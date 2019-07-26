@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include partials/dashboard-head.ejs %>
+
+    <body>
+        <div id="page">
+
+            <div id="main">
+                <div class="container-fluid">
+                    <div class="row">
+                        
+                            <div class="col-sm-3" style="padding-left:0px">
+                                <div id="mySidenav" class="sidenav panel">
+                                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                    <img src="\public\img\images1.jpg" class="img-circle" alt="User image" width="150" height="150">
+                                    <h3>Welcome</h3>
+                                    <h4 class="username">Elijah</h4>
+                                    <div style="width:50%;margin:auto;margin-bottom:20px;">
+                                        <a class="btn btn-default btn-success btn-block" href="/booking">Book ticket</a>
+                                    </div>
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li>
+                                            <a href="/dashboard">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-home"></span>
+                                                </div>
+                                                <div>
+                                                    Dashboard
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/history">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                                </div>
+                                                <div>Tickets</div>
+                                            </a>
+
+                                        </li>
+                                        <li class="active1">
+                                            <a href="/profile">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-user"></span>
+                                                </div>
+                                                <div>
+                                                    Profile
+                                                </div>
+                                            </a>
+
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-comment"></span>
+                                                </div>
+                                                <div>
+                                                    Help
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/profile#contact">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-phone-alt"></span>
+                                                </div>
+                                                <div>
+                                                    Contact us
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/index">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-log-out"></span>
+                                                </div>
+                                                <div>
+                                                    Logout
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-9">
+                                    <% include layouts/dashboard-header.ejs %>
+                                <div class="conatainer-fluid">
+                                    <h1 class="text-center">MY PROFILE</h1>
+                                    <form class="modal-form" style="padding: 45px">
+                                        <div class="form-group">
+                                            <label for="first_name">First name</label>
+                                            <input type="text" name="first_name" class="form-control" id="fname" disabled placeholder="Firstname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="first_name">Last name</label>
+                                            <input type="text" name="last_name" class="form-control" id="lname" disabled placeholder="Lastname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="first_name">Username</label>
+                                            <input type="text" name="username" class="form-control" id="uname" disabled placeholder="username">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="first_name">Email</label>
+                                            <input type="email" name="email" class="form-control" id="email" disabled placeholder="example@example.com">
+                                        </div>
+                                        <div style="width:50%;margin:auto;margin-bottom:20px;">
+                                                <a class="btn btn-default btn-success btn-block" href="/editprofile">Edit Profile</a>
+                                            </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                    </div>
+
+
+                    <% include partials/contact.ejs %>
+                </div>
+
+                <% include layouts/footer.ejs %>
+            </div>
+    </body>
+
+</html>

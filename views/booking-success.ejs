@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <% include partials/head.ejs %>
+    <body>
+        <div id="page">
+            <% include layouts/header.ejs %>
+            
+            <div id="content">
+                <h1>Success</h1>
+                <h2>Your Ticket Details</h2>
+                <p>Name: <%= data.name %></p>
+                <p>From: <%= data.from %></p>
+                <p>To: <%= data.to %></p>
+                <p>Payment method: <%= data.payment %></p>
+                <p>Mobile number: <%= data.number %></p>
+		  </div>
+            
+            <% include layouts/footer.ejs %>
+        </div>
+    </body>
+</html>

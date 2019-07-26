@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include partials/dashboard-head.ejs %>
+
+    <body>
+        <div id="page">
+
+            <div id="main">
+                <div class="container-fluid">
+                    <div class="row">
+                        <% include layouts/dashboard-header.ejs %>
+                            <div class="col-sm-3" style="padding-left:0px">
+                                <div id="mySidenav" class="sidenav panel">
+                                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                    <img src="\public\img\images1.jpg" class="img-circle" alt="User image" width="150" height="150">
+                                    <h3>Welcome</h3>
+                                    <h4>Elijah</h4>
+                                    <div style="width:50%;margin:auto;margin-bottom:20px;">
+                                        <a class="btn btn-default btn-success btn-block" href="/booking">Book ticket</a>
+                                    </div>
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li>
+                                            <a href="/dashboard">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-home"></span>
+                                                </div>
+                                                <div>
+                                                    Dashboard
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/history">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                                </div>
+                                                <div>Tickets</div>
+                                            </a>
+
+                                        </li>
+                                        <li class="active1">
+                                            <a href="/profile">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-user"></span>
+                                                </div>
+                                                <div>
+                                                    Profile
+                                                </div>
+                                            </a>
+
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-comment"></span>
+                                                </div>
+                                                <div>
+                                                    Help
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/profile#contact">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-phone-alt"></span>
+                                                </div>
+                                                <div>
+                                                    Contact us
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/index">
+                                                <div>
+                                                    <span class="glyphicon glyphicon-log-out"></span>
+                                                </div>
+                                                <div>
+                                                    Logout
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="conatainer-fluid">
+                                    <h1 class="text-center">EDIT PROFILE</h1>
+                                    <form class="modal-form"  style="padding: 55px" action="/target" method="post" onsubmit="return profileValidator()">
+                                        <div class="form-group">
+                                            <label for="first_name">First name</label>
+                                            <input type="text" name="first_name" class="form-control" required id="fname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="first_name">Last name</label>
+                                            <input type="text" name="last_name" class="form-control" required id="lname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="first_name">Username</label>
+                                            <input type="text" name="username" class="form-control" required id="uname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="first_name">Email</label>
+                                            <input type="email" name="email" class="form-control" required id="email" placeholder="example@example.com">
+                                        </div>
+                                        <h4>Change password</h4>
+                                        <div class="form-group">
+                                            <label for="opsw">Old password</label>
+                                            <input type="password" name="password" class="form-control" id="opsw" required>
+                                        </div>
+                                        <i><span class="msg"></span></i>
+                                        <div class="form-group">
+                                            <label for="npsw">New password</label>
+                                            <input type="password" class="form-control" id="npsw" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cnpsw">Confirm new Password</label>
+                                            <input type="password" class="form-control" id="cnpsw" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-default btn-success btn-block">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                    </div>
+
+
+                    <% include partials/contact.ejs %>
+                </div>
+
+                <% include layouts/footer.ejs %>
+            </div>
+    </body>
+
+</html>

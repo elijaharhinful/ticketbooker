@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include partials/head.ejs %>
+
+    <body>
+        <div id="page">
+            <% include layouts/header.ejs %>
+                <!--hidden login modal div starts here-->
+                <% include partials/modal.ejs %>
+
+                    <div id="main">
+
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                                <li data-target="#myCarousel" data-slide-to="3"></li>
+                            </ol>
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <img src="public/img/image.jpg" alt="">
+                                </div>
+                                <div class="item">
+                                    <img src="public/img/image.jpg" alt="">
+                                </div>
+                                <div class="item">
+                                    <img src="public/img/image.jpg" alt="">
+                                </div>
+                                <div class="item">
+                                    <img src="public/img/image.jpg" alt="">
+                                </div>
+                            </div>
+                            <!-- Left and right controls -->
+                            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+
+                        <article>
+                            <div class="container-fluid">
+                                <div class="col-sm-3">
+                                    <h3>Free Wifi</h3>
+                                    <p>Free wifi to browse whiles cruising in our buses</p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h3>Toilet in the bus</h3>
+                                    <p>No stopping to attend to nature's call. we got you covered</p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h3>Feel comfortable while travelling</h3>
+                                    <p>io iosuus sd;lfsuji sldj skl kskdjs;ljflkslskfj lkfjj sl </p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h3>Sockets to charge phones and laptops</h3>
+                                    <p>klafkl kfhu fklf sfhlks sj l h dsfh lkhf slgkjgj jg hgjhfhj h</p>
+                                </div>
+                            </div>
+                        </article>
+            
+                        <div id="download" class="container-fluid" style="background-color: #000080;color: white">
+                            <div class="col-sm-4">
+                                <img class="img-responsive" src="public/img/mobile.png" alt="mobile app image">
+                            </div>
+                            <div class="col-sm-8">
+                                <h2>Millions of people use our mobile app</h2>
+                                <p>Download our app now via
+                                    <a href="#">Google Playstore</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <article>
+                            <div id="travelUs" class="container-fluid" style="background-color: black;color: white;padding: 50px">
+                                <h2>Why travel with us?</h2>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Cheap ticket prices jafd;lk gksjfl; ssa;lk f;sjd sfdkfjsaj kl;s fljsakf slkflslaf sjaj; sklfkjkfklksaflkjl;asjflk ;ljsa;lfklsdkjf,jaslkfjslkfjlks;af
+                                        asfksakf;j;lnxzhnv a sal;lfnfslsf' sfsafhlkj l;kfjkl;
+                                    </div>
+                                    <div class="col-sm-4">
+                                        Reliable services jafd;lk gksjfl; ssa;lk f;sjd sfdkfjsaj kl;s fljsakf slkflslaf sjaj; sklfkjkfklksaflkjl;asjfl ;ljsa;lfklsdkjf,jaslkfjslkfjlks;af
+                                        asfksakf;j;lnxzhnv a sal;lfnfslsf' sfsafhlkj l;kfjkl;
+                                    </div>
+                                    <div class="col-sm-4">
+                                        Competent staff jafd;lk gksjfl; ssa;lk f;sjd sfdkfjsaj kl;s fljsakf slkflslaf sjaj; sklfkjkfklksaflkjl;asjflkksjcfamljmsccsdbvsd
+                                        ;ljsa;lfklsdkjf,jaslkfjslkfjlks;af asfksakf;j;lnxzhnv a sal;lfnfslsf' sfsafhlkj l;kfjkl;
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <% include partials/pricing.ejs %>
+
+                            <div class="container-fluid">
+                                <h2 class="text-center">Testimonials</h2>
+                                <marquee>
+                                    <p>Simply 5 stars. You guys are doing great job. Very good customer support.</p>
+                                </marquee>
+                            </div>
+
+                            <% include partials/contact.ejs %>
+
+                    </div>
+
+                    <% include layouts/footer.ejs %>
+        </div>
+    </body>
+
+</html>

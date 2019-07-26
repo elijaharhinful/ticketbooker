@@ -1,0 +1,37 @@
+<div class="container">
+    <!--modal-->
+    <div class="modal fade" id="pay" role="dialog">
+        <div class="modal-dialog">
+            <!--modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 style="color:brown;">Enter personal details</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" name="name" class="form-control" id="name" value="<%= qs.person %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tel">Mobile Number</label>
+                            <input type="tel" name="number" value="<%= qs.number %>" class="form-control" id="tel" minlength="10" maxlength="10" required placeholder="0240000000">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Select payment method</label>
+                            <select name="payment" value="<%= qs.payment %>" class="form-control" id="payment">
+                                <option>Mtn Mobile money</option>
+                                <option>Tigo Cash</option>
+                                <option>Vodafone Cash</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-default btn-success btn-block nextbtn" onclick="alert('Ticket purchased. Go to tickets to view ticket')">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--login hide div ends here-->

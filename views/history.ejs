@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include partials/dashboard-head.ejs %>
+<% include partials/ticket.ejs %>
+
+<body>
+    <div id="page" style="background-color:gainsboro ">
+        <div id="main">
+            <% include partials/confirm.ejs %>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-3" style="padding-left:0px;">
+                        <div id="mySidenav" class="sidenav panel">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <img src="\public\img\images1.jpg" class="img-circle" alt="User image" width="150" height="150">
+                            <h3>Welcome</h3>
+                            <h4>Elijah</h4>
+                            <div style="width:50%;margin:auto;margin-bottom:20px;">
+                                <a class="btn btn-default btn-success btn-block" href="/booking">Book ticket</a>
+                            </div>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li >
+                                    <a href="/dashboard">
+                                        <div>
+                                            <span class="glyphicon glyphicon-home"></span>
+                                        </div>
+                                        <div>
+                                            Dashboard
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="active1">
+                                    <a href="/history">
+                                        <div>
+                                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                                        </div>
+                                        <div>Tickets</div>
+                                    </a>
+
+                                </li>
+                                <li>
+                                    <a href="/profile">
+                                        <div>
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </div>
+                                        <div>
+                                            Profile
+                                        </div>
+                                    </a>
+
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <span class="glyphicon glyphicon-comment"></span>
+                                        </div>
+                                        <div>
+                                            Help
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/booking#contact">
+                                        <div>
+                                            <span class="glyphicon glyphicon-phone-alt"></span>
+                                        </div>
+                                        <div>
+                                            Contact us
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/index">
+                                        <div>
+                                            <span class="glyphicon glyphicon-log-out"></span>
+                                        </div>
+                                        <div>
+                                            Logout
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                            <% include layouts/dashboard-header.ejs %>
+                            <div class="conatainer-fluid">
+                                <h1 class="text-center">TICKET HISTORY</h1>
+                                <p class="text-center">Click on ticket to view ticket details</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                        <div class="panel-body">
+                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
+                                                width="50" height="50">
+                                            <div class="text-center">
+                                                <h5>
+                                                    <span class="historyfrom">Accra</span> to
+                                                    <span class="historyto">Cape Coast</span>
+                                                </h5>
+                                                <h5>
+                                                    <i>
+                                                        <span class="historydate">31/21/1234</span>
+                                                    </i>
+                                                </h5>
+                                                <button type="submit" data-toggle="modal" class="btn btn-xs btn-info"
+                                                    data-target="#ticket">View ticket</button>
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-xs btn-danger">Cancel ticket</button>
+                                                <button class="btn btn-xs btn-danger disable" disabled>Cancelled</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% include layouts/footer.ejs %>
+    </div>
+</body>
+
+</html>

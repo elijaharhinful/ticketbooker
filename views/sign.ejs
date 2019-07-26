@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include partials/head.ejs %>
+
+    <body>
+        <div id="page">
+            <% include layouts/header.ejs %>
+                <!--hidden login modal div starts here-->
+                <% include partials/modal.ejs %>
+
+
+                    <div id="content">
+                        <div class="sign">
+                            <div class="row" style="width:60%;margin:auto;">
+                                <div class="col-sm-12">
+                                    <h4>Register now</h4>
+                                    <form id="signupform" action="/token" method="post" onsubmit="return signValidator()">
+                                        <i><span class="msg"></span></i>
+                                        <div class="form-group">
+                                            <label for="tel">Mobile number</label>
+                                            <input type="tel" class="form-control num" required id="tel" minlength="10" maxlength="10" placeholder="example: 024000000">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="psw">Password</label>  
+                                            <input type="password" class="form-control passwd" id="psw" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="psw">Confirm Password</label>
+                                            <input type="password" class="form-control cpasswd" id="cpsw" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-default btn-success btn-block">Next</button>
+                                    </form>
+                                    <h4>Already have an account?
+                                        <a data-toggle="modal" class="dash-name" href="#myModal" style="color:red">Login</a>
+                                    </h4>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <% include partials/contact.ejs %>
+                        <% include layouts/footer.ejs %>
+        </div>
+    </body>
+
+</html>

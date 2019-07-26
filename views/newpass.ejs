@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include partials/head.ejs %>
+
+    <body>
+        <div id="token">
+            <% include layouts/header.ejs %>
+
+                <div class="container-fluid">
+                    <div class="row reseter">
+
+                        <div class="col-sm-12">
+                            <form class="modal-form" action="#" method="post" onsubmit="return profileValidator()">
+                                <i>
+                                    <span class="msg"></span>
+                                </i>
+                                <div class="form-group">
+                                    <label for="npsw">New password</label>
+                                    <input type="password" class="form-control" id="newpsw" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cnpsw">Confirm new Password</label>
+                                    <input type="password" class="form-control" id="cnewpsw" required>
+                                </div>
+                                <button type="submit" class="btn btn-default btn-success btn-block">Submit</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <% include layouts/footer.ejs %>
+        </div>
+    </body>
+
+</html>
