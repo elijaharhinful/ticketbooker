@@ -140,9 +140,10 @@ function signValidator(e) {
 };
 
 //Acessing API
-var mainAPIUrl = 'http://achatcryptostg.com/stcapp/public';
+var mainAPIUrl = 'https://achatcryptostg.com/stcapp/public';
 
-/*function getPrices() {
+
+function getPrices() {
 	axios.get(mainAPIUrl + "/companydestinationdetails/1")
 		.then(function (response) {
 			data = response.data
@@ -158,7 +159,7 @@ var mainAPIUrl = 'http://achatcryptostg.com/stcapp/public';
 
 		})
 }
-*/
+
 $('#signupform').on('submit', function(){
 	sendsignupdata();
 });
@@ -221,3 +222,30 @@ function getbuscompanies(){
 	})
 }
 
+/* This is for the mazzuma integration
+var requestPayload = {
+	"price": 1,
+	"network": "mtn",
+	"recipient_number": "0548777676",
+	"sender": "024xxxxxxx",
+	"option": "rmta",
+	"apikey": "27defb35646688a13b98fe4922b26ea0bbd5d321",
+	"orderID": ""
+  }
+
+  
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", 'https://client.teamcyst.com/api_call.php', true);
+  
+	//Send the proper header information along with the request
+	xhr.setRequestHeader("Content-type", "application/json");
+  
+	xhr.onreadystatechange = function() {
+	  //Call a function when the state changes.
+		if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+			// Request finished. Do processing here.
+		}
+	}
+	//Replace requestPayload with the payload you would be sending
+	xhr.send(requestPayload);
+	*/

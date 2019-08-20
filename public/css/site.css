@@ -4,11 +4,50 @@ body{
 }
 
 #page{
-    background:-webkit-linear-gradient(#9d4adf, #f26e78);
+    background:-webkit-linear-gradient(#989699, #f26e78);
+}
+
+#mainpage{
+    background-color: white;
 }
 
 #token {
 	background:url("/public/img/laptop.jpg");
+	background-attachment:fixed;
+	background-position:center;
+	background-repeat:no-repeat;
+	background-size:cover;
+    color: white;
+}
+
+#dashboardpage {
+	background:url("/public/img/gra.jpg");
+	background-attachment:fixed;
+	background-position:center;
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+
+#signpage {
+	background:url("/public/img/balls.jpg");
+	background-attachment:fixed;
+	background-position:center;
+	background-repeat:no-repeat;
+	background-size:cover;
+    color: white;
+}
+
+#historypage {
+	background:url("/public/img/tria.jpg");
+	background-attachment:fixed;
+	background-position:center;
+	background-repeat:no-repeat;
+	background-size:cover;
+    color: white;
+}
+
+#profilepage {
+	background:url("/public/img/material.jpg");
 	background-attachment:fixed;
 	background-position:center;
 	background-repeat:no-repeat;
@@ -31,16 +70,13 @@ body{
 }
 
 #mySidenav{
-    background: rgb(221, 245, 166);
+    background:-webkit-linear-gradient( #f0249b, white);
 }
 
 tr:hover{
     cursor: pointer;
 }
 
-#content{
-    border-radius:35px;
-}
 
 #content .container-fluid .col-sm-3{
     padding: 0px;
@@ -60,6 +96,7 @@ tr:hover{
 }
 
 #content {
+    border-radius:35px;
 	padding: 75px;
 	background:url("/public/img/laptop.jpg");
 	background-attachment:fixed;
@@ -69,7 +106,7 @@ tr:hover{
     color: white;
 }
 .active1{
-    background-color: royalblue !important;
+    background-color: rgb(225, 65, 118) !important;
     border-radius: 5px;
 }
 
