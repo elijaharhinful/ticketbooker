@@ -1,9 +1,11 @@
 var http = require('http');
 var express = require('express');
+var Cors = require('cors');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 
 var app = express();
+app.use(Cors())
 app.set('view engine', 'ejs');
 urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use('/public', express.static('public'));

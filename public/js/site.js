@@ -76,7 +76,7 @@ $("#qr1").ClassyQR({
 
 $('#gotop').gotop();
 
-
+//this is to connect the pages via the links clicked on the table
 $(function () {
 	$('tr').on('click', function () {
 		var tr = $(this);
@@ -110,7 +110,6 @@ $(function () {
 		}else{
 			btn.removeClass('disable');
 		}
-		
 	});
 });
 
@@ -139,7 +138,8 @@ function signValidator(e) {
 	return false;
 };
 
-//Acessing API
+
+/*Acessing API
 var mainAPIUrl = 'https://achatcryptostg.com/stcapp/public';
 
 
@@ -210,17 +210,19 @@ function sendlogindata(){
 }
 
 //to get bus companies
-function getbuscompanies(){
+$(function(){
 	axios.get(mainAPIUrl + "/companies")
 	.then(
 		function(response){
 			var data = response.data
+			alert(data);
 		}
 	)
 	.catch(function(error){
 		alert(error);
 	})
-}
+});
+*/
 
 /* This is for the mazzuma integration
 var requestPayload = {
