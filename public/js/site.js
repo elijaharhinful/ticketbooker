@@ -15,7 +15,7 @@ $(function(){
 	$('#pricing').hide().fadeIn(6000);
 	$('header').hide().fadeIn(3500);
 	$("#dash").hide().slideToggle(3500);
-	$("#mySidenav").hide().slideToggle(3500);
+	$("#mySidenav").hide().slideToggle(2000);
 })
 
 $(function () {
@@ -36,6 +36,11 @@ $(function () {
 	});
 });
 
+$('#gotop').gotop();
+
+$(document).ready(function() {
+    $('#ticketHistory').DataTable();
+} );
 
 $(function () {
 	$('.nextbtn').on('click', function (e) {
@@ -78,8 +83,6 @@ $("#qr1").ClassyQR({
 	type: 'text',
 	text: 'This is the text to embed'
 });
-
-$('#gotop').gotop();
 
 //this is to connect the pages via the links clicked on the table
 $(function () {

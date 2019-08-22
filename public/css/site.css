@@ -71,6 +71,8 @@ body{
 
 #mySidenav{
     background:-webkit-linear-gradient( #ee3030, white);
+    border-radius: 0px;
+    border: 0px;
 }
 
 tr:hover{
@@ -87,6 +89,9 @@ tr:hover{
 
 .nav-stacked li a{
     color: black;
+    text-align: left;
+    padding: 20px;
+    margin-left: 20px;
 }
 .nav-stacked li:hover{
     background-color:  #D3D3D3;
@@ -107,7 +112,6 @@ tr:hover{
 }
 .active1{
     background-color: rgb(225, 65, 118) !important;
-    border-radius: 5px;
 }
 
 .cancelPage{
