@@ -9,8 +9,13 @@ function closeNav() {
 
 }
 $(function(){
+	$('#myCarousel').hide().fadeIn(3500);
 	$('#download').hide().fadeIn(3500);
 	$('#travelUs').hide().slideToggle(3500);
+	$('#pricing').hide().fadeIn(6000);
+	$('header').hide().fadeIn(3500);
+	$("#dash").hide().slideToggle(3500);
+	$("#mySidenav").hide().slideToggle(3500);
 })
 
 $(function () {
@@ -138,6 +143,13 @@ function signValidator(e) {
 	return false;
 };
 
+$('#signupform').on('submit', function(){
+	sendsignupdata();
+});
+
+$('#loginform').on('submit', function(){
+	sendlogindata();
+});
 
 /*Acessing API
 var mainAPIUrl = 'https://achatcryptostg.com/stcapp/public';
@@ -160,13 +172,6 @@ function getPrices() {
 		})
 }
 
-$('#signupform').on('submit', function(){
-	sendsignupdata();
-});
-
-$('#loginform').on('submit', function(){
-	sendlogindata();
-});
 
 function sendsignupdata(){
 	var tel = $('#tel').val();

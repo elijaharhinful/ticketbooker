@@ -55,10 +55,6 @@ app.get('/newpass', function (req, res) {
     res.render('newpass');
 });
 
-app.get('/destination', function (req, res) {
-    res.render('destination');
-});
-
 app.get('/history', function (req, res) {
     res.render('history');
 });
