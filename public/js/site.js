@@ -37,6 +37,10 @@ $(function () {
 });
 
 $('#gotop').gotop();
+$("#qr1").ClassyQR({
+	type: 'text',
+	text: 'This is the text to embed'
+});
 
 $(document).ready(function() {
     $('#ticketHistory').DataTable();
@@ -78,11 +82,6 @@ function closeNav() {
 	$("#mySidenav").width("0");
 	$(".navbar-toggle").css("display","block");
 }
-
-$("#qr1").ClassyQR({
-	type: 'text',
-	text: 'This is the text to embed'
-});
 
 //this is to connect the pages via the links clicked on the table
 $(function () {
