@@ -87,7 +87,7 @@ function closeNav() {
 }
 
 //this is to connect the pages via the links clicked on the table
-$(function () {
+/*$(function () {
 	$('tr').on('click', function () {
 		var tr = $(this);
 		var from = tr.find('td:eq(0)').text();
@@ -122,6 +122,8 @@ $(function () {
 		}
 	});
 });
+*/
+
 
 //Validatons
 function profileValidator() {
