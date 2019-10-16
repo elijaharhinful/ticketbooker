@@ -10,14 +10,28 @@ app.set('view engine', 'ejs');
 urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use('/public', express.static('public'));
 
-
 app.set('port', process.env.PORT || 3000);
 
+//this is to get pricing data
 var pricing="";
-
 axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
 	.then(function(response){
         pricing = response.data.response
+    })
+    .catch(function(error){
+        console.log(error)
+    })
+//end of pricing 
+
+//this is for the login 
+var num = $('.num').val();
+var psw = $('.passwd').val();
+axios.post("http://achatcryptostg.com/stcapp/public/login",{
+        phone : num,
+        password : psw
+    })
+    .then(function(response){
+        console.log(response)
     })
     .catch(function(error){
         console.log(error)
