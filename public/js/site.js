@@ -42,6 +42,7 @@ $(function() {
 
 $('#gotop').gotop();
 
+<<<<<<< HEAD
 //For QrCode
 var options = {
     // render method: 'canvas', 'image' or 'div'
@@ -97,6 +98,14 @@ var options = {
 
 $("#selector").qrcode(options);
 //end of QrCode
+=======
+$("#qr1").ClassyQR({
+	type: 'text',
+	text: 'This is the text to embed'
+});
+
+
+>>>>>>> ad31806a496bf9dc27e477c6e8a3adeb6338d367
 
 $(function () {
 	$('.nextbtn').on('click', function (e) {
@@ -135,7 +144,10 @@ function closeNav() {
 	$(".navbar-toggle").css("display","block");
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ad31806a496bf9dc27e477c6e8a3adeb6338d367
 //this is to connect the pages via the links clicked on the table
 /*$(function () {
 	$('tr').on('click', function () {

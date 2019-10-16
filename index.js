@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors')
@@ -6,6 +7,13 @@ const axios = require('axios')
 const app = express();
 app.use(cors());
   
+=======
+var express = require('express');
+var bodyParser = require('body-parser');
+
+var app = express();
+
+>>>>>>> ad31806a496bf9dc27e477c6e8a3adeb6338d367
 app.set('view engine', 'ejs');
 urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use('/public', express.static('public'));

@@ -11,8 +11,12 @@
     "git": "^0.1.5",
     "heroku": "^7.28.0",
     "mysql": "^2.17.1",
+<<<<<<< HEAD
     "nodemon": "^1.19.1",
     "request": "^2.88.0"
+=======
+    "nodemon": "^1.19.1"
+>>>>>>> ad31806a496bf9dc27e477c6e8a3adeb6338d367
   },
   "devDependencies": {},
   "scripts": {
