@@ -4,7 +4,7 @@
     <% include partials/confirm.ejs %>
     <% include partials/pay.ejs %>
 
-        <body>
+        <body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
             <div id="page">
 
                 <div id="main">
@@ -20,68 +20,45 @@
                                         <div style="width:50%;margin:auto;margin-bottom:20px;">
                                                 <a class="btn btn-default btn-success btn-block" href="/booking">Book ticket</a>
                                         </div>
-                                            <ul class="nav nav-pills nav-stacked">
-                                                    <li>
-                                                        <a href="/dashboard">
-                                                            <div>
-                                                                <span class="glyphicon glyphicon-home"></span>
-                                                            </div>
-                                                            <div>
-                                                                Dashboard
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/history">
-                                                            <div>
-                                                                <span class="glyphicon glyphicon-shopping-cart"></span>
-                                                            </div>
-                                                            <div>Tickets</div>
-                                                        </a>
-        
-                                                    </li>
-                                                    <li>
-                                                        <a href="/profile">
-                                                            <div>
-                                                                <span class="glyphicon glyphicon-user"></span>
-                                                            </div>
-                                                            <div>
-                                                                Profile
-                                                            </div>
-                                                        </a>
-        
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <div>
-                                                                <span class="glyphicon glyphicon-comment"></span>
-                                                            </div>
-                                                            <div>
-                                                                Help
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/booking#contact">
-                                                            <div>
-                                                                <span class="glyphicon glyphicon-phone-alt"></span>
-                                                            </div>
-                                                            <div>
-                                                                Contact us
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/index">
-                                                            <div>
-                                                                <span class="glyphicon glyphicon-log-out"></span>
-                                                            </div>
-                                                            <div>
-                                                                Logout
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                        <ul class="nav nav-pills nav-stacked">
+                                            <li>
+                                                <a href="/dashboard">
+                                                        <i class="glyphicon glyphicon-home"></i>
+                                                        Dashboard
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/history">
+                                                        <i class="glyphicon glyphicon-shopping-cart"></i>
+                                                    Tickets
+                                                </a>
+            
+                                            </li>
+                                            <li>
+                                                <a href="/profile"> 
+                                                        <i class="glyphicon glyphicon-user"></i>
+                                                        Profile
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                        <i class="glyphicon glyphicon-comment"></i>
+                                                        Help
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/booking#contact"> 
+                                                        <i class="glyphicon glyphicon-phone-alt"></i>
+                                                        Contact us
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/index">
+                                                        <i class="glyphicon glyphicon-log-out"></i>
+                                                        Logout
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
 
                                 </div>
@@ -159,8 +136,8 @@
                                                             </select>
                                                         </div>
                                                         <div>
-                                                            <button type="submit" data-toggle="modal" data-target="#confirm" style="background:#f26e78;color:white" class="btn btn-default nextbtn">Preview</button>
-                                                            <button type="submit" data-toggle="modal" data-target="#pay" style="background:white;color:#f26e78" class="btn btn-default nextbtn">Buy Ticket</button>
+                                                            <button style="background:#dd1728;color:white"><a data-toggle="modal" class="btn btn-default nextbtn dash-name" data-target="#confirm" >Preview</a></button>
+                                                            <button style="background:rgb(44, 11, 235);color:#f26e78"><a data-toggle="modal" class="btn btn-default nextbtn dash-name" data-target="#pay" >Buy Ticket</a></button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -189,7 +166,7 @@
 
                         <% include partials/pricing.ejs %>
 
-                            <% include partials/contact.ejs %>
+                        <% include partials/contact.ejs %>
                     </div>
 
                     <% include layouts/footer.ejs %>

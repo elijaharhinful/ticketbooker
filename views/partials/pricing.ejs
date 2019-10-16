@@ -25,6 +25,16 @@
                         <th class="text-center">Duration/hrs</th>
                     </tr>
                 </thead>
+                <tbody>
+                    <% for (var i = 0; i < pricing.length; i++){ %>
+                        <tr>
+                            <td><%= pricing[i].d_from %></td>
+                            <td><%= pricing[i].d_to %></td>
+                            <td><%= pricing[i].d_price %></td>
+                            <td><%= pricing[i].journeyhrs %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
             </table>
         </div>
         <div id="menu1" class="tab-pane fade">

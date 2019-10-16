@@ -1,27 +1,45 @@
-var http = require('http');
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors')
+const axios = require('axios')
 
-var app = express();
+const app = express();
+app.use(cors());
+  
 app.set('view engine', 'ejs');
 urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use('/public', express.static('public'));
 
+
 app.set('port', process.env.PORT || 3000);
 
+var pricing="";
+
+axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
+	.then(function(response){
+        pricing = response.data.response
+    })
+    .catch(function(error){
+        console.log(error)
+    })
+
 app.get('/', function (req, res) {
-    res.render('index');
+    res.render('index',{pricing});
 });
 app.get('/index', function (req, res) {
-    res.render('index');
+    res.render('index',{pricing});
+});
+    
+app.get('/dashboard', function (req, res) {
+    res.render('dashboard',{pricing});
 });
 
-app.get('/dashboard', function (req, res) {
-    res.render('dashboard');
+app.get('/dashboard1', function (req, res) {
+    res.render('dashboard1',{pricing});
 });
 
 app.get('/booking', function(req, res){
-    res.render('booking', {qs:req.query});
+    res.render('booking',{pricing});
 });
 
 app.get('/profile', function (req, res) {

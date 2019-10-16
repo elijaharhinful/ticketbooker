@@ -9,18 +9,23 @@ function closeNav() {
 
 }
 $(function(){
+	$('#myCarousel').hide().fadeIn(3500);
 	$('#download').hide().fadeIn(3500);
 	$('#travelUs').hide().slideToggle(3500);
+	$('#pricing').hide().fadeIn(6000);
+	$('header').hide().fadeIn(3500);
+	$("#dash").hide().slideToggle(3500);
+	$("#mySidenav").hide().slideToggle(2000);
 })
 
 $(function () {
 	var today = new Date();
 
-	var elbookDate = document.getElementById('bookDate');
-	elbookDate.textContent = today.toDateString();
+	var elbookDate = $('#bookDate');
+	elbookDate.text(today.toDateString());
 
-	var elbooktime = document.getElementById('bookTime');
-	elbooktime.textContent = today.toTimeString();
+	var elbooktime = $('#bookTime');
+	elbooktime.text(today.toTimeString());
 });
 
 $(function () {
@@ -31,6 +36,67 @@ $(function () {
 	});
 });
 
+$(function() {
+    $('#ticketHistory').DataTable();
+});
+
+$('#gotop').gotop();
+
+//For QrCode
+var options = {
+    // render method: 'canvas', 'image' or 'div'
+    render: 'img',
+
+    // version range somewhere in 1 .. 40
+    minVersion: 1,
+    maxVersion: 40,
+
+    // error correction level: 'L', 'M', 'Q' or 'H'
+    ecLevel: 'L',
+
+    // offset in pixel if drawn onto existing canvas
+    left: 0,
+    top: 0,
+
+    // size in pixel
+    size: 100,
+
+    // code color or image element
+    fill: '#000',
+
+    // background color or image element, null for transparent background
+    background: null,
+
+    // content
+    text: 'no text',
+
+    // corner radius relative to module width: 0.0 .. 0.5
+    radius: 0,
+
+    // quiet zone in modules
+    quiet: 0,
+
+    // modes
+    // 0: normal
+    // 1: label strip
+    // 2: label box
+    // 3: image strip
+    // 4: image box
+    mode: 0,
+
+    mSize: 0.1,
+    mPosX: 0.5,
+    mPosY: 0.5,
+
+    label: 'no label',
+    fontname: 'sans',
+    fontcolor: '#000',
+
+    image: null
+}
+
+$("#selector").qrcode(options);
+//end of QrCode
 
 $(function () {
 	$('.nextbtn').on('click', function (e) {
@@ -69,15 +135,9 @@ function closeNav() {
 	$(".navbar-toggle").css("display","block");
 }
 
-$("#qr1").ClassyQR({
-	type: 'text',
-	text: 'This is the text to embed'
-});
 
-$('#gotop').gotop();
-
-
-$(function () {
+//this is to connect the pages via the links clicked on the table
+/*$(function () {
 	$('tr').on('click', function () {
 		var tr = $(this);
 		var from = tr.find('td:eq(0)').text();
@@ -110,9 +170,10 @@ $(function () {
 		}else{
 			btn.removeClass('disable');
 		}
-		
 	});
 });
+*/
+
 
 //Validatons
 function profileValidator() {
@@ -139,10 +200,19 @@ function signValidator(e) {
 	return false;
 };
 
-//Acessing API
-var mainAPIUrl = 'http://achatcryptostg.com/stcapp/public';
+$('#signupform').on('submit', function(){
+	sendsignupdata();
+});
 
-/*function getPrices() {
+$('#loginform').on('submit', function(){
+	sendlogindata();
+});
+
+/*Acessing API
+var mainAPIUrl = 'https://achatcryptostg.com/stcapp/public';
+
+
+function getPrices() {
 	axios.get(mainAPIUrl + "/companydestinationdetails/1")
 		.then(function (response) {
 			data = response.data
@@ -158,14 +228,7 @@ var mainAPIUrl = 'http://achatcryptostg.com/stcapp/public';
 
 		})
 }
-*/
-$('#signupform').on('submit', function(){
-	sendsignupdata();
-});
 
-$('#loginform').on('submit', function(){
-	sendlogindata();
-});
 
 function sendsignupdata(){
 	var tel = $('#tel').val();
@@ -209,15 +272,44 @@ function sendlogindata(){
 }
 
 //to get bus companies
-function getbuscompanies(){
+$(function(){
 	axios.get(mainAPIUrl + "/companies")
 	.then(
 		function(response){
 			var data = response.data
+			alert(data);
 		}
 	)
 	.catch(function(error){
 		alert(error);
 	})
-}
+});
+*/
 
+/* This is for the mazzuma integration
+var requestPayload = {
+	"price": 1,
+	"network": "mtn",
+	"recipient_number": "0548777676",
+	"sender": "024xxxxxxx",
+	"option": "rmta",
+	"apikey": "27defb35646688a13b98fe4922b26ea0bbd5d321",
+	"orderID": ""
+  }
+
+  
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", 'https://client.teamcyst.com/api_call.php', true);
+  
+	//Send the proper header information along with the request
+	xhr.setRequestHeader("Content-type", "application/json");
+  
+	xhr.onreadystatechange = function() {
+	  //Call a function when the state changes.
+		if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+			// Request finished. Do processing here.
+		}
+	}
+	//Replace requestPayload with the payload you would be sending
+	xhr.send(requestPayload);
+	*/

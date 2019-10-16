@@ -12,15 +12,15 @@
                     <form action="#" method="post">
                         <div class="form-group">
                             <label for="name">Full Name</label>
-                            <input type="text" name="name" class="form-control" id="name" value="<%= qs.person %>" required>
+                            <input type="text" name="name" class="form-control" id="name" required>
                         </div>
                         <div class="form-group">
                             <label for="tel">Mobile Number</label>
-                            <input type="tel" name="number" value="<%= qs.number %>" class="form-control" id="tel" minlength="10" maxlength="10" required placeholder="0240000000">
+                            <input type="tel" name="number" class="form-control" id="tel" minlength="10" maxlength="10" required placeholder="0240000000">
                         </div>
                         <div class="form-group">
                             <label for="name">Select payment method</label>
-                            <select name="payment" value="<%= qs.payment %>" class="form-control" id="payment">
+                            <select name="payment" class="form-control" id="payment">
                                 <option>Mtn Mobile money</option>
                                 <option>Tigo Cash</option>
                                 <option>Vodafone Cash</option>

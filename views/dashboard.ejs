@@ -1,81 +1,58 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <% include partials/dashboard-head.ejs %>
 
-<body>
-    <div id="page" style="background:-webkit-linear-gradient(#9d4adf, #f26e78)">
+<body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+    <div id="dashboardpage">
         <div id="main">
             <% include partials/confirm.ejs %>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-3" style="padding-left:0px;">
-                        <div id="mySidenav" class="sidenav panel">
+                        <div id="mySidenav" class="sidenav panel" style="border-radius:0px;" >
                             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                             <img src="\public\img\images1.jpg" class="img-circle" alt="User image" width="150" height="150">
                             <h3>Welcome</h3>
-                            <h4>Elijah</h4>
+                            <h4 class="clientname">Elijah</h4>
                             <div style="width:50%;margin:auto;margin-bottom:20px;">
                                 <a class="btn btn-default btn-success btn-block" href="/booking">Book ticket</a>
                             </div>
                             <ul class="nav nav-pills nav-stacked">
                                 <li class="active1">
                                     <a href="/dashboard">
-                                        <div>
-                                            <span class="glyphicon glyphicon-home"></span>
-                                        </div>
-                                        <div>
+                                            <i class="glyphicon glyphicon-home"></i>
                                             Dashboard
-                                        </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/history">
-                                        <div>
-                                            <span class="glyphicon glyphicon-shopping-cart"></span>
-                                        </div>
-                                        <div>Tickets</div>
+                                            <i class="glyphicon glyphicon-shopping-cart"></i>
+                                        Tickets
                                     </a>
 
                                 </li>
                                 <li>
-                                    <a href="/profile">
-                                        <div>
-                                            <span class="glyphicon glyphicon-user"></span>
-                                        </div>
-                                        <div>
+                                    <a href="/profile"> 
+                                            <i class="glyphicon glyphicon-user"></i>
                                             Profile
-                                        </div>
                                     </a>
-
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <div>
-                                            <span class="glyphicon glyphicon-comment"></span>
-                                        </div>
-                                        <div>
+                                            <i class="glyphicon glyphicon-comment"></i>
                                             Help
-                                        </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/booking#contact">
-                                        <div>
-                                            <span class="glyphicon glyphicon-phone-alt"></span>
-                                        </div>
-                                        <div>
+                                    <a href="/booking#contact"> 
+                                            <i class="glyphicon glyphicon-phone-alt"></i>
                                             Contact us
-                                        </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/index">
-                                        <div>
-                                            <span class="glyphicon glyphicon-log-out"></span>
-                                        </div>
-                                        <div>
+                                            <i class="glyphicon glyphicon-log-out"></i>
                                             Logout
-                                        </div>
                                     </a>
                                 </li>
                             </ul>
@@ -86,9 +63,9 @@
                             <div class="conatainer-fluid">
                                 <h1 class="text-center">DASHBOARD</h1>
                             </div>
-                            <div class="row">
+                            <div id="dash" class="row">
                                 <div class="col-sm-3">
-                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                    <div class="card narrower" style="background:-webkit-linear-gradient( #c4f5e6, rgb(240, 235, 235));border-radius:0px;padding-top: 10px;">
                                         <div class="panel-body">
                                             <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
                                                 width="50" height="50">
@@ -107,7 +84,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                    <div class="card" style="background:-webkit-linear-gradient( #c4e3f5, rgb(240, 235, 235));border-radius:0px;padding-top: 10px;"">
                                         <div class="panel-body">
                                             <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
                                                 width="50" height="50">
@@ -126,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                    <div class="card" style="background:-webkit-linear-gradient( #f0f1af, rgb(240, 235, 235));border-radius:0px;padding-top: 10px;">
                                         <div class="panel-body">
                                             <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
                                                 width="50" height="50">
@@ -145,7 +122,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="panel" style="border-radius:5px;padding-top: 10px;">
+                                    <div class="card" style="background:-webkit-linear-gradient( #eeb9eb, rgb(240, 235, 235));border-radius:0px;padding-top: 10px;">
                                         <div class="panel-body">
                                             <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
                                                 width="50" height="50">
