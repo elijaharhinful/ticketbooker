@@ -23,19 +23,7 @@ axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
     })
 //end of pricing 
 
-//this is for the login 
-var num = $('.num').val();
-var psw = $('.passwd').val();
-axios.post("http://achatcryptostg.com/stcapp/public/login",{
-        phone : num,
-        password : psw
-    })
-    .then(function(response){
-        console.log(response)
-    })
-    .catch(function(error){
-        console.log(error)
-    })
+
 
 app.get('/', function (req, res) {
     res.render('index',{pricing});
