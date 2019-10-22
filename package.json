@@ -12,6 +12,7 @@
     "heroku": "^7.28.0",
     "mysql": "^2.17.1",
     "nodemon": "^1.19.1",
+    "npm": "^6.12.0",
     "request": "^2.88.0"
   },
   "devDependencies": {},

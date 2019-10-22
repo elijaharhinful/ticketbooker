@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include partials/head.ejs %>
+
+    <body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+        <div id="page">
+            <% include layouts/header.ejs %>
+                <!--hidden login modal div starts here-->
+
+                    <div id="content">
+                        <div class="login">
+                            <div class="row" style="width:60%;margin:auto;">
+                                <div class="col-sm-12">
+                                    <h4>Login|
+                                        <a class="dash-name" href="/sign" style="color:red">Register here</a>
+                                    </h4>
+                                    <form id="loginform" class="modal-form" action="auth" method="POST" onsubmit="return sendlogindata()">
+                                        <i><span class="msg"></span></i>
+                                        <div class="form-group">
+                                            <label for="tel">Mobile number</label>
+                                            <input type="tel" name="tel" class="form-control num" required id="tel"  minlength="10" maxlength="10" placeholder="example: 0240000000">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="psw">Password</label>   
+                                            <input type="password" name="password" class="form-control passwd" id="psw" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cpsw">Confirm Password</label>
+                                            <input type="password" class="form-control cpasswd" id="cpsw" required>
+                                        </div>
+                
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="checkbox" value="checked">Remember me</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-default btn-success btn-block">Submit</button>
+                                    </form>
+                                    <div class="modal-footer">
+                                        <p>
+                                            <a href="/passreset">Forgot Password?</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                        <% include layouts/footer.ejs %>
+        </div>
+    </body>
+
+</html>

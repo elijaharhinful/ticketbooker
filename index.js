@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors')
-const axios = require('axios')
+const cors = require('cors');
+const axios = require('axios');
 
 const app = express();
 app.use(cors());
@@ -12,20 +12,21 @@ app.use('/public', express.static('public'));
 
 app.set('port', process.env.PORT || 3000);
 
+
 //this is to get pricing data
-var pricing="";
+var prices="";
 axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
 	.then(function(response){
-        pricing = response.data.response
+        prices = response.data.response
     })
     .catch(function(error){
         console.log(error)
     })
-//end of pricing 
+//end of prices 
 
 //this is for the login 
-var num = $('.num').val();
-var psw = $('.passwd').val();
+var num = document.getElementsByClassName('num').value;
+var psw = document.getElementsByClassName('passwd').value;
 axios.post("http://achatcryptostg.com/stcapp/public/login",{
         phone : num,
         password : psw
@@ -36,25 +37,25 @@ axios.post("http://achatcryptostg.com/stcapp/public/login",{
     .catch(function(error){
         console.log(error)
     })
-//end of login    
+//end of login   
 
 app.get('/', function (req, res) {
-    res.render('index',{pricing});
+    res.render('index',{prices});
 });
 app.get('/index', function (req, res) {
-    res.render('index',{pricing});
+    res.render('index',{prices});
 });
     
 app.get('/dashboard', function (req, res) {
-    res.render('dashboard',{pricing});
+    res.render('dashboard',{prices});
 });
 
 app.get('/dashboard1', function (req, res) {
-    res.render('dashboard1',{pricing});
+    res.render('dashboard1',{prices});
 });
 
 app.get('/booking', function(req, res){
-    res.render('booking',{pricing});
+    res.render('booking',{prices});
 });
 
 app.get('/profile', function (req, res) {
@@ -69,6 +70,9 @@ app.get('/sign', function (req, res) {
     res.render('sign');
 });
 
+app.get('/login', function (req, res) {
+    res.render('login');
+});
 app.get('/token', function (req, res) {
     res.render('token');
 });
