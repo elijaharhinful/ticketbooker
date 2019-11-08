@@ -3,13 +3,13 @@
 
     <ul class="nav nav-tabs nav-justified">
         <li class="active">
-            <a data-toggle="tab" href="#home">STC Buses</a>
+            <a data-toggle="tab" href="#home">STC</a>
         </li>
         <li>
             <a data-toggle="tab" href="#menu1">Metro Mass</a>
         </li>
         <li>
-            <a data-toggle="tab" href="#menu2">VIP</a>
+            <a data-toggle="tab" href="#menu2">Aayalolo</a>
         </li>
     </ul>
 
@@ -48,11 +48,21 @@
                         <th class="text-center">Duration/hrs</th>
                     </tr>
                 </thead>
+                <tbody>
+                    <% for (var i = 0; i < prices.length; i++){ %>
+                        <tr>
+                            <td><%= prices[i].d_from %></td>
+                            <td><%= prices[i].d_to %></td>
+                            <td><%= prices[i].d_price %></td>
+                            <td><%= prices[i].journeyhrs %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
             </table>
         </div>
         <div id="menu2" class="tab-pane fade">
             <table class="table x table-hover text-center">
-                <h4 class="text-center">VIP Buses</h4>
+                <h4 class="text-center">Aayalolo Buses</h4>
                 <thead>
                     <tr>
                         <th class="text-center">From</th>
@@ -61,6 +71,16 @@
                         <th class="text-center">Duration/hrs</th>
                     </tr>
                 </thead>
+                <tbody>
+                    <% for (var i = 0; i < prices.length; i++){ %>
+                        <tr>
+                            <td><%= prices[i].d_from %></td>
+                            <td><%= prices[i].d_to %></td>
+                            <td><%= prices[i].d_price %></td>
+                            <td><%= prices[i].journeyhrs %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
             </table>
         </div>
     </div>

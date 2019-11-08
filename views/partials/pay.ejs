@@ -3,32 +3,75 @@
     <div class="modal fade" id="pay" role="dialog">
         <div class="modal-dialog">
             <!--modal content-->
-            <div class="modal-content">
+            <div class="modal-content text-center">
                 <div class="modal-header">
+                    <img src="http://fpoimg.com/95x65?text=Logo" class="mx-auto d-block logo">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 style="color:brown;">Enter personal details</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="post">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" name="name" class="form-control" id="name" required>
+                    <form action="https://manage.ipaygh.com/gateway/checkout" id="ipay_checkout" method="post" name="ipay_checkout" target="_blank">
+                    <div class="modal-body">
+                        <legend class="text-center">Make Payment</legend>
+                        <input name="merchant_key" type="hidden" value="tk_a8e5e9e6-0190-11ea-be62-f23c9170642f">
+                        <input id="merchant_code" type="hidden" value="TST000000003265">
+                        <input name="source" type="hidden" value="WIDGET">
+                        <input name="success_url" type="hidden" value="\success">
+                        <input name="cancelled_url" type="hidden" value="\cancel">
+                        <input id="invoice_id" name="invoice_id" type="hidden" value="123456789012345878901234">
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group">
+                                    <input type="text" title="Name" name="extra_name" id="name" class="form-control" placeholder="First & Last Name" required>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="tel">Mobile Number</label>
-                            <input type="tel" name="number" class="form-control" id="tel" minlength="10" maxlength="10" required placeholder="0240000000">
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group">
+                                    <input type="tel" title="Mobile Number" name="extra_mobile" id="number" class="form-control" maxlength="10" placeholder="Contact Number" required>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="name">Select payment method</label>
-                            <select name="payment" class="form-control" id="payment">
-                                <option>Mtn Mobile money</option>
-                                <option>Tigo Cash</option>
-                                <option>Vodafone Cash</option>
-                            </select>
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group">
+                                    <input type="email" name="email" id="extra_email" class="form-control" placeholder="Email" required>
+                                </div>
+                            </div>
                         </div>
-
-                        <button type="submit" class="btn btn-default btn-success btn-block nextbtn" onclick="alert('Ticket purchased. Go to tickets to view ticket')">Submit</button>
-                    </form>
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group">
+                                    <input type="text" name="total" class="form-control" id="total" placeholder="Amount(GH₵)" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="description" id="description" placeholder="Description of Payment" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg">
+                                <button type="submit" class="btn btn-primary ipay-btn btn-block" style="padding: 8px 11px;"><strong>Pay</strong></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg text-center">
+                                <a href="" data-dismiss="modal" id="close">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center ">
+                        <div class="row">
+                            <div class="col-lg">
+                                <img src="https://payments.ipaygh.com/app/webroot/img/iPay_payments.png" style="width: 100%;" class="img-fluid mr-auto" alt="Powered by iPay">
+                            </div>
+                        </div>
+                    </div>
+                </form>
                 </div>
             </div>
         </div>

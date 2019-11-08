@@ -198,7 +198,7 @@ function signValidator(e) {
 	$('.msg').text('Invalid login details');
 	return false;
 };
-
+/*
 $('#signupform').on('submit', function(){
 	sendsignupdata();
 });
@@ -206,6 +206,7 @@ $('#signupform').on('submit', function(){
 $('#loginform').on('submit', function(){
 	sendlogindata();
 });
+*/
 
 /*Acessing API
 var mainAPIUrl = 'https://achatcryptostg.com/stcapp/public';
