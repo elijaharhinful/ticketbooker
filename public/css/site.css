@@ -3,10 +3,6 @@ body{
     font-family: Tahoma;
 }
 
-#page{
-    background:-webkit-linear-gradient(#989699, #f26e78);
-}
-
 #mainpage{
     background-color: white;
 }
@@ -70,7 +66,7 @@ body{
 }
 
 #mySidenav{
-    background:-webkit-linear-gradient( #ee3030, white);
+    background:-webkit-linear-gradient( #0445f8, white);
     border-radius: 0px;
     border: 0px;
 }
@@ -101,7 +97,6 @@ tr:hover{
 }
 
 #content {
-    border-radius:35px;
 	padding: 75px;
 	background:url("/public/img/laptop.jpg");
 	background-attachment:fixed;
@@ -111,12 +106,21 @@ tr:hover{
     color: white;
 }
 .active1{
-    background-color: rgb(225, 65, 118) !important;
+    background-color: rgb(30, 14, 119) !important;
 }
 
 .cancelPage{
     width: 50%;
     margin: auto;
+}
+
+.card{
+    border: 1px solid rgb(160, 159, 159);
+    border-radius: 5px;
+}
+
+.card:hover{
+    cursor: pointer;
 }
 
 /*hoverable dropdown trigger*/
@@ -157,7 +161,7 @@ tr:hover{
 footer{
     float: left;
     width: 100%;
-    background-color: black;
+    background-color: rgba(18, 3, 53, 0.925);
     color: white;
 }
 

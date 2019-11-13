@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <script src="/public/js/jquery-3.2.0.min.js"></script>
+    </head>
 <% include partials/dashboard-head.ejs %>
     <% include partials/confirm.ejs %>
     <% include partials/pay.ejs %>
+    <% include partials/busdestination.ejs %>
    
 
-        <body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+        <body style="font-family: 'Nunito', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
             <div id="page">
 
                 <div id="main">
@@ -63,82 +67,40 @@
                                     </div>
 
                                 </div>
-                                <div class="col-sm-9" style="margin-top:50px;">
-                                    <div id="content">
+                                <div class="col-sm-6" style="margin-top:10px;">
+                                    <div id="">
                                         <div class="container_fluid">
                                             <h2 style="text-align: center">BOOK YOUR TICKET</h2>
-                                            <div class="row">
-                                                <div class="col-sm-7">
-                                                    <form class="booker" action="#" method="post" style="border: 0px">
-                                                        <div class="form-group">
-                                                            <label for="bustype">Choose a bus company</label>
-                                                            <select name="bus" class="form-control" id="companybus">
-                                                            <% for (var i = 0;i < companyname.length; i++){ %>
-                                                                <option value= <%=companyname[i].name %>> <%=companyname[i].name %> </option>
-                                                            <% } %>
-                                                        </select>
+                                            <hr>
+                                            <h3 style="text-align: center">Choose any bus company</h3>
+                                            <hr>
+                                            <% for (var i = 0;i < companyname.length; i++){ %>
+                                                <div class="card" style="width:100%;margin:auto">
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <img class="img-responsive" src="public\img\images1.jpg" alt="Company logo">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="card-body text-center">
+                                                                    <h1 class="card-title"><%=companyname[i].name %></h1>
+                                                                    <p class="card-text"><%=companyname[i].extra %></p>
+                                                                    <a data-toggle="modal" data-target="#busdestination" class="btn btn-primary stretched-link firstnext">Next</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <img class="img-responsive" src="public\img\images1.jpg" alt="Company logo">
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="name">Where are you presently?</label>
-                                                            <select name="from" class="form-control" id="from">
-                                                                    <% for (var i = 0;i < iddetails.length; i++){ %>
-                                                                        <option value=<%=iddetails[i].d_from %> > <%=iddetails[i].d_from %> </option>
-                                                                    <% } %>
-                                                        </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="name">Where are you going?</label>
-                                                            <select name="to" class="form-control" id="to">
-                                                            <<% for (var i = 0;i < iddetails.length; i++){ %>
-                                                                <option> <%=iddetails[i].d_to %> </option>
-                                                            <% } %>
-                                                        </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="name">Select a date</label>
-                                                            <select name="departdate" class="form-control" id="departdate">
-                                                                <option>12/03/2018</option>
-                                                                <option>12/03/2018</option>
-                                                                <option>12/03/2018</option>
-                                                                <option>12/03/2018</option>
-                                                                <option>12/03/2018</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="name">Select time</label>
-                                                            <select name="departtime" class="form-control" id="departtime">
-                                                                <option>11:00am</option>
-                                                                <option>11:00am</option>
-                                                                <option>11:00am</option>
-                                                                <option>11:00am</option>
-                                                                <option>11:00am</option>
-                                                            </select>
-                                                        </div>
-                                                        <div>
-                                                            <button style="background:#dd1728;color:white"><a data-toggle="modal" class="btn btn-default nextbtn dash-name" data-target="#confirm" >Preview</a></button>
-                                                            <button style="background:rgb(44, 11, 235);color:#f26e78"><a data-toggle="modal" class="btn btn-default nextbtn dash-name" data-target="#pay" >Buy Ticket</a></button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                <div class="col-sm-5">
-                                                    <div>
-                                                        <h4>Date</h4>
-                                                        <p id="bookDate"></p>
                                                     </div>
-                                                    <div>
-                                                        <h4>Time</h4>
-                                                        <p id="bookTime"></p>
-                                                    </div>
-                                                    <div>
-                                                        <h3>
-                                                            <p id="bus_report"></p>Seats left</h3>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                <hr>
+                                            <% } %>
                                         </div>
 
 
                                     </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p>some blog</p>
                                 </div>
 
                         </div>

@@ -38,26 +38,17 @@ axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
     })
     //end of prices 
 
-    //start of booking form control
+    //start of booking data control
 var companyname = "";
+var idurls = [];
 var iddetails = "";
 axios.get("http://achatcryptostg.com/stcapp/public/companies")
     .then(function(response){
         companyname = response.data.response
-        var ids = [];
         for (var i = 0; i < companyname.length; i++){
-           ids.push(companyname[i].id);
+           idurls.push("http://achatcryptostg.com/stcapp/public/companydestinationdetails/"+companyname[i].id);
         }
-
-        var myurl = "http://achatcryptostg.com/stcapp/public/companydestinationdetails/1"
-                axios.get(myurl)
-                    .then(function(response){
-                    iddetails = response.data.response
-                    console.log(iddetails)
-                })
-                .catch(function(error){
-                    console.log(error)
-            })
+        console.log(idurls)
     })
     .catch(function(error){
         console.log(error)
@@ -81,7 +72,7 @@ app.get('/dashboard', function (req, res) {
 });
 
 app.get('/booking', function(req, res){
-    res.render('booking',{prices,companyname,iddetails});
+    res.render('booking',{prices,companyname});
 });
 
 app.get('/profile', function (req, res) {
@@ -129,7 +120,7 @@ app.post('/auth',urlencodedParser, function(req, res) {
 	var num = req.body.tel;
     var psw = req.body.password;
     var cpsw = req.body.cpassword;
-	if (psw == cpsw) {
+	if (psw) {
        axios.post("http://achatcryptostg.com/stcapp/public/login",{
             phone : num,
             password : psw

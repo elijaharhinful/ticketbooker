@@ -23,13 +23,9 @@
                                         
                                         <div class="form-group">
                                             <label for="psw">Password</label>   
-                                            <input type="password" name="password" class="form-control passwd" id="psw" required>
+                                            <input type="password" name="password" class="form-control passwd" id="psw" minlength="6" required>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="cpsw">Confirm Password</label>
-                                            <input type="password" name="cpassword" class="form-control cpasswd" id="cpsw" required>
-                                        </div>
-                
+                                        
                                         <div class="checkbox">
                                             <label>
                                                 <input type="checkbox" name="checkbox" value="checked">Remember me</label>
@@ -47,7 +43,7 @@
                         </div>
                     </div>
 
-                        <% include layouts/footer.ejs %>
+            <% include layouts/footer.ejs %>
         </div>
     </body>
 
