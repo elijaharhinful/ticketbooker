@@ -250,5 +250,9 @@ footer{
     .card .card-body a{
         font-size: 10px;
     }
+    #content .login .row{
+        width:100%;
+        padding:20px;
+    }
 
 }
