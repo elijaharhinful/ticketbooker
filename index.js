@@ -31,10 +31,24 @@ app.set('port', process.env.PORT || 3000);
             //routes start here
 //node get requests
     //this is to get pricing data
-var prices="";
+var prices1="";
 axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
 	.then(function(response){
-        prices = response.data.response
+        prices1 = response.data.response
+    })
+    .catch(function(error){
+        console.log(error)
+    })
+axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/2")
+	.then(function(response){
+        prices2 = response.data.response
+    })
+    .catch(function(error){
+        console.log(error)
+    })
+axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/3")
+	.then(function(response){
+        prices3 = response.data.response
     })
     .catch(function(error){
         console.log(error)
@@ -55,30 +69,34 @@ axios.get("http://achatcryptostg.com/stcapp/public/companies")
 
 
 app.get('/', function (req, res) {
-    res.render('index',{prices});
+    res.render('index',{prices1,prices2,prices3});
 });
 app.get('/index', function (req, res) {
-    res.render('index',{prices});
+    res.render('index',{prices1,prices2,prices3});
 });
     
 app.get('/dashboard', function (req, res) {
     if (req.session.loggedin){
-        res.render('dashboard',{prices})
+        res.render('dashboard',{prices1,prices2,prices3})
     } else{
-        res.render('index',{prices});
+        res.render('index',{prices1,prices2,prices3});
     }
 });
 
 app.get('/booking', function(req, res){
-    res.render('booking',{prices,companyname});
+    res.render('booking',{prices1,prices2,prices3,companyname});
 });
 
 app.get('/busdestination',function(req,res){
-    res.render('busdestination',{prices,iddetails});
+    res.render('busdestination',{prices1,prices2,prices3,idname,iddetails});
 });
 
 app.get('/destinationdetails', function (req, res) {
-    res.render('destinationdetails',{prices,details,buses});
+    res.render('destinationdetails',{prices1,prices2,prices3,details,buses});
+});
+
+app.get('/payment', function (req, res) {
+    res.render('payment',{prices1,prices2,prices3,details,buses});
 });
 
 app.get('/profile', function (req, res) {
@@ -145,8 +163,10 @@ app.post('/auth',urlencodedParser, function(req, res) {
 });
 
 var iddetails = "";
+var idname = "";
 app.post('/booking',urlencodedParser, function(req,res){
     var idurls = req.body.id;
+    idname = req.body.name;
     axios.get("http://achatcryptostg.com/stcapp/public/companydestinationdetails/" + idurls)
     .then(function(response){
         iddetails = response.data.response

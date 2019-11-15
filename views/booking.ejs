@@ -148,7 +148,8 @@
                         $('.card').on('click',function(){
                             var card = $(this);
                             var clicked = card.find('.someid').text();
-                            var clickedid = {id: clicked};
+                            var name = card.find('.card-title').text();
+                            var clickedid = {id: clicked,name: name};
                             $.post('/booking',clickedid,function(data){
                             })
                         })

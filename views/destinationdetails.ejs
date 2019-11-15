@@ -91,6 +91,10 @@
                                                                     <p class="card-text departdate">Departure date: <%=buses[i].depart_date %></p>
                                                                     <p class="card-text departtime">Departure time: <%=buses[i].depart_time %></p>
                                                                     <a href="#" class="btn btn-primary btn-sm stretched-link" data-toggle="modal" data-target="#ticket" >Preview ticket</a>
+                                                                    <form>
+                                                                        <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
+                                                                        <button type="button" onClick="payWithRave()">Pay Now</button>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                             <div class="col-xs-4">
@@ -216,6 +220,38 @@
                         }
 
                         $("#selector").qrcode(options);
+
+                        const API_publicKey = "FLWPUBK_TEST-3a836c5cb58f2278d58a5f4b66e46848-X";
+    
+        function payWithRave() {
+            var x = getpaidSetup({
+                PBFPubKey: API_publicKey,
+                customer_email: "user@example.com",
+                amount: 2000,
+                customer_phone: "234099940409",
+                currency: "GHS",
+                txref: "MC-" + Date.now(),
+                meta: [{
+                    metaname: "flightID",
+                    metavalue: "AP1234"
+                }],
+                onclose: function() {},
+                callback: function(response) {
+                    var txref = response.tx.txRef; // collect txRef returned and pass to a 					server page to complete status check.
+                    console.log("This is the response returned after a charge", response);
+                    if (
+                        response.tx.chargeResponseCode == "00" ||
+                        response.tx.chargeResponseCode == "0"
+                    ) {
+                        // redirect to a success page
+                    } else {
+                        // redirect to a failure page.
+                    }
+    
+                    x.close(); // use this to close the modal immediately after payment.
+                }
+            });
+        }
                     });
                 </script>
         </body>
