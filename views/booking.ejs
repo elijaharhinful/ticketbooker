@@ -6,10 +6,9 @@
 <% include partials/dashboard-head.ejs %>
     <% include partials/confirm.ejs %>
     <% include partials/pay.ejs %>
-    <% include partials/busdestination.ejs %>
    
 
-        <body style="font-family: 'Nunito', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+        <body>
             <div id="page">
 
                 <div id="main">
@@ -17,15 +16,16 @@
                         <div class="row">
                             <% include layouts/dashboard-header.ejs %>
                                 <div class="col-sm-3" style="padding-left:0px">
-                                    <div id="mySidenav" class="sidenav panel">
+                                    <div id="mySidenav">
                                         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                                        <img src="\public\img\images1.jpg" class="img-circle" alt="User image" width="150" height="150">
-                                        <h3>Welcome</h3>
-                                        <h4>Elijah</h4>
-                                        <div style="width:50%;margin:auto;margin-bottom:20px;">
-                                                <a class="btn btn-default btn-success btn-block" href="/booking">Book ticket</a>
+                                        <div class="header">
+                                            <img src="\public\img\avatar.png" class="img-circle" alt="User image" width="150" height="150">
+                                            <h3>Welcome</h3>
+                                            <h4>Elijah</h4>
+                                            <a style="width:50%;margin:auto;margin-bottom:10px;" class="btn btn-default btn-success btn-block" href="/booking">Book ticket</a>
                                         </div>
-                                        <ul class="nav nav-pills nav-stacked">
+                                        
+                                        <ul class="nav">
                                             <li>
                                                 <a href="/dashboard">
                                                         <i class="glyphicon glyphicon-home"></i>
@@ -77,48 +77,81 @@
                                             <% for (var i = 0;i < companyname.length; i++){ %>
                                                 <div class="card" style="width:100%;margin:auto">
                                                         <div class="row">
-                                                            <div class="col-sm-4">
-                                                                <img class="img-responsive" src="public\img\images1.jpg" alt="Company logo">
+                                                            <div class="col-xs-4">
+                                                                <img class="img-responsive" src="public\img\bus.jpg" alt="Company logo">
                                                             </div>
-                                                            <div class="col-sm-4">
+                                                            <div class="col-xs-4">
                                                                 <div class="card-body text-center">
+                                                                    <p class="someid" style="display: none"><%=companyname[i].id %></p>
                                                                     <h1 class="card-title"><%=companyname[i].name %></h1>
                                                                     <p class="card-text"><%=companyname[i].extra %></p>
-                                                                    <a data-toggle="modal" data-target="#busdestination" class="btn btn-primary stretched-link firstnext">Next</a>
+                                                                    <a href="\busdestination" class="btn btn-sm btn-primary stretched-link">Next</a>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-4">
-                                                                <img class="img-responsive" src="public\img\images1.jpg" alt="Company logo">
+                                                            <div class="col-xs-4">
+                                                                <img class="img-responsive" src="public\img\bus.jpg" alt="Company logo">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 <hr>
                                             <% } %>
                                         </div>
-
-
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <p>some blog</p>
+                                <div class="col-sm-3" style="padding:20px">
+                                    <h3>Blog,news and updates</h3>
+                                    <div class="row" style="padding:20px">
+                                            <h3>Blog</h3>
+                                            <p class="sched-time">
+                                              <span><span class="glyphicon glyphicon-calendar"></span> April 22, 2018</span> <br>
+                                            </p>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
+                                            
+                                            <p><a href="#" class="btn btn-primary btn-sm">Read More</a></p>
+                                    </div>
+                                    <div class="row" style="padding:20px">
+                                            <h3>Promotions</h3>
+                                            <p class="sched-time">
+                                              <span><span class="glyphicon glyphicon-calendar"></span> April 22, 2018</span> <br>
+                                            </p>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
+                                            
+                                            <p><a href="#" class="btn btn-primary btn-sm">Read More</a></p>
+                                    </div>
+                                    <div class="row" style="padding:20px">
+                                            <h3>News</h3>
+                                            <p class="sched-time">
+                                              <span><span class="glyphicon glyphicon-calendar"></span> April 22, 2018</span> <br>
+                                            </p>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
+                                            
+                                            <p><a href="#" class="btn btn-primary btn-sm">Read More</a></p>
+                                    </div>
                                 </div>
-
                         </div>
 
                         <% include partials/pricing.ejs %>
+                        <div class="container-fluid">
+                                <h2 class="text-center">Testimonials</h2>
+                                <marquee>
+                                    <p>Simply 5 stars. You guys are doing great job. Very good customer support.</p>
+                                </marquee>
+                            </div>
 
-                        <% include partials/contact.ejs %>
+                        
                     </div>
-
+                    <% include partials/contact.ejs %>
                     <% include layouts/footer.ejs %>
                 </div>
                 <script>
                     $(function () {
-                        var datafrom = localStorage.getItem('firstkey');
-                        var datato = localStorage.getItem('secondkey');
-
-                        $('#from').val(datafrom);
-                        $('#to').val(datato);
+                        $('.card').on('click',function(){
+                            var card = $(this);
+                            var clicked = card.find('.someid').text();
+                            var clickedid = {id: clicked};
+                            $.post('/booking',clickedid,function(data){
+                            })
+                        })
                     });
                 </script>
         </body>

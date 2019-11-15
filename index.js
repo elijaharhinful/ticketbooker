@@ -4,6 +4,7 @@ const cors = require('cors');
 const axios = require('axios');
 const session = require('express-session');
 const jsdom = require('jsdom');
+const Ravepay = require('ravepay');
 
 const { JSDOM } = jsdom;
 const { window } = new JSDOM();
@@ -14,11 +15,13 @@ var $ = jQuery = require('jquery')(window);
 const app = express();
 app.use(cors());
 
+//creating app session
 app.use(session({
     secret: 'secret',
     resave: true,
     saveUninitialized: true
 }));
+
 app.set('view engine', 'ejs');
 urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use('/public', express.static('public'));
@@ -40,20 +43,15 @@ axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
 
     //start of booking data control
 var companyname = "";
-var idurls = [];
-var iddetails = "";
 axios.get("http://achatcryptostg.com/stcapp/public/companies")
     .then(function(response){
         companyname = response.data.response
-        for (var i = 0; i < companyname.length; i++){
-           idurls.push("http://achatcryptostg.com/stcapp/public/companydestinationdetails/"+companyname[i].id);
-        }
-        console.log(idurls)
     })
     .catch(function(error){
         console.log(error)
     }) 
     //end of booking form control
+
 
 
 app.get('/', function (req, res) {
@@ -73,6 +71,14 @@ app.get('/dashboard', function (req, res) {
 
 app.get('/booking', function(req, res){
     res.render('booking',{prices,companyname});
+});
+
+app.get('/busdestination',function(req,res){
+    res.render('busdestination',{prices,iddetails});
+});
+
+app.get('/destinationdetails', function (req, res) {
+    res.render('destinationdetails',{prices,details,buses});
 });
 
 app.get('/profile', function (req, res) {
@@ -106,12 +112,8 @@ app.get('/newpass', function (req, res) {
     res.render('newpass');
 });
 
-app.get('/destination', function (req, res) {
-    res.render('destination');
-});
-
 app.get('/history', function (req, res) {
-    res.render('history');
+    res.render('history',{buses,details});
 });
 
 //node post requests
@@ -119,7 +121,6 @@ app.get('/history', function (req, res) {
 app.post('/auth',urlencodedParser, function(req, res) {
 	var num = req.body.tel;
     var psw = req.body.password;
-    var cpsw = req.body.cpassword;
 	if (psw) {
        axios.post("http://achatcryptostg.com/stcapp/public/login",{
             phone : num,
@@ -141,6 +142,33 @@ app.post('/auth',urlencodedParser, function(req, res) {
 	} else {
         $('.msg').text('Incorrect Username and/or Password!');
     }
+});
+
+var iddetails = "";
+app.post('/booking',urlencodedParser, function(req,res){
+    var idurls = req.body.id;
+    axios.get("http://achatcryptostg.com/stcapp/public/companydestinationdetails/" + idurls)
+    .then(function(response){
+        iddetails = response.data.response
+    })
+    .catch(function(error){
+        console.log(error);
+    })
+});
+
+var details = "";
+var buses = "";
+app.post('/busdestination',urlencodedParser,function(req,res){
+    var from = req.body.from;
+    var to = req.body.to;
+    axios.get("http://achatcryptostg.com/stcapp/public/companydestination/"+ from +"/" + to + "/1")
+    .then(function(response){
+        details = response.data.response
+        buses = details.buses
+    })
+    .catch(function(error){
+        console.log(error);
+    })
 });
 
 app.post('/target', urlencodedParser, function (req, res) {

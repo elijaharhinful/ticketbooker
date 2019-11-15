@@ -1,6 +1,6 @@
 <div class="container">
     <!--modal-->
-    
+        <% for (var i = 0; i < buses.length; i++){ %>
             <div class="modal fade" id="ticket" role="dialog">
                 <div class="modal-dialog">
                     <!--modal content-->
@@ -19,18 +19,18 @@
                                     <div class="col-xs-4">
                                         <h4>From</h4>
                                         <p>
-                                            <span class="initial"></span>
+                                            <span class="initial"><%=details.d_from %></span>
                                         </p>
                                     </div>
                                     <div class="col-xs-4">
-                                        <h4 class="price">GHC 35.00</h4>
+                                        <h4 class="price">GHS <%=buses[i].amount %></h4>
                                         <h4 class="glyphicon glyphicon-arrow-right"></h4>
-                                        <h4 class="duration">3hrs</h4>
+                                        <h4 class="duration"><%=details.journeyhrs %></h4>
                                     </div>
                                     <div class="col-xs-4">
                                         <h4>To</h4>
                                         <p>
-                                            <span class="final"></span>
+                                            <span class="final"><%=details.d_to %></span>
                                         </p>
                                     </div>
                                 </div>
@@ -38,7 +38,7 @@
                                     <div class="col-xs-4">
                                         <h4>Departure</h4>
                                         <p>
-                                            <span class="departure"></span>
+                                            <span class="departure"><%=buses[i].depart_date %></span>
                                         </p>
                                     </div>
                                     <div class="col-xs-4">
@@ -47,7 +47,7 @@
                                     <div class="col-xs-4">
                                         <h4>Time</h4>
                                         <p>
-                                            <span class="time">6:00pm</span>
+                                            <span class="time"><%=buses[i].depart_time %></span>
                                         </p>
                                     </div>
                                 </div>
@@ -67,11 +67,49 @@
                                 <div id="selector" class="row text-center" style="width: 20%; margin: auto;">
                                    <!--QrCode goes here-->
                                 </div>
+                                <form>
+                                        <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
+                                        <button type="button" onClick="payWithRave()">Pay Now</button>
+                                    </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <% } %>
 </div>
 <!--login hide div ends here-->
+<script>
+        const API_publicKey = "FLWPUBK_TEST-3a836c5cb58f2278d58a5f4b66e46848-X";
+    
+        function payWithRave() {
+            var x = getpaidSetup({
+                PBFPubKey: API_publicKey,
+                customer_email: "user@example.com",
+                amount: 2000,
+                customer_phone: "234099940409",
+                currency: "GHS",
+                txref: "MC-" + Date.now(),
+                meta: [{
+                    metaname: "flightID",
+                    metavalue: "AP1234"
+                }],
+                onclose: function() {},
+                callback: function(response) {
+                    var txref = response.tx.txRef; // collect txRef returned and pass to a 					server page to complete status check.
+                    console.log("This is the response returned after a charge", response);
+                    if (
+                        response.tx.chargeResponseCode == "00" ||
+                        response.tx.chargeResponseCode == "0"
+                    ) {
+                        // redirect to a success page
+                    } else {
+                        // redirect to a failure page.
+                    }
+    
+                    x.close(); // use this to close the modal immediately after payment.
+                }
+            });
+        }
+    </script>

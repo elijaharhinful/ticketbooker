@@ -9,16 +9,17 @@
                 <div class="container-fluid">
                     <div class="row">
                         <% include layouts/dashboard-header.ejs %>
-                            <div class="col-sm-3" style="padding-left:0px">
-                                <div id="mySidenav" class="sidenav panel">
+                        <div class="col-sm-3" style="padding-left:0px">
+                                <div id="mySidenav">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                                    <img src="\public\img\images1.jpg" class="img-circle" alt="User image" width="150" height="150">
-                                    <h3>Welcome</h3>
-                                    <h4 class="clientname">Elijah</h4>
-                                    <div style="width:50%;margin:auto;margin-bottom:20px;">
-                                        <a class="btn btn-default btn-success btn-block" href="/booking">Book ticket</a>
+                                    <div class="header">
+                                        <img src="\public\img\avatar.png" class="img-circle" alt="User image" width="150" height="150">
+                                        <h3>Welcome</h3>
+                                        <h4>Elijah</h4>
+                                        <a style="width:50%;margin:auto;margin-bottom:10px;" class="btn btn-default btn-success btn-block" href="/booking">Book ticket</a>
                                     </div>
-                                    <ul class="nav nav-pills nav-stacked">
+                                    
+                                    <ul class="nav">
                                         <li>
                                             <a href="/dashboard">
                                                     <i class="glyphicon glyphicon-home"></i>

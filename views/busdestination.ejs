@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="/public/js/jquery-3.2.0.min.js"></script>
+    </head>
+    <% include partials/dashboard-head.ejs %>
+    <% include partials/confirm.ejs %>
+    <% include partials/pay.ejs %>
+   
+
+        <body style="font-family: 'Nunito', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+            <div id="page">
+
+                <div id="main">
+                    <div class="container-fluid" >
+                        <div class="row">
+                            <% include layouts/dashboard-header.ejs %>
+                            <div class="col-sm-3" style="padding-left:0px">
+                                    <div id="mySidenav">
+                                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                        <div class="header">
+                                            <img src="\public\img\avatar.png" class="img-circle" alt="User image" width="150" height="150">
+                                            <h3>Welcome</h3>
+                                            <h4>Elijah</h4>
+                                            <a style="width:50%;margin:auto;margin-bottom:10px;" class="btn btn-default btn-success btn-block" href="/booking">Book ticket</a>
+                                        </div>
+                                        
+                                        <ul class="nav">
+                                            <li>
+                                                <a href="/dashboard">
+                                                        <i class="glyphicon glyphicon-home"></i>
+                                                        Dashboard
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/history">
+                                                        <i class="glyphicon glyphicon-shopping-cart"></i>
+                                                    Tickets
+                                                </a>
+            
+                                            </li>
+                                            <li>
+                                                <a href="/profile"> 
+                                                        <i class="glyphicon glyphicon-user"></i>
+                                                        Profile
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                        <i class="glyphicon glyphicon-comment"></i>
+                                                        Help
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/booking#contact"> 
+                                                        <i class="glyphicon glyphicon-phone-alt"></i>
+                                                        Contact us
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/index">
+                                                        <i class="glyphicon glyphicon-log-out"></i>
+                                                        Logout
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6" style="margin-top:10px;">
+                                    <div id="">
+                                        <div class="container_fluid">
+                                            <h2 style="text-align: center">BOOK YOUR TICKET</h2>
+                                            <hr>
+                                            <h3 style="text-align: center">STC BUSES</h3>
+                                            <hr>
+                                            <% for (var i = 0; i < iddetails.length; i++){ %>
+                                                <div class="card" style="width:100%;margin:auto">
+                                                        <div class="row">
+                                                            <div class="col-xs-4">
+                                                                <img class="img-responsive" src="public\img\bus1.jpg" alt="Company logo">
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <div class="card-body text-center">
+                                                                    <p class="someid" style="display: none"><%=iddetails[i].id %></p>
+                                                                    <p class="card-text">FROM: <%=iddetails[i].d_from %></p>
+                                                                    <p class="card-text1">TO: <%=iddetails[i].d_to %></p>
+                                                                    <a href="\destinationdetails" class="btn btn-primary stretched-link btn-sm ">Next</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <img class="img-responsive" src="public\img\bus1.jpg" alt="Company logo">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <hr>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3" style="padding:20px">
+                                        <h3>Blog,news and updates</h3>
+                                        <div class="row" style="padding:20px">
+                                                <h3>Blog</h3>
+                                                <p class="sched-time">
+                                                  <span><span class="glyphicon glyphicon-calendar"></span> April 22, 2018</span> <br>
+                                                </p>
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
+                                                
+                                                <p><a href="#" class="btn btn-primary btn-sm">Read More</a></p>
+                                        </div>
+                                        <div class="row" style="padding:20px">
+                                                <h3>Promotions</h3>
+                                                <p class="sched-time">
+                                                  <span><span class="glyphicon glyphicon-calendar"></span> April 22, 2018</span> <br>
+                                                </p>
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
+                                                
+                                                <p><a href="#" class="btn btn-primary btn-sm">Read More</a></p>
+                                        </div>
+                                        <div class="row" style="padding:20px">
+                                                <h3>News</h3>
+                                                <p class="sched-time">
+                                                  <span><span class="glyphicon glyphicon-calendar"></span> April 22, 2018</span> <br>
+                                                </p>
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus...</p>
+                                                
+                                                <p><a href="#" class="btn btn-primary btn-sm">Read More</a></p>
+                                        </div>
+                                    </div>
+
+                        </div>
+
+                        <% include partials/pricing.ejs %>
+
+                        
+                    </div>
+                    <% include partials/contact.ejs %>
+                    <% include layouts/footer.ejs %>
+                </div>
+                <script>
+                    $(function () {
+                        $('.card').on('click',function(){
+                            var card = $(this);
+                            var cardtext = card.find('.card-text').text();
+                            var cardtext1 = card.find('.card-text1').text();
+                            var datatosend = {from: cardtext, to:cardtext1};
+                            $.post('/busdestination',datatosend,function(data){
+                            })
+                        })
+                    });
+                </script>
+        </body>
+
+</html>
