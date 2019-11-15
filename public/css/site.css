@@ -145,6 +145,11 @@ tr:hover{
     cursor: pointer;
 }
 
+#content .login .row{
+    width:60%;
+    margin:auto;
+    padding:40px;
+}
 /*hoverable dropdown trigger*/
 .dropdown:hover .dropdown-menu {
     display: block;
