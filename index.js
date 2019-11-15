@@ -39,6 +39,7 @@ axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
     .catch(function(error){
         console.log(error)
     })
+var prices2 = "";
 axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/2")
 	.then(function(response){
         prices2 = response.data.response
@@ -46,6 +47,7 @@ axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/2")
     .catch(function(error){
         console.log(error)
     })
+var prices3 = "";
 axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/3")
 	.then(function(response){
         prices3 = response.data.response

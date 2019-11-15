@@ -67,7 +67,10 @@
                                 <div id="selector" class="row text-center" style="width: 20%; margin: auto;">
                                    <!--QrCode goes here-->
                                 </div>
-                                
+                                <form>
+                                        <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
+                                        <button type="button" onClick="payWithRave()">Pay Now</button>
+                                    </form>
                             </div>
                         </div>
                     </div>
@@ -77,3 +80,38 @@
         <% } %>
 </div>
 <!--login hide div ends here-->
+<script>
+    //Rave Pay
+var API_publicKey = "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X";
+
+function payWithRave() {
+    var x = getpaidSetup({
+        PBFPubKey: API_publicKey,
+        customer_email: "user@example.com",
+        amount: 2000,
+        customer_phone: "234099940409",
+        currency: "GHS",
+        txref: "rave-123456",
+        meta: [{
+            metaname: "flightID",
+            metavalue: "AP1234"
+        }],
+        onclose: function() {},
+        callback: function(response) {
+            var txref = response.tx.txRef; // collect txRef returned and pass to a 					server page to complete status check.
+            console.log("This is the response returned after a charge", response);
+            if (
+                response.tx.chargeResponseCode == "00" ||
+                response.tx.chargeResponseCode == "0"
+            ) {
+                // redirect to a success page
+            } else {
+                // redirect to a failure page.
+            }
+
+            x.close(); // use this to close the modal immediately after payment.
+        }
+    });
+}
+//Rave Pay
+</script>
