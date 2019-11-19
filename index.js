@@ -76,6 +76,10 @@ app.get('/', function (req, res) {
 app.get('/index', function (req, res) {
     res.render('index',{prices1,prices2,prices3});
 });
+
+app.get('/contact', function (req, res) {
+    res.render('contact');
+});
     
 app.get('/dashboard', function (req, res) {
     if (req.session.loggedin){
@@ -110,7 +114,7 @@ app.get('/editprofile', function (req, res) {
 });
 
 app.get('/sign', function (req, res) {
-    res.render('sign',);
+    res.render('sign');
 });
 
 app.get('/login', function (req, res) {

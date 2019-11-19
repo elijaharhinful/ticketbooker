@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <% include partials/head.ejs %>
+
+    <body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif" >
+        <div id="mainpage">
+            <% include layouts/header.ejs %>
+
+            <div id="contact" class="container-fluid" style="padding:50px;background-color:#f8f9fa;color: black">
+                    <div class="row">
+                        <div class="col-sm-12 text-center"><h1>CONTACT US</h1></div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <address>
+                                <strong>Address</strong><br>
+                                You can come by our office at<br>
+                                Accra,Ghana<br>
+                                Mobile: +233546998765<br>
+                                Email: example@example.com<br>
+                            </address>
+                        </div>
+                        <div class="col-sm-8">
+                            <form action="#" method="post">
+                                <div class="form-group has-warning">
+                                    <label for="name" style="color:red">Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="form-group has-warning">
+                                    <label for="email" style="color:red">Email</label>
+                                    <input type="email" class="form-control" placeholder="example@example.com">
+                                </div>
+                                <div class="form-group has-warning">
+                                    <label for="subject" style="color:red">Subject</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message" style="color:red">Message</label>
+                                    <textarea class="form-control col-sm-12" rows="7"></textarea>
+                                </div>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <button type="submit" class="btn btn-success" style="float:right">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% include layouts/footer.ejs %>    
+        </div>
+    </body>
+</html>
+
+    
