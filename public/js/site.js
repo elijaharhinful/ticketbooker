@@ -146,7 +146,7 @@ function signValidator(e) {
 //qr code
 var options = {
 	// render method: 'canvas', 'image' or 'div'
-	render: 'img',
+	render: 'div',
 
 	// version range somewhere in 1 .. 40
 	minVersion: 1,
@@ -170,11 +170,6 @@ var options = {
 
 	// content
 	text: {
-		price: amount, 
-		duration: duration,
-		seatsleft:seatleft,
-		departure_date:departdate,
-		departure_time:departtime
 	},
 
 	// corner radius relative to module width: 0.0 .. 0.5

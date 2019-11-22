@@ -17,7 +17,7 @@ app.use(cors());
 
 //creating app session
 app.use(session({
-    secret: 'secret',
+    secret: 'secretforapp',
     resave: true,
     saveUninitialized: true
 }));
