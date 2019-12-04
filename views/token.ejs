@@ -5,8 +5,7 @@
 <body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
         <div id="logmain">
                         <div class="login">
-                            <div class="row">
-                                    <div class="col-sm-12 logpage">
+                                    <div class="logpage">
                                         <p>A token has been sent to your email. Look it up and input it into the form below</p>
                                         <% if (thetoken.length > 0){ %>
                                             <i>TOKEN : <span class="msg1"><%= thetoken%></span></i>
@@ -21,7 +20,7 @@
                                             <p>Didn't receive any code? <a href="#" style="color:red" class="resend">Resend token</a></p>
                                             <a class="dash-name" href="/login" style="color:red">Login here</a>
                                         </div>
-                            </div>
+                            
                         </div>        
         </div>
         

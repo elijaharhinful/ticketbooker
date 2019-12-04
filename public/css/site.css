@@ -43,15 +43,6 @@ body{
     background-color: white;
 }
 
-#token {
-	background:url("/public/img/laptop.jpg");
-	background-attachment:fixed;
-	background-position:center;
-	background-repeat:no-repeat;
-	background-size:cover;
-    color: white;
-}
-
 #dashboardpage {
 	background:url("/public/img/gra.jpg");
 	background-attachment:fixed;
@@ -312,6 +303,15 @@ footer{
     #content .login .row{
         width:100%;
         padding:20px;
+    }
+    .login{
+        padding: 0;
+    }
+    .logpage{
+        width: 85%;
+        margin: auto;
+        overflow: hidden;
+        padding: 55px 55px 37px 55px;
     }
 
 }
