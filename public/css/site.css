@@ -10,6 +10,39 @@ body{
     background-color: white;
 }
 
+#logmain{
+    width: 100%;
+    margin: 0 auto;
+}
+.login{
+	background:url("/public/img/back.jpg");
+	background-attachment:fixed;
+	background-position:center;
+	background-repeat:no-repeat;
+    background-size:cover;
+    z-index: 1; 
+    width: 100%;  
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;   
+}
+
+.logpage{
+    width: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 55px 55px 37px 55px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
 #token {
 	background:url("/public/img/laptop.jpg");
 	background-attachment:fixed;
@@ -97,7 +130,7 @@ body{
     line-height: 1.5;
   }
 
-  #mySidenav .nav a:hover{
+#mySidenav .nav a:hover{
     background: none;
     color: #ECEFF1;
   }
@@ -186,6 +219,9 @@ tr:hover{
 
 .msg{
     color: red;
+}
+.msg1{
+    color: rgb(72, 255, 72);
 }
 .reseter{
     width:60%;

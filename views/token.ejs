@@ -2,29 +2,29 @@
 <html lang="en">
 <% include partials/head.ejs %>
 
-    <body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
-        <div id="token">
-            <% include layouts/header.ejs %>
-
-                <div class="container-fluid">
-                    <div class="row" style="width:60%;margin:auto;">
-                        
-                        <div class="col-sm-12"  style="padding:230px 50px">
-                            <form action="#" method="post"></form>
-                                <div class="form-group">
-                                    <label for="tel">Enter token</label>
-                                    <input type="number" class="form-control" required id="tel">
-                                </div>
-                                <button type="submit" class="btn btn-default btn-success btn-block next">Submit</button>
-                            </form>
-                            <p>Didn't receive any code? <a href="#" style="color:red" >Resend code</a></p>
-                        </div>
-                        
-                    </div>
-                </div>
-
-                <% include layouts/footer.ejs %>
+<body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+        <div id="logmain">
+                        <div class="login">
+                            <div class="row">
+                                    <div class="col-sm-12 logpage">
+                                        <p>A token has been sent to your email. Look it up and input it into the form below</p>
+                                        <% if (thetoken.length > 0){ %>
+                                            <i>TOKEN : <span class="msg1"><%= thetoken%></span></i>
+                                        <% } %>
+                                            <form id="tokenform" action="/target" method="POST">
+                                                <div class="form-group">
+                                                    <label for="token">Enter token</label>
+                                                    <input type="number" name="token" class="form-control" required id="tok">
+                                                </div>
+                                                <button type="submit" class="btn btn-default btn-success btn-block next">Submit</button>
+                                            </form>
+                                            <p>Didn't receive any code? <a href="#" style="color:red" class="resend">Resend token</a></p>
+                                            <a class="dash-name" href="/login" style="color:red">Login here</a>
+                                        </div>
+                            </div>
+                        </div>        
         </div>
+        
     </body>
 
 </html>
