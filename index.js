@@ -7,8 +7,8 @@ const jsdom = require('jsdom');
 "use strict";
 const nodemailer = require("nodemailer");
 const TeleSignSDK = require('telesignsdk');
-const messagebird = require('messagebird')('zxQxefh9UCbIMZGsBorCWxUlk');
-const Ravepay = require('ravepay');
+//const messagebird = require('messagebird')('zxQxefh9UCbIMZGsBorCWxUlk');
+//const Ravepay = require('ravepay');
 
 const { JSDOM } = jsdom;
 const { window } = new JSDOM();
@@ -77,6 +77,7 @@ var message = "";
 var message1 = "";
 var sometoken = "";
 var resetnnum = "";
+var msg = "";
 
 app.get('/', function (req, res) {
     res.render('index',{prices1,prices2,prices3});
@@ -143,7 +144,7 @@ app.get('/passreset', function (req, res) {
 // Show a plain alert
 
 app.get('/passtoken', function (req, res) {
-    res.render('passtoken',{sometoken,message});
+    res.render('passtoken',{sometoken,msg});
 });
 
 app.get('/newpass', function (req, res) {
@@ -243,6 +244,37 @@ app.post('/token', urlencodedParser, function (req, res) {
                 // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
                 }
                 main().catch(console.error);
+
+                //telesign sms 
+                const customerId = "75DA083A-6A1A-48CC-B3A4-EB0BED75E8CD";
+                const apiKey = "xxlW8qHbqwdIJQhKfDoE/+RCDFvZ5F9B28UuuNKd+Zafv3qTaj+zwgDkiT7AXEgFhG5qLf1pJYAGM3RdiyeA9g==";
+                const rest_endpoint = "https://rest-api.telesign.com";
+                const timeout = 300*1000; // 5 min
+            
+                const client = new TeleSignSDK( customerId,
+                    apiKey,
+                    rest_endpoint,
+                    timeout // optional
+                    // userAgent
+                );
+            
+                const phoneNumber = "2330548777676";
+                const message = tokenmsg;
+                const messageType = "ARN";
+            
+                console.log("## MessagingClient.message ##");
+            
+                function messageCallback(error, responseBody) {
+                    if (error === null) {
+                        console.log(`Messaging response for messaging phone number: ${phoneNumber}` +
+                            ` => code: ${responseBody['status']['code']}` +
+                            `, description: ${responseBody['status']['description']}`);
+                    } else {
+                        console.error("Unable to send message. " + error);
+                    }
+                }
+                client.sms.message(messageCallback, phoneNumber, message, messageType);
+                //end of telesign sms
                 
                 res.render('token',{thetoken});
             }else{
@@ -290,23 +322,39 @@ app.post('/passtoken',urlencodedParser,function(req,res){
         tokenmsg = "Dear Customer, use this token " + sometoken + " to create your new TransPo password";
         if (response.data.status == 'success'){
             resetnnum = num
-            //messagebird sms
-            const params = {
-            'originator': '233548777676',
-            'recipients': [
-                '233548777676'
-            ],
-                'body': tokenmsg
-            };
 
-            messagebird.messages.create(params, function (err, response) {
-                if (err) {
-                return console.log(err);
+            //telesign sms 
+            const customerId = "75DA083A-6A1A-48CC-B3A4-EB0BED75E8CD";
+            const apiKey = "xxlW8qHbqwdIJQhKfDoE/+RCDFvZ5F9B28UuuNKd+Zafv3qTaj+zwgDkiT7AXEgFhG5qLf1pJYAGM3RdiyeA9g==";
+            const rest_endpoint = "https://rest-api.telesign.com";
+            const timeout = 300*1000; // 5 min
+          
+            const client = new TeleSignSDK( customerId,
+                apiKey,
+                rest_endpoint,
+                timeout // optional
+                // userAgent
+            );
+          
+            const phoneNumber = "2330548777676";
+            const message = tokenmsg;
+            const messageType = "ARN";
+          
+            console.log("## MessagingClient.message ##");
+          
+            function messageCallback(error, responseBody) {
+                if (error === null) {
+                    console.log(`Messaging response for messaging phone number: ${phoneNumber}` +
+                        ` => code: ${responseBody['status']['code']}` +
+                        `, description: ${responseBody['status']['description']}`);
+                } else {
+                    console.error("Unable to send message. " + error);
                 }
-                console.log(response);
-            });
-            //end of messagebird sms
-            res.render('passtoken',{sometoken : sometoken,message : message})
+            }
+            client.sms.message(messageCallback, phoneNumber, message, messageType);
+            //end of telesign sms
+
+            res.render('passtoken',{sometoken : sometoken,msg : msg})
         }
         else{
             message = 'Enter valid phone number'
@@ -327,8 +375,8 @@ app.post('/newpass',urlencodedParser,function(req,res){
         res.render('newpass',{message:message});
     }
     else{
-        message = 'Invalid token'
-        res.render('passtoken',{message:message})
+        msg = 'Invalid token'
+        res.render('passtoken',{msg:msg})
     }
     res.end();
 });
@@ -353,6 +401,26 @@ app.post('/tologin',urlencodedParser,function(req,res){
         res.render('newpass',{message:message})
     }
 });
+
+/*To update user profile
+app.post('/editprofile',urlencodedParser,function(req,res){
+    var firstname = req.body.first_name;
+    var lastname = req.body.last_name;
+    var email = req.body.email;
+    var num = req.body.num;
+    axios.post('http://achatcryptostg.com/stcapp/public/updateUserProfile',{
+        phone : num,
+        email : email,
+        name : firstname + lastname
+    })
+    .then(function(response){
+        console.log(response)
+    })
+    .catch(function(error){
+        console.log(error);
+    })
+})
+*/
 
 
 var iddetails = "";
