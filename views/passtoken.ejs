@@ -2,29 +2,28 @@
 <html lang="en">
 <% include partials/head.ejs %>
 
-    <body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
-        <div id="token">
-            <% include layouts/header.ejs %>
-
-                <div class="container-fluid">
-                    <div class="row reseter">
+<body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+    <div id="logmain">
+                    <div class="login">
+                            <div class="logpage">
+                                <form action="/newpass" method="POST">
+                                    <% if (message.length > 0){ %>
+                                        <i><span class="msg"><%= message %></span></i>
+                                    <% } %>
+                                    <div class="form-group">
+                                        <label for="tel">Enter token</label>
+                                        <input type="number" name="token" class="form-control" value="<%= sometoken %>" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                                    <p>Didn't receive any code? <a href="#" style="color:red" class="resend">Resend token</a></p>
+                                </form>
+                            </div>
                         
-                        <div class="col-sm-12">
-                            <form action="#" method="post">
-                                <div class="form-group">
-                                    <label for="tel">Enter token</label>
-                                    <input type="text" class="form-control" required id="tel">
-                                </div>
-                                <button type="submit" class="btn btn-default btn-success btn-block next"><a href="/newpass">Submit</a></button>
-                            </form>
-                            <p>Didn't receive any code? <a href="#">Resend code</a></p>
-                        </div>
-                        
-                    </div>
-                </div>
+                    </div>        
+    </div>
+   <script>
+   </script>
+</body>
 
-                <% include layouts/footer.ejs %>
-        </div>
-    </body>
 
 </html>

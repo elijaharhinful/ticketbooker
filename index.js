@@ -6,6 +6,8 @@ const session = require('express-session');
 const jsdom = require('jsdom');
 "use strict";
 const nodemailer = require("nodemailer");
+const TeleSignSDK = require('telesignsdk');
+const messagebird = require('messagebird')('zxQxefh9UCbIMZGsBorCWxUlk');
 const Ravepay = require('ravepay');
 
 const { JSDOM } = jsdom;
@@ -72,6 +74,9 @@ axios.get("http://achatcryptostg.com/stcapp/public/companies")
 
 var thetoken = "";
 var message = "";
+var message1 = "";
+var sometoken = "";
+var resetnnum = "";
 
 app.get('/', function (req, res) {
     res.render('index',{prices1,prices2,prices3});
@@ -92,7 +97,7 @@ app.get('/dashboard', function (req, res) {
     if (req.session.loggedin){
         res.render('dashboard',{prices1,prices2,prices3})
     } else{
-        res.render('login',{prices1,prices2,prices3,message});
+        res.render('login',{prices1,prices2,prices3,message,message1});
     }
 });
 
@@ -125,22 +130,24 @@ app.get('/sign', function (req, res) {
 });
 
 app.get('/login', function (req, res) {
-    res.render('login',{message});
+    res.render('login',{message,message1});
 });
 app.get('/token', function (req, res) {
     res.render('token',{message,thetoken});
 });
 
 app.get('/passreset', function (req, res) {
-    res.render('passreset');
+    res.render('passreset',{message});
 });
 
+// Show a plain alert
+
 app.get('/passtoken', function (req, res) {
-    res.render('passtoken');
+    res.render('passtoken',{sometoken,message});
 });
 
 app.get('/newpass', function (req, res) {
-    res.render('newpass');
+    res.render('newpass',{message,resetnnum});
 });
 
 app.get('/history', function (req, res) {
@@ -165,11 +172,13 @@ app.post('/auth',urlencodedParser, function(req, res) {
 				res.redirect('/dashboard');
             }else if (response.data.message == "Invalid Password"){
                 message = "Invalid Password"
-                res.render('login',{message : message})
+                res.render('login',{message : message,message1:message1})
+                message = "";
             } 
             else if (thestatus == "error"){
                 message = 'Sorry you do not have any account with the details you logged in with. Go to signup page to create an account';
-                res.render('login',{message : message})
+                res.render('login',{message : message,message1:message1})
+                message = "";
 			}
 			res.end();
         })
@@ -178,7 +187,7 @@ app.post('/auth',urlencodedParser, function(req, res) {
         })	
 	} else {
         message = "Invalid login details"
-        res.render('login',{message : message})
+        res.render('login',{message : message,message1:message1})
     }
 });
 
@@ -239,7 +248,9 @@ app.post('/token', urlencodedParser, function (req, res) {
             }else{
                 message = "User already exist. Go to login in page to login in to your account"
                 res.render('sign',{message : message})
+                message = "";
             }
+            res.end();
         })
         .catch(function(error){
             console.log(error)
@@ -247,6 +258,7 @@ app.post('/token', urlencodedParser, function (req, res) {
     }else {
         message = "Passwords do not match"
         res.render('sign',{message : message})
+        res.end();
     }
 });
 
@@ -255,12 +267,90 @@ app.post('/token', urlencodedParser, function (req, res) {
 app.post('/target', urlencodedParser, function (req, res) {
     var token = req.body.token;
     if (token == thetoken){
-        message = "Account created. You may login"
-        res.render('login', {message : message})
+        message1 = "Account created. You may login"
+        res.render('login', {message:message, message1 : message1})
+        message1 = "";
+        res.end();
     }
     else{
         message = "Invalid token"
-        res.render('token',{message : message})
+        res.render('token',{thetoken:thetoken,message : message})
+        res.end();
+    }
+});
+
+//this is for password reset
+app.post('/passtoken',urlencodedParser,function(req,res){
+    var num = req.body.tel;
+    axios.post("http://achatcryptostg.com/stcapp/public/sendtoken",{
+        phone : num
+    })
+    .then(function(response){
+        sometoken = response.data.token;
+        tokenmsg = "Dear Customer, use this token " + sometoken + " to create your new TransPo password";
+        if (response.data.status == 'success'){
+            resetnnum = num
+            //messagebird sms
+            const params = {
+            'originator': '233548777676',
+            'recipients': [
+                '233548777676'
+            ],
+                'body': tokenmsg
+            };
+
+            messagebird.messages.create(params, function (err, response) {
+                if (err) {
+                return console.log(err);
+                }
+                console.log(response);
+            });
+            //end of messagebird sms
+            res.render('passtoken',{sometoken : sometoken,message : message})
+        }
+        else{
+            message = 'Enter valid phone number'
+            res.render('passreset',{message : message})
+        }
+        res.end();
+    })
+    .catch(function(error){
+        console.log(error)
+    })
+});
+
+
+app.post('/newpass',urlencodedParser,function(req,res){
+    var tok = req.body.token;
+    if (tok == sometoken){
+        message = "";
+        res.render('newpass',{message:message});
+    }
+    else{
+        message = 'Invalid token'
+        res.render('passtoken',{message:message})
+    }
+    res.end();
+});
+
+app.post('/tologin',urlencodedParser,function(req,res){
+    var pass = req.body.newpassword;
+    var cpass = req.body.password;
+    if (pass == cpass){
+        axios.post('http://achatcryptostg.com/stcapp/public/resetpassword',{
+            phone : resetnnum,
+            password : pass
+        })
+        .then(function(response){
+            res.render('success')
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+    }
+    else{
+        message = "Passwords do not match"
+        res.render('newpass',{message:message})
     }
 });
 
@@ -277,6 +367,7 @@ app.post('/booking',urlencodedParser, function(req,res){
     .catch(function(error){
         console.log(error);
     })
+    res.end();
 });
 
 var details = "";

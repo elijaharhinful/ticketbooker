@@ -2,29 +2,24 @@
 <html lang="en">
 <% include partials/head.ejs %>
 
-    <body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
-        <div id="token">
-            <% include layouts/header.ejs %>
-
-                <div class="container-fluid">
-                    <div class="row reseter">
-                        
-                        <div class="col-sm-12">
-                            <form action="#" method="post">
-                            <div class="form-group">
-                                <label for="tel">Enter mobile number to reset password</label>
-                                <input type="tel" name="tel" class="form-control num" required id="tel"  minlength="10" maxlength="10" placeholder="example: 0240000000">
+<body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+    <div id="logmain">
+                    <div class="login">
+                            <div class="logpage">
+                                <form action="/passtoken" method="POST">
+                                    <% if (message.length > 0){ %>
+                                        <i><span class="msg"><%= message %></span></i>
+                                    <% } %>
+                                    <div class="form-group">
+                                        <label for="tel">Enter mobile number to reset password</label>
+                                        <input type="tel" name="tel" class="form-control num" required id="tel"  minlength="10" maxlength="10" placeholder="example: 0240000000">
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                                </form>
                             </div>
-                                <button type="submit" class="btn btn-default btn-success btn-block next"><a href="/passtoken">Submit</a></button>
-                            </form>
-                           
-                        </div>
                         
-                    </div>
-                </div>
-
-                <% include layouts/footer.ejs %>
-        </div>
-    </body>
+                    </div>        
+    </div>
+</body>
 
 </html>
