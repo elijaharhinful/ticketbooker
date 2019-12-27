@@ -365,7 +365,6 @@ app.post('/passtoken',urlencodedParser,function(req,res){
     })
 });
 
-
 app.post('/newpass',urlencodedParser,function(req,res){
     var tok = req.body.token;
     if (tok == sometoken){
@@ -397,6 +396,23 @@ app.post('/tologin',urlencodedParser,function(req,res){
     else{
         message = "Passwords do not match"
         res.render('newpass',{message:message})
+    }
+});
+
+//for home page search
+app.post('/search',urlencodedParser,function(req,res){
+    var from = req.body.searchfrom;
+    var to = req.body.searchto;
+    var company = req.body.searchcompany;
+    if (searchcompany = 1){
+        axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
+        .then(function(response){
+            console.log(response)
+            res.render('index')
+        })
+        .catch(function(error){
+            console.log(error)
+        })
     }
 });
 
