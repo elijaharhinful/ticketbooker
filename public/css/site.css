@@ -10,10 +10,34 @@ body{
     background-color: white;
 }
 
+.search{
+    padding: 65px;
+    background:url("/public/img/bus3.jpg");
+	background-attachment:fixed;
+	background-position:center;
+	background-repeat:no-repeat;
+    background-size:cover;
+}
+
+.search .text-center{
+    border-radius: 5px;
+    background-color: white;
+    padding: 25px;
+}
+
+#myNavbar ul li a, .navbar-header .navbar-brand{
+    color: white;
+}
+
+#myNavbar ul li a:hover, .navbar-header .navbar-brand:hover{
+    color: rgb(255, 190, 70);
+}
+
 #logmain{
     width: 100%;
     margin: 0 auto;
 }
+
 .login{
 	background:url("/public/img/back.jpg");
 	background-attachment:fixed;
@@ -126,7 +150,7 @@ body{
     color: #ECEFF1;
   }
   
-  #mySidenav .nav a i{
+#mySidenav .nav a i{
     margin-right: 16px;
   }
 

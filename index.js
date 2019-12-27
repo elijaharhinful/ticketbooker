@@ -141,8 +141,6 @@ app.get('/passreset', function (req, res) {
     res.render('passreset',{message});
 });
 
-// Show a plain alert
-
 app.get('/passtoken', function (req, res) {
     res.render('passtoken',{sometoken,msg});
 });
@@ -422,6 +420,23 @@ app.post('/editprofile',urlencodedParser,function(req,res){
 })
 */
 
+/*To post ticket details
+app.post()
+
+*/
+
+/*To post subscription emails 
+app.post('/subcribe',urlencodedParser,function(req,res){
+    var email = req.bosy.email;
+    axios.post('http://achatcryptostg.com/stcapp/public/')
+    .then(function(response){
+        console.log(response)
+    })
+    .catch(function(error){
+        console.log(error);
+    })
+})
+*/
 
 var iddetails = "";
 var idname = "";
@@ -452,10 +467,9 @@ app.post('/busdestination',urlencodedParser,function(req,res){
         console.log(error);
     })
 });
-
-
 //routes end here
 
+//error codes
 app.use(function (req, res) {
     res.status(404);
     res.render('404');
@@ -467,6 +481,7 @@ app.use(function (err, req, res, next) {
     res.render('500');
 });
 
+//listening server
 app.listen(app.get('port'), function (err) {
     if (err) throw err;
     console.log("App is running on http://localhost:3000");

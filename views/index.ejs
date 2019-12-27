@@ -44,8 +44,31 @@
                             </a>
                         </div>
 
+                        <div class="container-fluid search">
+                            <div class="row text-center">
+                                <div class="col-sm-12">
+                                    <form class="form-inline" action="#">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="searchfrom" placeholder="FROM">
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="searchto" placeholder="TO">
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="searchcompany" placeholder="BUS COMPANY">
+                                        </div>
+                                        <div class="input-group">
+                                            <button type="submit" class="btn btn-default btn-primary btn-block">Search Destination</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
                         <article>
                             <div class="container-fluid" style="margin: 35px;">
+                                    <h2 class="text-center" style="margin: 35px;">THE BENEFITS OF TRAVELLING WITH US</h2>
                                 <div class="col-sm-3">
                                     <div class="card">
                                         <div class="image">
@@ -88,8 +111,8 @@
                                                     <p>We provide luxuorus buses to ensure you enjoy your trip</p>                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-3">
+                                </div>
+                                <div class="col-sm-3">
                                             <div class="card">
                                                 <div class="image">
                                                     <img src="public/img/charge.jpg" />
@@ -102,7 +125,7 @@
                                                         <p>No worries about low battery while you travel with us. We provide you with charging ports to charge your electronic devices</p>                                                </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                </div>
                             </div>
                         </article>
             
@@ -140,18 +163,16 @@
                                 </div>
                             </div>
                         </article>
-                        <div class="container-fluid">
-                            <h3>Insert push notification here</h3>
-                        </div>
+                        
                         
                         <% include partials/pricing.ejs %>
 
                         <div style="margin-top: 25px;background-color: rgb(221, 205, 241);padding: 30px;">
                             <h2 class="text-center"> Subscribe to our newsletter</h2>
                                 <div class="text-center" style="width: 50%;margin: auto;">
-                                  <form action="#" method="post">
+                                  <form action="subscribe" method="post">
                                         <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Email" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+                                                <input type="email" name="email" class="form-control" placeholder="Email" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
                                                 <span class="input-group-btn">
                                                      <button class="btn" type="button" style="background-color: royalblue;color: white;">Subscribe</button>
                                                 </span>
@@ -164,6 +185,18 @@
 
                     <% include layouts/footer.ejs %>
         </div>
+        <script>
+            $('.form-inline').on('mouseenter','input',function(){
+                alert('heya')
+                var card = $(this);
+                var cardtext = card.find('.card-text').text();
+                var cardtext1 = card.find('.card-text1').text();
+                var datatosend = {from: cardtext, to:cardtext1};
+                $.post('/busdestination',datatosend,function(data){
+                })
+                $(this).off('mousenter  ');
+            })
+        </script>
     </body>
 
 </html>
