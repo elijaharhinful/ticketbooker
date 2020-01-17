@@ -5,7 +5,6 @@
     </head>
     <% include partials/dashboard-head.ejs %>
     <% include partials/confirm.ejs %>
-    <% include partials/pay.ejs %>
    
 
         <body style="font-family: 'Nunito', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
@@ -21,7 +20,7 @@
                                         <div class="header">
                                             <img src="\public\img\avatar.png" class="img-circle" alt="User image" width="150" height="150">
                                             <h3>Welcome</h3>
-                                            <h4>Elijah</h4>
+                                            <h4><%=user.firstname %></h4>
                                             <a style="width:50%;margin:auto;margin-bottom:10px;" class="btn btn-default btn-success btn-block btn-sm" href="/booking">Book ticket</a>
                                         </div>
                                         
@@ -46,7 +45,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href="/booking#contact">
                                                         <i class="glyphicon glyphicon-comment"></i>
                                                         Help
                                                 </a>
@@ -74,6 +73,8 @@
                                             <hr>
                                             <h3 style="text-align: center"><%=idname %></h3>
                                             <hr>
+
+                                            <% if (iddetails !== ""){ %>
                                             <% for (var i = 0; i < iddetails.length; i++){ %>
                                                 <div class="card" style="width:100%;margin:auto">
                                                         <div class="row">
@@ -94,6 +95,12 @@
                                                         </div>
                                                     </div>
                                                 <hr>
+                                            <% } %>
+                                            
+                                            <% }else{ %>
+                                                <div class="alert alert-danger alert-dismissible fade in">
+                                                    <strong>Network error! </strong>  refresh page
+                                                </div>
                                             <% } %>
                                         </div>
                                     </div>

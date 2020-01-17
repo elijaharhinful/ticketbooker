@@ -15,7 +15,7 @@
                                     <div class="header">
                                         <img src="\public\img\avatar.png" class="img-circle" alt="User image" width="150" height="150">
                                         <h3>Welcome</h3>
-                                        <h4>Elijah</h4>
+                                        <h4><%=user.firstname %></h4>
                                         <a style="width:50%;margin:auto;margin-bottom:10px;" class="btn btn-default btn-success btn-block btn-sm" href="/booking">Book ticket</a>
                                     </div>
                                     
@@ -46,7 +46,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/contact"> 
+                                            <a href="/contact" target="_blank"> 
                                                     <i class="glyphicon glyphicon-phone-alt"></i>
                                                     Contact us
                                             </a>
@@ -63,24 +63,28 @@
                             </div>
                             <div class="col-sm-9">
                                 <div class="conatainer-fluid">
+                                        <%-success %>
                                     <h1 class="text-center">EDIT PROFILE</h1>
-                                    <form class="modal-form"  style="padding: 55px" action="#" method="POST">
+                                    <form class="modal-form"  style="padding: 55px" action="/editprofile" method="POST">
                                         <div class="form-group">
                                             <label for="first_name">First name</label>
                                             <input type="text" name="first_name" class="form-control" required id="fname">
                                         </div>
                                         <div class="form-group">
-                                            <label for="first_name">Last name</label>
+                                            <label for="last_name">Last name</label>
                                             <input type="text" name="last_name" class="form-control" required id="lname">
                                         </div>
                                         <div class="form-group">
-                                            <label for="first_name">Email</label>
+                                            <label for="email">Email</label>
                                             <input type="email" name="email" class="form-control" required id="email" placeholder="example@example.com">
                                         </div>
                                         <div class="form-group">
-                                                <label for="first_name">Phone number</label>
-                                                <input type="tel" name="num" class="form-control" required id="tel" minlength="10" maxlength="10" placeholder="0240000000">
-                                            </div>
+                                            <label for="gender">Select Gender</label>
+                                                <select name="gender" class="form-control" id="gender">
+                                                    <option name="male" value="male">Male</option>
+                                                    <option name="female" value="female">Female</option>
+                                                </select>
+                                          </div>
                                         
                                         <button type="submit" class="btn btn-default btn-success btn-block">Submit</button>
                                     </form>

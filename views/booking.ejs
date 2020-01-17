@@ -5,7 +5,6 @@
     </head>
 <% include partials/dashboard-head.ejs %>
     <% include partials/confirm.ejs %>
-    <% include partials/pay.ejs %>
    
 
         <body>
@@ -21,7 +20,7 @@
                                         <div class="header">
                                             <img src="\public\img\avatar.png" class="img-circle" alt="User image" width="150" height="150">
                                             <h3>Welcome</h3>
-                                            <h4>Elijah</h4>
+                                            <h4><%=user.firstname %></h4>
                                             <a style="width:50%;margin:auto;margin-bottom:10px;" class="btn btn-default btn-success btn-block btn-sm" href="/booking">Book ticket</a>
                                         </div>
                                         
@@ -46,7 +45,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href="/contact">
                                                         <i class="glyphicon glyphicon-comment"></i>
                                                         Help
                                                 </a>
@@ -69,16 +68,19 @@
                                 </div>
                                 <div class="col-sm-6" style="margin-top:10px;">
                                     <div id="">
+                                        <%-amounterror %>
                                         <div class="container_fluid">
                                             <h2 style="text-align: center">BOOK YOUR TICKET</h2>
                                             <hr>
                                             <h3 style="text-align: center">Choose any bus company</h3>
                                             <hr>
+
+                                            <% if (companyname !== ""){ %>
                                             <% for (var i = 0;i < companyname.length; i++){ %>
                                                 <div class="card" style="width:100%;margin:auto">
                                                         <div class="row">
                                                             <div class="col-xs-4">
-                                                                <img class="img-responsive" src="public\img\bus.jpg" alt="Company logo">
+                                                                <img class="img-responsive" src="<%=companyname[i].image %>" alt="Company logo">
                                                             </div>
                                                             <div class="col-xs-4">
                                                                 <div class="card-body text-center">
@@ -89,11 +91,17 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-xs-4">
-                                                                <img class="img-responsive" src="public\img\bus.jpg" alt="Company logo">
+                                                                <img class="img-responsive" src="<%=companyname[i].image %>" alt="Company logo">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 <hr>
+                                            <% } %>
+                                            
+                                            <% }else{ %>
+                                                <div class="alert alert-danger alert-dismissible fade in">
+                                                    <strong>Network error! </strong>  refresh page
+                                                </div>
                                             <% } %>
                                         </div>
                                     </div>

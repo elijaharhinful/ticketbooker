@@ -33,7 +33,7 @@ body{
     color: rgb(255, 190, 70);
 }
 
-#logmain{
+#logmain, #ticketmain{
     width: 100%;
     margin: 0 auto;
 }
@@ -58,7 +58,27 @@ body{
     padding: 15px;   
 }
 
-.logpage{
+.ticketsub{
+	background:url("/public/img/tria.jpg");
+	background-attachment:fixed;
+	background-position:center;
+	background-repeat:no-repeat;
+    background-size:cover;
+    z-index: 1; 
+    width: 100%;  
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;   
+}
+
+.logpage, .ticketpage{
     width: 500px;
     border-radius: 10px;
     overflow: hidden;
@@ -211,6 +231,15 @@ tr:hover{
   }
   .card img{
     width:100%;
+  }
+  .narrower{
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+  }
+
+  .narrower img{
+      width: 70%;
   }
 
 #content .login .row{

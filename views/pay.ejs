@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include partials/head.ejs %>
+
+    <body style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+        <div id="logmain">
+                        <div class="ticketsub">
+                                <div class="logpage">
+                                    <form action="/pay" method="POST">
+                                        <div class="modal-body">
+                                            <legend class="text-center">Enter Payment Details</legend>
+                                            <div class="row">
+                                                <div class="col-lg">
+                                                    <div class="form-group">
+                                                        <input type="text" title="FirstName" name="firstname" id="firstname" class="form-control" placeholder="Firstname" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg">
+                                                    <div class="form-group">
+                                                        <input type="text" title="LastName" name="lastname" id="firstname" class="form-control" placeholder="Lastname" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg">
+                                                    <div class="form-group">
+                                                        <input type="tel" title="Mobile Number" name="extra_mobile" id="number" class="form-control" maxlength="10" placeholder="Contact Number" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg">
+                                                    <div class="form-group">
+                                                        <input type="email" title="Email" name="extra_email" id="extra_email" class="form-control" placeholder="Email" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg">
+                                                    <div class="form-group">
+                                                        <input type="text" name="total" class="form-control" id="total" placeholder="Amount(GH₵)" value="<%=amount %>" required disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" name="description" id="description" placeholder="Description of Payment" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg">
+                                                    <button class="btn btn-success btn-block" style="padding: 8px 11px;" type="submit"><strong>Submit</strong></button>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-lg text-center">
+                                                    <a class="btn btn-danger btn-block" href="/dashboard"><strong>Cancel</strong></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    
+                                </div>
+                            
+                        </div>        
+        </div>
+    </body>
+
+</html>

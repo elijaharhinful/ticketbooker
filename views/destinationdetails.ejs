@@ -5,13 +5,11 @@
     </head>
     <% include partials/dashboard-head.ejs %>
     <% include partials/confirm.ejs %>
-    <% include partials/pay.ejs %>
     <% include partials/ticket.ejs %>
    
 
         <body>
             <div id="page">
-
                 <div id="main">
                     <div class="container-fluid" >
                         <div class="row">
@@ -22,7 +20,7 @@
                                         <div class="header">
                                             <img src="\public\img\avatar.png" class="img-circle" alt="User image" width="150" height="150">
                                             <h3>Welcome</h3>
-                                            <h4>Elijah</h4>
+                                            <h4><%=user.firstname %></h4>
                                             <a style="width:50%;margin:auto;margin-bottom:10px;" class="btn btn-default btn-success btn-block btn-sm" href="/booking">Book ticket</a>
                                         </div>
                                         
@@ -47,7 +45,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href="/contact">
                                                         <i class="glyphicon glyphicon-comment"></i>
                                                         Help
                                                 </a>
@@ -77,29 +75,39 @@
                                             <h4 style="text-align: center"><%=details.d_from %> to <%=details.d_to %></h4>
                                             <hr>
                                             
+                                            <% if (buses !== ""){ %>
                                             <% for (var i = 0; i < buses.length; i++){ %>    
                                                 <div class="card" style="width:100%;margin:auto">
                                                         <div class="row">
                                                             <div class="col-xs-4">
-                                                                <img class="img-responsive" src="public\img\bus1.png" alt="Company logo">
+                                                                <img class="img-responsive" src="<%=details.image %>" alt="Company logo">
                                                             </div>
                                                             <div class="col-xs-4">
                                                                 <div class="card-body text-center">
-                                                                    <p class="card-text amount">Price: GHC <%=buses[i].amount %></p>
-                                                                    <p class="card-text duration">Duration: <%=details.journeyhrs %></p>
-                                                                    <p class="card-text seatleft">Seatsleft: <%=buses[i].seat_left %></p>
-                                                                    <p class="card-text departdate">Departure date: <%=buses[i].depart_date %></p>
-                                                                    <p class="card-text departtime">Departure time: <%=buses[i].depart_time %></p>
-                                                                    <a href="#" class="btn btn-primary btn-sm stretched-link" data-toggle="modal" data-target="#ticket" >Preview ticket</a>
-                                                                    
+                                                                    <p>Price: GH₵ <span  class="amount"><%=buses[i].amount %></span></p>
+                                                                    <p>Duration: <span class="duration"><%=details.journeyhrs %></span></p>
+                                                                    <p>Seatsleft: <span  class="seatleft"><%=buses[i].seat_left %></span></p>
+                                                                    <p>Departure date: <span class="departdate"><%=buses[i].depart_date %></span></p>
+                                                                    <p>Departure time: <span  class="departtime"><%=buses[i].depart_time %></span> </p>
+                                                                    <a href="/ticketA" class="btn btn-primary btn-sm stretched-link" >Preview ticket</a>
                                                                 </div>
                                                             </div>
                                                             <div class="col-xs-4">
-                                                                <img class="img-responsive" src="public\img\bus1.png" alt="Company logo">
+                                                                <img class="img-responsive" src="<%=details.image %>" alt="Company logo">
                                                             </div>
+                                                            <p style="display: none;"class="detailscompanyid"><%=detailscompany.id %></p>
+                                                            <p style="display: none;"class="detailscompanyname"><%=detailscompany.name %></p>
+                                                            <p style="display: none;"class="detailscompanylocation"><%=detailscompany.location %></p>
+                                                            
                                                         </div>
                                                     </div>
                                                 <hr>
+                                            <% } %>
+                                            
+                                            <% }else{ %>
+                                                <div class="alert alert-danger alert-dismissible fade in">
+                                                    <strong>Network error! </strong>  refresh page
+                                                </div>
                                             <% } %>
                                         </div>
                                     </div>
@@ -145,20 +153,20 @@
                     <% include layouts/footer.ejs %>
                 </div>
                 <script>
-                   
-                        $('.card').on('click',function(){
-                            var card = $(this);
-                            var amount = card.find('.amount').text();
-                            var duration = card.find('.duration').text();
-                            var seatleft = card.find('.seatleft').text();
-                            var departdate = card.find('.departdate').text();
-                            var departtime = card.find('.departtime').text();
-                            $('.price').val(amount)
-                            var datasend = {from: cardtext, to:cardtext1};
-                            $.post('/busdestination',datasend,function(data){
-                            })
+                    $('.card').on('click',function(){
+                        var card = $(this);
+                        var amount = card.find('.amount').text();
+                        var duration = card.find('.duration').text();
+                        var seatleft = card.find('.seatleft').text();
+                        var departdate = card.find('.departdate').text();
+                        var departtime = card.find('.departtime').text();
+                        var detailscompanyid = card.find('.detailscompanyid').text();
+                        var detailscompanyname = card.find('.detailscompanyname').text();
+                        var detailscompanylocation = card.find('.detailscompanylocation').text();
+                        var datatosend = {amount: amount, duration:duration,seatleft:seatleft,departdate:departdate,departtime:departtime,detailscompanyid:detailscompanyid,detailscompanyname:detailscompanyname,detailscompanylocation:detailscompanylocation};
+                        $.post('/destinationdetails',datatosend,function(data){
                         })
-                   
+                    })
                 </script>
         </body>
 

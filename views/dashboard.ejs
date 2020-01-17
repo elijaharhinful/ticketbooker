@@ -14,7 +14,7 @@
                                     <div class="header">
                                         <img src="\public\img\avatar.png" class="img-circle" alt="User image" width="150" height="150">
                                         <h3>Welcome</h3>
-                                        <h4>Elijah</h4>
+                                        <h4><%=user.firstname %></h4>
                                         <a style="width:50%;margin:auto;margin-bottom:10px;" class="btn btn-default btn-success btn-block btn-sm" href="/booking">Book ticket</a>
                                     </div>
                                     
@@ -45,7 +45,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/contact"> 
+                                            <a href="/contact" target="_blank"> 
                                                     <i class="glyphicon glyphicon-phone-alt"></i>
                                                     Contact us
                                             </a>
@@ -60,85 +60,77 @@
                                 </div>
 
                             </div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-9";">
                             <% include layouts/dashboard-header.ejs %>
                             <div class="conatainer-fluid">
                                 <h1 class="text-center">DASHBOARD</h1>
                             </div>
                             <div id="dash" class="row">
                                 <div class="col-sm-3">
-                                    <div class="card narrower" style="background:-webkit-linear-gradient( #c4f5e6, rgb(240, 235, 235));border-radius:0px;padding-top: 10px;">
+                                    <div class="card narrower" style="background:-webkit-linear-gradient(90deg,#3f5efb 0% , #fc466b 100%)">
                                         <div class="panel-body">
-                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
-                                                width="50" height="50">
                                             <div class="text-center">
-                                                <h5>
-                                                    TICKETS PURCHASED
-                                                </h5>
-                                                <h5>
+                                                <i class="glyphicon glyphicon-shopping-cart" style="font-weight: 900; font-size: 45px;"></i>
+                                                <h3>
                                                     <i>
                                                         <span class="ticketspurchased">31</span>
                                                     </i>
+                                                </h3>
+                                                <h5 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-weight: 900;">
+                                                    TICKETS PURCHASED
                                                 </h5>
-                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="card" style="background:-webkit-linear-gradient( #c4e3f5, rgb(240, 235, 235));border-radius:0px;padding-top: 10px;"">
+                                    <div class="card narrower" style="background:-webkit-linear-gradient(90deg, #11998e 0% , #38ef7d 100%)">
                                         <div class="panel-body">
-                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
-                                                width="50" height="50">
-                                            <div class="text-center">
-                                                <h5>
-                                                    TICKETS PENDING
-                                                </h5>
-                                                <h5>
-                                                    <i>
-                                                        <span class="ticketspending">31</span>
-                                                    </i>
-                                                </h5>
-                                                
-                                            </div>
+                                                <div class="text-center">
+                                                    <i class="glyphicon glyphicon-shopping-cart" style="font-weight: 900; font-size: 45px;"></i>
+                                                    <h3>
+                                                        <i>
+                                                            <span class="ticketspurchased">31</span>
+                                                        </i>
+                                                    </h3>
+                                                    <h5 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-weight: 900;">
+                                                        TICKETS PENDING
+                                                    </h5>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="card" style="background:-webkit-linear-gradient( #f0f1af, rgb(240, 235, 235));border-radius:0px;padding-top: 10px;">
+                                    <div class="card narrower" style="background:-webkit-linear-gradient(90deg, #ee0979 0% , #ff6a00 100%)">
                                         <div class="panel-body">
-                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
-                                                width="50" height="50">
-                                            <div class="text-center">
-                                                <h5>
-                                                    TICKETS CANCELLED
-                                                </h5>
-                                                <h5>
-                                                    <i>
-                                                        <span class="ticketscancelled">31</span>
-                                                    </i>
-                                                </h5>
-                                                
-                                            </div>
+                                                <div class="text-center">
+                                                    <i class="glyphicon glyphicon-shopping-cart" style="font-weight: 900; font-size: 45px;"></i>
+                                                    <h3>
+                                                        <i>
+                                                            <span class="ticketspurchased">31</span>
+                                                        </i>
+                                                    </h3>
+                                                    <h5 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-weight: 900;">
+                                                        TICKETS CANCELLED
+                                                    </h5>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="card" style="background:-webkit-linear-gradient( #eeb9eb, rgb(240, 235, 235));border-radius:0px;padding-top: 10px;">
+                                    <div class="card narrower" style="background:-webkit-linear-gradient(90deg, #45b649 0% , #4ef7f7 100%)">
                                         <div class="panel-body">
-                                            <img src="\public\img\images2.jpg" class="img-circle text-center" alt="User image"
-                                                width="50" height="50">
-                                            <div class="text-center">
-                                                <h5>
-                                                    FREE TICKETS
-                                                </h5>
-                                                <h5>
-                                                    <i>
-                                                        <span class="freetickets">31</span>
-                                                    </i>
-                                                </h5>
-                                                
-                                            </div>
+                                                <div class="text-center">
+                                                    <i class="glyphicon glyphicon-shopping-cart" style="font-weight: 900; font-size: 45px;"></i>
+                                                    <h3>
+                                                        <i>
+                                                            <span class="ticketspurchased">31</span>
+                                                        </i>
+                                                    </h3>
+                                                    <h5 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-weight: 900;">
+                                                        FREE TICKETS
+                                                    </h5>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>

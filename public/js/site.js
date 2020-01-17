@@ -143,10 +143,12 @@ function signValidator(e) {
 	return false;
 };
 
+
+
 //qr code
 var options = {
 	// render method: 'canvas', 'image' or 'div'
-	render: 'div',
+	render: 'image',
 
 	// version range somewhere in 1 .. 40
 	minVersion: 1,
@@ -169,8 +171,7 @@ var options = {
 	background: null,
 
 	// content
-	text: {
-	},
+	text: "some text",
 
 	// corner radius relative to module width: 0.0 .. 0.5
 	radius: 0,

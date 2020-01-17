@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs')
 const cors = require('cors');
 const axios = require('axios');
 const session = require('express-session');
+const qr = require('qr-image')
 const jsdom = require('jsdom');
 "use strict";
 const nodemailer = require("nodemailer");
@@ -72,18 +74,44 @@ axios.get("http://achatcryptostg.com/stcapp/public/companies")
     }) 
     //end of booking form control
 
+var user = "";
+var usernum = "";
 var thetoken = "";
 var message = "";
 var message1 = "";
 var sometoken = "";
 var resetnnum = "";
 var msg = "";
+var details = "";
+var buses = "";
+var detailscompany = "";
+var success = "";
+var chosendata = "";
+var amounterror = "";
+var amount = "";
+var name = "";
+var mobile = "";
+var email = "";
+var totalamount = "";
+var description = "";
 
+//for booked ticket//
+var t_company_id = "";
+var t_company_name = "";
+var t_bus_no = "";
+var t_seat = "";
+var t_location = "";
+var t_t_from = "";
+var t_t_to = "";
+var t_the_date = "";
+var t_the_time = "";
+
+var departtime = ""
 app.get('/', function (req, res) {
-    res.render('index',{prices1,prices2,prices3});
+    res.render('index',{prices1,prices2,prices3,companyname});
 });
 app.get('/index', function (req, res) {
-    res.render('index',{prices1,prices2,prices3});
+    res.render('index',{prices1,prices2,prices3,companyname});
 });
 
 app.get('/contact', function (req, res) {
@@ -96,22 +124,22 @@ app.get('/about', function (req, res) {
     
 app.get('/dashboard', function (req, res) {
     if (req.session.loggedin){
-        res.render('dashboard',{prices1,prices2,prices3})
+        res.render('dashboard',{prices1,prices2,prices3,user})
     } else{
         res.render('login',{prices1,prices2,prices3,message,message1});
     }
 });
 
 app.get('/booking', function(req, res){
-    res.render('booking',{prices1,prices2,prices3,companyname});
+    res.render('booking',{prices1,prices2,prices3,companyname,user,amounterror});
 });
 
 app.get('/busdestination',function(req,res){
-    res.render('busdestination',{prices1,prices2,prices3,idname,iddetails});
+    res.render('busdestination',{prices1,prices2,prices3,idname,iddetails,user});
 });
 
 app.get('/destinationdetails', function (req, res) {
-    res.render('destinationdetails',{prices1,prices2,prices3,details,buses});
+    res.render('destinationdetails',{prices1,prices2,prices3,user,details,buses,chosendata,detailscompany});
 });
 
 app.get('/payment', function (req, res) {
@@ -119,11 +147,19 @@ app.get('/payment', function (req, res) {
 });
 
 app.get('/profile', function (req, res) {
-    res.render('profile');
+    //to get user profile
+    axios.get('http://achatcryptostg.com/stcapp/public/profile/' + usernum)
+        .then(function(response){
+            user = response.data.user
+            res.render('profile',{user});
+        })
+        .catch(function(error){
+            console.log(error)
+        })
 });
 
 app.get('/editprofile', function (req, res) {
-    res.render('editprofile');
+    res.render('editprofile',{success,user});
 });
 
 app.get('/sign', function (req, res) {
@@ -150,8 +186,76 @@ app.get('/newpass', function (req, res) {
 });
 
 app.get('/history', function (req, res) {
-    res.render('history',{buses,details});
+    axios.get("http://achatcryptostg.com/stcapp/public/history/" + usernum)
+	.then(function(response){
+        t_history = response.body.response
+    })
+    .catch(function(error){
+        console.log(error)
+    })
+    res.render('history',{buses,details,user,t_history});
 });
+
+app.get('/ticketA',async function(req,res){
+    mytext = "some text"
+    var qr_png = qr.imageSync(mytext,{ type: 'png'})
+    let qr_code_file_name = new Date().getTime() + '.png';
+    fs.writeFileSync('./public/qr/' + qr_code_file_name, qr_png, (err) => {
+        if(err){
+            console.log(err);
+        }  
+    })
+    // Send the link of generated QR code
+    var qrurl = "public/qr/" + qr_code_file_name
+    res.render('ticketA',{buses,details,qrurl,chosendata})
+})
+
+app.get('/pay',function(req,res){
+    res.render('pay',{amount})
+});
+
+app.get('/payconfirm',function(req,res){
+    res.render('payconfirm',{name,email,mobile,totalamount,description})
+});
+
+app.get('/ticket-success',function(req,res){
+    var fullname = req.query.customer.fullName;
+    var phone = req.query.customer.phone;
+    var amount = req.query.amount;
+    var payment_method = req.query.payment_type;
+    var transaction_id = req.query.id;
+    var status = req.query.status;
+    axios.post('http://achatcryptostg.com/stcapp/public/savebookdetails',{
+        fullname : fullname,
+     phone : phone,
+     company_id : t_company_id,
+     company_name : t_company_name,
+     bus_no : t_bus_no,
+     seat : t_seat,
+     location : t_location,
+     t_from : t_t_from,
+     t_to : t_t_to,
+     the_date : t_the_date,
+     the_time : t_the_time,
+     amount : amount,
+     payment_method : payment_type,
+     transaction_id : id,
+    status : status
+    })
+    .then(function(response){
+        console.log(response);
+    })
+    .catch(function(error){
+        console.log(error)
+    })
+    res.render('ticket-success')
+});
+
+app.get('/ticket-failure',function(req,res){
+    res.render('ticket-failure')
+});
+
+
 
 
 //node post requests
@@ -168,6 +272,16 @@ app.post('/auth',urlencodedParser, function(req, res) {
             thestatus = response.data.status;
             if (thestatus == "success") {
                 req.session.loggedin = true;
+                usernum = num;
+                username = "";
+                //to get user profile
+                axios.get('http://achatcryptostg.com/stcapp/public/profile/' + usernum)
+                .then(function(response){
+                    user = response.data.user
+                })
+                .catch(function(error){
+                    console.log(error)
+                })
 				res.redirect('/dashboard');
             }else if (response.data.message == "Invalid Password"){
                 message = "Invalid Password"
@@ -276,7 +390,7 @@ app.post('/token', urlencodedParser, function (req, res) {
                 
                 res.render('token',{thetoken});
             }else{
-                message = "User already exist. Go to login in page to login in to your account"
+                message = "User already exist. Go to login in page to sign in to your account"
                 res.render('sign',{message : message})
                 message = "";
             }
@@ -291,7 +405,6 @@ app.post('/token', urlencodedParser, function (req, res) {
         res.end();
     }
 });
-
 
 //for token verification
 app.post('/target', urlencodedParser, function (req, res) {
@@ -365,6 +478,7 @@ app.post('/passtoken',urlencodedParser,function(req,res){
     })
 });
 
+
 app.post('/newpass',urlencodedParser,function(req,res){
     var tok = req.body.token;
     if (tok == sometoken){
@@ -399,53 +513,90 @@ app.post('/tologin',urlencodedParser,function(req,res){
     }
 });
 
-//for home page search
-app.post('/search',urlencodedParser,function(req,res){
-    var from = req.body.searchfrom;
-    var to = req.body.searchto;
-    var company = req.body.searchcompany;
-    if (searchcompany = 1){
-        axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
-        .then(function(response){
-            console.log(response)
-            res.render('index')
-        })
-        .catch(function(error){
-            console.log(error)
-        })
-    }
-});
-
-/*To update user profile
+//To update user profile
 app.post('/editprofile',urlencodedParser,function(req,res){
     var firstname = req.body.first_name;
     var lastname = req.body.last_name;
     var email = req.body.email;
-    var num = req.body.num;
-    axios.post('http://achatcryptostg.com/stcapp/public/updateUserProfile',{
-        phone : num,
+    var gender = req.body.gender;
+    axios.post('http://achatcryptostg.com/stcapp/public/savebasicprofile',{
+        phone: usernum,
+        firstname : firstname,
+        lastname : lastname,
         email : email,
-        name : firstname + lastname
+        gender : gender
     })
     .then(function(response){
-        console.log(response)
+        success = '<div class="alert alert-success alert-dismissible fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success! </strong> Go to <a href="/profile" class="alert-link">profile</a> to view updated profile.</div>'
+        res.render('editprofile',{success})
     })
     .catch(function(error){
         console.log(error);
     })
 })
-*/
 
-/*To post ticket details
-app.post()
+app.post('/pay',urlencodedParser,function(req,res){
+    firstname = req.body.firstname;
+    lastname = req.body.lastname
+    mobile = req.body.extra_mobile;
+    email = req.body.extra_email;
+    totalamount = amount;
+    description = req.body.description;
+    if (totalamount !== ""){
+        axios.post('https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/hosted/pay',{
+        amount : amount,
+        customer_email : email,
+        customer_phone : mobile,
+        customer_firstname : firstname,
+        customer_lastname : lastname,
+        currency : "GHS",
+        txref : description,
+        PBFPubKey : "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X",
+        redirect_url : "https://ticketbooker.herokuapp.com/ticket-success"
+    })
+    .then(function(response){
+        res.redirect(response.data.data.link)
+        console.log(response.data.data.link)
+    })
+    .catch(function(error){
+        console.log(error)
+    })
+    }else{
+        amounterror = '<div class="alert alert-danger alert-dismissible fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Sorry! </strong> Request failed due to wrong amount. Please try again</div>'
+        res.render('booking',{prices1,prices2,prices3,companyname,user,amounterror})
+    }
+    
+})
 
-*/
+//For homepage search
+// app.get('/search',function(req,res){
+//     var from = req.params.searchfrom;
+//     var to = req.params.searchto;
+//     var searchid = req.params.searchid;
+//     console.log(searchid)
+//     axios.get('http://achatcryptostg.com/stcapp/public/companyalldetails/1')
+//     .then(function(response){
+//         console.log(response)
+//         res.render('index',{prices1,prices2,prices3,companyname})
+//     })
+//     .catch(function(error){
+//         console.log(error)
+//     })
+// })
+
+// To post ticket details
+// app.post('http://achatcryptostg.com/stcapp/public/',urlencodedParser,function(req,res){
+
+// })
+
+
 
 /*To post subscription emails 
 app.post('/subcribe',urlencodedParser,function(req,res){
-    var email = req.bosy.email;
+    var email = req.body.email;
     axios.post('http://achatcryptostg.com/stcapp/public/')
     .then(function(response){
+        success = '<div class="alert alert-success alert-dismissible fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success! </strong> You have successfully subscribed to our newsletter</div>'
         console.log(response)
     })
     .catch(function(error){
@@ -456,8 +607,9 @@ app.post('/subcribe',urlencodedParser,function(req,res){
 
 var iddetails = "";
 var idname = "";
+var idurls = "";
 app.post('/booking',urlencodedParser, function(req,res){
-    var idurls = req.body.id;
+    idurls = req.body.id;
     idname = req.body.name;
     axios.get("http://achatcryptostg.com/stcapp/public/companydestinationdetails/" + idurls)
     .then(function(response){
@@ -469,19 +621,45 @@ app.post('/booking',urlencodedParser, function(req,res){
     res.end();
 });
 
-var details = "";
-var buses = "";
+
 app.post('/busdestination',urlencodedParser,function(req,res){
     var from = req.body.from;
     var to = req.body.to;
-    axios.get("http://achatcryptostg.com/stcapp/public/companydestination/"+ from +"/" + to + "/1")
+    axios.get("http://achatcryptostg.com/stcapp/public/companydestination/"+ from +"/" + to + "/" + idurls)
     .then(function(response){
         details = response.data.response
         buses = details.buses
+        detailscompany = details.company
     })
     .catch(function(error){
         console.log(error);
     })
+});
+
+app.post('/destinationdetails',urlencodedParser,function(req,res){
+    amount = req.body.amount;
+    var duration = req.body.duration;
+    var seatleft = req.body.seatleft;
+    var departdate = req.body.departdate;
+    departtime = req.body.departtime;
+
+    t_company_id = req.body.detailscompanyid;
+    t_company_name = req.body.detailscompanyname;
+    t_bus_no;
+    t_seat;
+    t_location = req.body.detailscompanylocation;
+    t_t_from;
+    t_t_to;
+    t_the_date;
+    t_the_time;
+
+    chosendata = {
+        amount: amount, 
+        duration:duration,
+        seatleft:seatleft,
+        departdate:departdate,
+        departtime:departtime
+    }
 });
 //routes end here
 
