@@ -38,7 +38,7 @@ app.set('port', process.env.PORT || 3000);
 //node get requests
     //this is to get pricing data
 var prices1="";
-axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
+axios.get("https://transspo.com/companyalldetails/1")
 	.then(function(response){
         prices1 = response.data.response
     })
@@ -46,7 +46,7 @@ axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/1")
         console.log(error)
     })
 var prices2 = "";
-axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/2")
+axios.get("https://transspo.com/companyalldetails/2")
 	.then(function(response){
         prices2 = response.data.response
     })
@@ -54,7 +54,7 @@ axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/2")
         console.log(error)
     })
 var prices3 = "";
-axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/3")
+axios.get("https://transspo.com/companyalldetails/3")
 	.then(function(response){
         prices3 = response.data.response
     })
@@ -65,7 +65,7 @@ axios.get("http://achatcryptostg.com/stcapp/public/companyalldetails/3")
 
     //start of booking data control
 var companyname = "";
-axios.get("http://achatcryptostg.com/stcapp/public/companies")
+axios.get("https://transspo.com/companies")
     .then(function(response){
         companyname = response.data.response
     })
@@ -148,7 +148,7 @@ app.get('/payment', function (req, res) {
 
 app.get('/profile', function (req, res) {
     //to get user profile
-    axios.get('http://achatcryptostg.com/stcapp/public/profile/' + usernum)
+    axios.get('https://transspo.com/profile/' + usernum)
         .then(function(response){
             user = response.data.user
             res.render('profile',{user});
@@ -186,7 +186,7 @@ app.get('/newpass', function (req, res) {
 });
 
 app.get('/history', function (req, res) {
-    axios.get("http://achatcryptostg.com/stcapp/public/history/" + usernum)
+    axios.get("https://transspo.com/history/" + usernum)
 	.then(function(response){
         t_history = response.body.response
     })
@@ -225,7 +225,7 @@ app.get('/ticket-success',function(req,res){
     var payment_method = req.query.payment_type;
     var transaction_id = req.query.id;
     var status = req.query.status;
-    axios.post('http://achatcryptostg.com/stcapp/public/savebookdetails',{
+    axios.post('https://transspo.com/savebookdetails',{
         fullname : fullname,
      phone : phone,
      company_id : t_company_id,
@@ -264,7 +264,7 @@ app.post('/auth',urlencodedParser, function(req, res) {
 	var num = req.body.tel;
     var psw = req.body.password;
 	if (psw) {
-       axios.post("http://achatcryptostg.com/stcapp/public/login",{
+       axios.post("https://transspo.com/login",{
             phone : num,
             password : psw
         })
@@ -275,7 +275,7 @@ app.post('/auth',urlencodedParser, function(req, res) {
                 usernum = num;
                 username = "";
                 //to get user profile
-                axios.get('http://achatcryptostg.com/stcapp/public/profile/' + usernum)
+                axios.get('https://transspo.com/profile/' + usernum)
                 .then(function(response){
                     user = response.data.user
                 })
@@ -313,7 +313,7 @@ app.post('/token', urlencodedParser, function (req, res) {
     psw = req.body.psw;
     cpsw = req.body.cpsw;
     if (psw == cpsw){
-        axios.post("http://achatcryptostg.com/stcapp/public/signup",{
+        axios.post("https://transspo.com/signup",{
             phone : num,
             password : psw
         })
@@ -425,7 +425,7 @@ app.post('/target', urlencodedParser, function (req, res) {
 //this is for password reset
 app.post('/passtoken',urlencodedParser,function(req,res){
     var num = req.body.tel;
-    axios.post("http://achatcryptostg.com/stcapp/public/sendtoken",{
+    axios.post("https://transspo.com/sendtoken",{
         phone : num
     })
     .then(function(response){
@@ -496,7 +496,7 @@ app.post('/tologin',urlencodedParser,function(req,res){
     var pass = req.body.newpassword;
     var cpass = req.body.password;
     if (pass == cpass){
-        axios.post('http://achatcryptostg.com/stcapp/public/resetpassword',{
+        axios.post('https://transspo.com/resetpassword',{
             phone : resetnnum,
             password : pass
         })
@@ -519,7 +519,7 @@ app.post('/editprofile',urlencodedParser,function(req,res){
     var lastname = req.body.last_name;
     var email = req.body.email;
     var gender = req.body.gender;
-    axios.post('http://achatcryptostg.com/stcapp/public/savebasicprofile',{
+    axios.post('https://transspo.com/savebasicprofile',{
         phone: usernum,
         firstname : firstname,
         lastname : lastname,
@@ -574,7 +574,7 @@ app.post('/pay',urlencodedParser,function(req,res){
 //     var to = req.params.searchto;
 //     var searchid = req.params.searchid;
 //     console.log(searchid)
-//     axios.get('http://achatcryptostg.com/stcapp/public/companyalldetails/1')
+//     axios.get('https://transspo.com/companyalldetails/1')
 //     .then(function(response){
 //         console.log(response)
 //         res.render('index',{prices1,prices2,prices3,companyname})
@@ -585,7 +585,7 @@ app.post('/pay',urlencodedParser,function(req,res){
 // })
 
 // To post ticket details
-// app.post('http://achatcryptostg.com/stcapp/public/',urlencodedParser,function(req,res){
+// app.post('https://transspo.com/',urlencodedParser,function(req,res){
 
 // })
 
@@ -594,7 +594,7 @@ app.post('/pay',urlencodedParser,function(req,res){
 /*To post subscription emails 
 app.post('/subcribe',urlencodedParser,function(req,res){
     var email = req.body.email;
-    axios.post('http://achatcryptostg.com/stcapp/public/')
+    axios.post('https://transspo.com/')
     .then(function(response){
         success = '<div class="alert alert-success alert-dismissible fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success! </strong> You have successfully subscribed to our newsletter</div>'
         console.log(response)
@@ -611,7 +611,7 @@ var idurls = "";
 app.post('/booking',urlencodedParser, function(req,res){
     idurls = req.body.id;
     idname = req.body.name;
-    axios.get("http://achatcryptostg.com/stcapp/public/companydestinationdetails/" + idurls)
+    axios.get("https://transspo.com/companydestinationdetails/" + idurls)
     .then(function(response){
         iddetails = response.data.response
     })
@@ -625,7 +625,7 @@ app.post('/booking',urlencodedParser, function(req,res){
 app.post('/busdestination',urlencodedParser,function(req,res){
     var from = req.body.from;
     var to = req.body.to;
-    axios.get("http://achatcryptostg.com/stcapp/public/companydestination/"+ from +"/" + to + "/" + idurls)
+    axios.get("https://transspo.com/companydestination/"+ from +"/" + to + "/" + idurls)
     .then(function(response){
         details = response.data.response
         buses = details.buses

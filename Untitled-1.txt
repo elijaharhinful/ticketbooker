@@ -1,0 +1,32 @@
+<div class="container-fluid search">
+                            <div class="row text-center">
+                                <div class="col-sm-12">
+                                    <form class="form-inline searchform" action="search" method="GET">
+                                        <div class="form-group">
+                                            <input name="searchfrom" type="text" class="form-control" id="searchfrom" placeholder="FROM">
+                                        </div>
+                                        <div class="form-group">
+                                            <input name="searchto" type="text" class="form-control" id="searchto" placeholder="TO">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="selectbus">Select Bus Comapny:</label>
+                                                <select name="searchid" class="form-control" id="searchcompany">
+                                                    <% for (var i = 0; i < companyname.length; i++){ %>
+                                                    <option value= "<%=companyname[i].id %>" > <%=companyname[i].name %> </option>
+                                                    <% } %>
+                                                </select>
+                                        </div>
+                                        <div class="input-group">
+                                            <button type="submit" class="btn btn-default btn-primary btn-block">Search Destination</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="container-fluid text-center">
+                            <p class="sfrom">fdasjfhsl</p>
+                            <p class="sto">ssafjaskl</p>
+                            <p class="scom">fjasdfhl</p>
+                        </div>
