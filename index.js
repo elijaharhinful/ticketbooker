@@ -94,6 +94,7 @@ var mobile = "";
 var email = "";
 var totalamount = "";
 var description = "";
+var t_history = "";
 
 //for booked ticket//
 var t_company_id = "";
@@ -552,11 +553,11 @@ app.post('/pay',urlencodedParser,function(req,res){
         currency : "GHS",
         txref : description,
         PBFPubKey : "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X",
-        redirect_url : "https://ticketbooker.herokuapp.com/ticket-success"
+        redirect_url : "https://ticketbooker.herokuapp.com/ticket-success/"
     })
     .then(function(response){
         res.redirect(response.data.data.link)
-        console.log(response.data.data.link)
+        console.log(response)
     })
     .catch(function(error){
         console.log(error)
