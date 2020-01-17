@@ -220,7 +220,6 @@ app.get('/payconfirm',function(req,res){
     res.render('payconfirm',{name,email,mobile,totalamount,description})
 });
 
-//this loads a success page when the ticket is successfully booked
 app.get('/ticket-success',function(req,res){
     var fullname = req.query.customer.fullName;
     var phone = req.query.customer.phone;
