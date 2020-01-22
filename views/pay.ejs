@@ -80,7 +80,7 @@
             var x = getpaidSetup({
                 PBFPubKey: API_publicKey,
                 customer_email: "user@example.com",
-                amount: 200,
+                amount: 20,
                 customer_phone: "234099940409",
                 currency: "GHS",
                 txref: "rave-123456",
@@ -97,9 +97,9 @@
                         response.tx.chargeResponseCode == "0"
                     ) {
                         // redirect to a success page
-                        window.location = "https://www.ticketbooker.herokuapp.com/ticket-success"
+                        window.location = "https://ticketbooker.herokuapp.com/ticket-success"
                     } else {
-                        window.location = "https://www.ticketbooker.herokuapp.com/ticket-failure"
+                        window.location = "https://ticketbooker.herokuapp.com/ticket-failure"
                         // redirect to a failure page.
                     }
     
