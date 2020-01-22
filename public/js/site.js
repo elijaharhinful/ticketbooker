@@ -9,13 +9,10 @@ function closeNav() {
 
 }
 $(function(){
-	$('#myCarousel').hide().fadeIn(3500);
-	$('#download').hide().fadeIn(3500);
+	$('#myCarousel').hide().slideToggle(3500);
 	$('#travelUs').hide().slideToggle(3500);
 	$('#pricing').hide().fadeIn(6000);
-	$('header').hide().fadeIn(3500);
-	$("#dash").hide().slideToggle(3500);
-	$("#mySidenav").hide().slideToggle(2000);
+	$("#dash").hide().slideToggle(3000);
 })
 
 $(function () {

@@ -220,38 +220,37 @@ app.get('/payconfirm',function(req,res){
     res.render('payconfirm',{name,email,mobile,totalamount,description})
 });
 
-//this loads a success page when the ticket is successfully booked
 app.get('/ticket-success',function(req,res){
-    var fullname = req.query.customer.fullName;
-    var phone = req.query.customer.phone;
-    var amount = req.query.amount;
-    var payment_method = req.query.payment_type;
-    var transaction_id = req.query.id;
-    var status = req.query.status;
-    axios.post('https://transspo.com/savebookdetails',{
-        fullname : fullname,
-     phone : phone,
-     company_id : t_company_id,
-     company_name : t_company_name,
-     bus_no : t_bus_no,
-     seat : t_seat,
-     location : t_location,
-     t_from : t_t_from,
-     t_to : t_t_to,
-     the_date : t_the_date,
-     the_time : t_the_time,
-     amount : amount,
-     payment_method : payment_method,
-     transaction_id : transaction_id,
-     transaction_id : transaction_id,
-    status : status
-    })
-    .then(function(response){
-        console.log(response);
-    })
-    .catch(function(error){
-        console.log(error)
-    })
+    // var fullname = req.query.customer.fullName;
+    // var phone = req.query.customer.phone;
+    // var amount = req.query.amount;
+    // var payment_method = req.query.payment_type;
+    // var transaction_id = req.query.id;
+    // var status = req.query.status;
+    // axios.post('https://transspo.com/savebookdetails',{
+    //     fullname : fullname,
+    //     phone : phone,
+    //     company_id : t_company_id,
+    //     company_name : t_company_name,
+    //     bus_no : t_bus_no,
+    //     seat : t_seat,
+    //     location : t_location,
+    //     t_from : t_t_from,
+    //     t_to : t_t_to,
+    //     the_date : t_the_date,
+    //     the_time : t_the_time,
+    //     amount : amount,
+    //     payment_method : payment_method,
+    //     transaction_id : transaction_id,
+    //     status : status
+    // })
+    // .then(function(response){
+    //     console.log(response);
+    // })
+    // .catch(function(error){
+    //     console.log(error)
+    // })
+    console.log(res)
     res.render('ticket-success')
 });
 
@@ -539,38 +538,62 @@ app.post('/editprofile',urlencodedParser,function(req,res){
     })
 })
 
-app.post('/pay',urlencodedParser,function(req,res){
-    firstname = req.body.firstname;
-    lastname = req.body.lastname
-    mobile = req.body.extra_mobile;
-    email = req.body.extra_email;
-    totalamount = amount;
-    description = req.body.description;
-    if (totalamount !== ""){
-        axios.post('https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/hosted/pay',{
-        amount : amount,
-        customer_email : email,
-        customer_phone : mobile,
-        customer_firstname : firstname,
-        customer_lastname : lastname,
-        currency : "GHS",
-        txref : description,
-        PBFPubKey : "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X",
-        redirect_url : port+"/ticket-success/"
-    })
-    .then(function(response){
-        res.redirect(response.data.data.link)
-        console.log(response)
-    })
-    .catch(function(error){
-        console.log(error)
-    })
-    }else{
-        amounterror = '<div class="alert alert-danger alert-dismissible fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Sorry! </strong> Request failed due to wrong amount. Please try again</div>'
-        res.render('booking',{prices1,prices2,prices3,companyname,user,amounterror})
-    }
+// app.post('/pay',urlencodedParser,function(req,res){
+//     firstname = req.body.firstname;
+//     lastname = req.body.lastname
+//     mobile = req.body.extra_mobile;
+//     email = req.body.extra_email;
+//     totalamount = amount;
+//     description = req.body.description;
+//     if (totalamount !== ""){
+//         axios.post("https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/hosted/pay",{
+//             amount : amount,
+//             customer_email : email,
+//             customer_phone : mobile,
+//             customer_firstname : firstname,
+//             customer_lastname : lastname,
+//             currency : "GHS",
+//             txref : description,
+//             PBFPubKey : "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X",
+//             redirect_url : "https://www.ticketbooker.herokuapp.com/ticket-success"
+//         })
+//         .then(function(response){
+//             res.redirect(response.data.data.link)
+//         })
+//         .catch(function(error){
+//             console.log(error)
+//         })
+//     }else{
+//         amounterror = '<div class="alert alert-danger alert-dismissible fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Sorry! </strong> Request failed due to wrong amount. Please try again</div>'
+//         res.render('booking',{prices1,prices2,prices3,companyname,user,amounterror})
+//     }
     
-})
+// })
+
+app.post("/pay",urlencodedParser, (req, res) => {
+    const data = {
+        PBFPubKey: "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X",
+        txref: "TransactionRef" + Date.now(),
+        customer_email: req.body.extra_email,
+        customer_phone: req.body.extra_mobile,
+        amount: 100,
+        currency: "GHS",
+        country: "GH",
+        redirect_url: "https://www.ticketbooker.herokuapp.com/ticket-success"
+    };
+    axios({
+        url: "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/hosted/pay",
+        method: "POST",
+        data
+    })
+        .then(result => {
+            console.log(result.data);
+            res.redirect(result.data.data.link);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
 
 //For homepage search
 // app.get('/search',function(req,res){
