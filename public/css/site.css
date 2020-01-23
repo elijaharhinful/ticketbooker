@@ -295,8 +295,6 @@ footer {
 }
 
 /*Animations*/
-#mycarousel{
-}
 @keyframes rainbow-background {
     0% { background-color: #faf8f8; }
     8.333% { background-color: #fcddbf; }

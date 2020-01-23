@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <% include partials/dashboard-head.ejs %>
+<% include partials/ticketmain.ejs %>
 
 <body>
     <div  id="historypage">
         <div id="main">
-            <% include partials/confirm.ejs %>
+            
             <div class="container-fluid">
                 <div class="row">
                         <div class="col-sm-3" style="padding-left:0px">
@@ -81,18 +82,21 @@
                                         <tbody>
                                             <% for (var i=0; i < t_history.length;i++){ %>
                                                 <tr>
-                                                    <td><%=t_history[i].id %></td>
-                                                    <td><%=t_history[i].the_date %></td>
-                                                    <td><%=t_history[i].t_from %></td>
-                                                    <td><%=t_history[i].t_to %></td>
-                                                    <td><%=t_history[i].amount %></td>
-                                                    <td><a href="ticketA">Preview</a></td>
+                                                    <td class="historyid"><%=t_history[i].id %></td>
+                                                    <td class="historydate"><%=t_history[i].the_date %></td>
+                                                    <td class="historyfrom"><%=t_history[i].t_from %></td>
+                                                    <td class="historyto"><%=t_history[i].t_to %></td>
+                                                    <td class="historyamount"><%=t_history[i].amount %></td>
+                                                    <td class="historytransactionid"style="display: none;"><%=t_history[i].transaction_id %></td>
+                                                    <td class="historycompanyname"style="display: none;"><%=t_history[i].company_name %></td>
+                                                    <td class="historytime" style="display: none;"><%=t_history[i].the_time %></td>
+                                                    <td><a data-toggle="modal" data-target="#ticketmain">Preview</a></td>
                                                 </tr>
                                             <% } %>
                                         </tbody>
                                  <% } else { %>
                                     <div class="alert alert-danger alert-dismissible fade in">
-                                        <strong>Server error! </strong>  No data to display
+                                        <strong>Server error! </strong>  No data to display. Refresh page.
                                     </div>
                                 <% } %> 
                                 <tfoot>

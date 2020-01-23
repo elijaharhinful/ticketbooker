@@ -4,9 +4,6 @@
         <script src="/public/js/jquery-3.2.0.min.js"></script>
     </head>
     <% include partials/dashboard-head.ejs %>
-    <% include partials/confirm.ejs %>
-    <% include partials/ticket.ejs %>
-   
 
         <body>
             <div id="page">
@@ -90,7 +87,7 @@
                                                                     <p>Seatsleft: <span  class="seatleft"><%=buses[i].seat_left %></span></p>
                                                                     <p>Departure date: <span class="departdate"><%=buses[i].depart_date %></span></p>
                                                                     <p>Departure time: <span  class="departtime"><%=buses[i].depart_time %></span> </p>
-                                                                    <a href="/ticketA" class="btn btn-primary btn-sm stretched-link" >Preview ticket</a>
+                                                                    <a href="/ticket" class="btn btn-primary btn-sm stretched-link" >Preview ticket</a>
                                                                 </div>
                                                             </div>
                                                             <div class="col-xs-4">

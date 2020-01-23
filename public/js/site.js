@@ -98,21 +98,19 @@ function closeNav() {
 		$('#to').val(datagoing);
 	});
 });
-
-
-$(function () {
-	$('.btn-danger').on('click', function () {
-		var btn = $(this);
-		btn.addClass('disable');
-		var btn_after = btn.next();
-		if (confirm('Are you sure you want to cancel ticket?')){
-			btn_after.removeClass('disable');
-		}else{
-			btn.removeClass('disable');
-		}
-	});
-});
 */
+
+
+$('.tocancel').on('click', function () {
+	var btn = $(this);
+	btn.addClass('disable');
+	if (confirm('Are you sure you want to cancel ticket?')){
+		$('.qrcode').addClass('disable');
+	}else{
+		btn.removeClass('disable');
+	}
+	});
+
 
 
 //Validatons
@@ -140,15 +138,7 @@ function signValidator(e) {
 	return false;
 };
 
-$('#payfrom .btnsubmit').on('click',function(){
-		var isValid = true;
-		$('.form-field').each(function() {
-		  if ( $(this).val() === '' )
-			  isValid = false;
-		});
-		return isValid;
-		return payWithRave();
-})
+
 //Rave Pay
 
     function payWithRave() {
@@ -193,3 +183,82 @@ $('#payfrom .btnsubmit').on('click',function(){
         });
 	}
 //Rave Pay
+
+
+
+
+//to load ticket details
+var transactionid = ""; //to be passed as qrcode text
+$("#ticketHistory tbody td a").on('click',function(){
+	var from = $('.historyfrom').text();
+	var date = $('.historydate').text();
+	var to = $('.historyto').text();
+	var amount = $('.historyamount').text();
+	transactionid = $('.historytransactionid').text();
+	var name = $('.historycompanyname').text();
+	var time = $('.historytime').text();
+
+	$('.modal-body .bus').text(name);
+	$('.modal-body .initial').text(from);
+	$('.modal-body .price').text('GH₵ '+ amount);
+	$('.modal-body .duration').text();
+	$('.modal-body .final').text(to);
+	$('.modal-body .departure').text(date);
+	$('.modal-body .time').text(time);
+	$('.modal-body .transactionid').text(transactionid);
+});
+
+//for qrcode
+
+var options = {
+    // render method: 'canvas', 'image' or 'div'
+    render: 'div',
+
+    // version range somewhere in 1 .. 40
+    minVersion: 1,
+    maxVersion: 40,
+
+    // error correction level: 'L', 'M', 'Q' or 'H'
+    ecLevel: 'L',
+
+    // offset in pixel if drawn onto existing canvas
+    left: 0,
+    top: 0,
+
+    // size in pixel
+    size: 150,
+
+    // code color or image element
+    fill: '#000',
+
+    // background color or image element, null for transparent background
+    background: null,
+
+    // content
+    text: transactionid,
+
+    // corner radius relative to module width: 0.0 .. 0.5
+    radius: 0,
+
+    // quiet zone in modules
+    quiet: 0,
+
+    // modes
+    // 0: normal
+    // 1: label strip
+    // 2: label box
+    // 3: image strip
+    // 4: image box
+    mode: 0,
+
+    mSize: 0.1,
+    mPosX: 0.5,
+    mPosY: 0.5,
+
+    label: 'no label',
+    fontname: 'sans',
+    fontcolor: '#000',
+
+    image: null
+}
+$('.qrcode').qrcode(options);

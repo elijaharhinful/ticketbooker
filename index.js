@@ -207,7 +207,11 @@ app.get('/history', function (req, res) {
     res.render('history',{buses,details,user,t_history});
 });
 
-app.get('/ticketA',async function(req,res){
+app.get('/ticket',async function(req,res){
+    res.render('ticket',{buses,details,chosendata})
+})
+
+app.get('/ticketmain',async function(req,res){
     mytext = "some text"
     var qr_png = qr.imageSync(mytext,{ type: 'png'})
     let qr_code_file_name = new Date().getTime() + '.png';
@@ -219,7 +223,7 @@ app.get('/ticketA',async function(req,res){
     // Send the link of generated QR code
     var qrurl = "";
     // var qrurl = "public/qr/" + qr_code_file_name
-    res.render('ticketA',{buses,details,qrurl,chosendata})
+    res.render('ticketmain',{buses,details,qrurl,chosendata})
 })
 
 app.get('/pay',function(req,res){
@@ -283,6 +287,37 @@ app.get('/ticket-success',function(req,res){
     .catch(function(error){
         console.log(error)
     })
+
+    //telesign sms 
+    const customerId = "75DA083A-6A1A-48CC-B3A4-EB0BED75E8CD";
+    const apiKey = "xxlW8qHbqwdIJQhKfDoE/+RCDFvZ5F9B28UuuNKd+Zafv3qTaj+zwgDkiT7AXEgFhG5qLf1pJYAGM3RdiyeA9g==";
+    const rest_endpoint = "https://rest-api.telesign.com";
+    const themsg = "Dear customer, your ticket purchase was successful. Your transaction id is " + transaction_id;
+
+    const client = new TeleSignSDK( customerId,
+        apiKey,
+        rest_endpoint
+        // userAgent
+    );
+
+    const phoneNumber = "2330548777676";
+    const message = themsg;
+    const messageType = "ARN";
+
+    console.log("## MessagingClient.message ##");
+
+    function messageCallback(error, responseBody) {
+        if (error === null) {
+            console.log(`Messaging response for messaging phone number: ${phoneNumber}` +
+                ` => code: ${responseBody['status']['code']}` +
+                `, description: ${responseBody['status']['description']}`);
+        } else {
+            console.error("Unable to send message. " + error);
+        }
+    }
+    client.sms.message(messageCallback, phoneNumber, message, messageType);
+    //end of telesign sms
+    
     res.render('ticket-success')
 });
 
@@ -677,7 +712,8 @@ app.post('/destinationdetails',urlencodedParser,function(req,res){
         duration:duration,
         seatleft:seatleft,
         departdate:departdate,
-        departtime:departtime
+        departtime:departtime,
+        companyname : t_company_name
     }
 });
 //routes end here
