@@ -222,7 +222,7 @@ app.get('/payconfirm',function(req,res){
 });
 
 app.get('/ticket-success',function(req,res){
-    var fullname = req.query.["customer.fullName"];
+    var fullname = req.query["customer.fullName"];
     var phone = req.query["customer.phone"];
     var amount = req.query.amount;
     var payment_method = req.query.payment_type;
