@@ -79,14 +79,16 @@
                                 </thead>
                                 <% if ( t_history !== "") { %>
                                         <tbody>
-                                            <tr>
-                                                <td>t_history.id</td>
-                                                <td>t_history.the_date</td>
-                                                <td>t_history.t_from</td>
-                                                <td>t_history.t_to</td>
-                                                <td>t_history.amount</td>
-                                                <td><a href="ticketA">Preview</a></td>
-                                            </tr>
+                                            <% for (var i=0; i < t_history.length;i++){ %>
+                                                <tr>
+                                                    <td><%=t_history[i].id %></td>
+                                                    <td><%=t_history[i].the_date %></td>
+                                                    <td><%=t_history[i].t_from %></td>
+                                                    <td><%=t_history[i].t_to %></td>
+                                                    <td><%=t_history[i].amount %></td>
+                                                    <td><a href="ticketA">Preview</a></td>
+                                                </tr>
+                                            <% } %>
                                         </tbody>
                                  <% } else { %>
                                     <div class="alert alert-danger alert-dismissible fade in">

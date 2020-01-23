@@ -191,7 +191,7 @@ app.get('/newpass', function (req, res) {
 app.get('/history', function (req, res) {
     axios.get("https://transspo.com/history/" + usernum)
 	.then(function(response){
-        t_history = response.body.response
+        t_history = response.data.response
     })
     .catch(function(error){
         console.log(error)
