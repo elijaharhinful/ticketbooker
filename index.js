@@ -223,14 +223,14 @@ app.get('/payconfirm',function(req,res){
 
 app.get('/ticket-success',function(req,res){
     // var fullname = req.query.customer.fullName;
-    // var phone = req.query.customer.phone;
+     var phone = req.query.customer.phone;
     // var amount = req.query.amount;
     // var payment_method = req.query.payment_type;
     var transaction_id = req.query.id;
     // var status = req.query.status;
     axios.post('https://transspo.com/savebookdetails',{
         // fullname : fullname,
-        // phone : phone,
+        phone : phone,
         // company_id : t_company_id,
         // company_name : t_company_name,
         // bus_no : t_bus_no,
