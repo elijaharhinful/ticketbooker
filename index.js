@@ -223,7 +223,7 @@ app.get('/payconfirm',function(req,res){
 
 app.get('/ticket-success',function(req,res){
     // var fullname = req.query.customer.fullName;
-     var phone = req.query.customer.phone;
+     var phone = "0548777676";
     // var amount = req.query.amount;
     // var payment_method = req.query.payment_type;
     var transaction_id = req.query.id;
