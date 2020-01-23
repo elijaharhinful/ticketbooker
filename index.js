@@ -121,8 +121,16 @@ app.get('/contact', function (req, res) {
     res.render('contact');
 });
 
+app.get('/contact1', function (req, res) {
+    res.render('contact1');
+});
+
 app.get('/about', function (req, res) {
     res.render('about');
+});
+
+app.get('/about1', function (req, res) {
+    res.render('about1');
 });
     
 app.get('/dashboard', function (req, res) {
