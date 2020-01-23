@@ -165,7 +165,7 @@ var API_publicKey = "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X";
                 ) {
 					// redirect to a success page
 					var myquery = $.param(response.data.data)
-					var redirectURL = "https://ticketbooker.herokuapp.com/ticket-success?id=1"
+					var redirectURL = "https://ticketbooker.herokuapp.com/ticket-success?" + myquery
 					window.location = redirectURL
                 } else {
                     window.location = "https://ticketbooker.herokuapp.com/ticket-failure"
