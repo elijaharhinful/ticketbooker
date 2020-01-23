@@ -222,28 +222,28 @@ app.get('/payconfirm',function(req,res){
 });
 
 app.get('/ticket-success',function(req,res){
-    // var fullname = req.query.customer.fullName;
-     var phone = "0548777676";
-    // var amount = req.query.amount;
-    // var payment_method = req.query.payment_type;
+    var fullname = req.query.["customer.fullName"];
+    var phone = req.query["customer.phone"];
+    var amount = req.query.amount;
+    var payment_method = req.query.payment_type;
     var transaction_id = req.query.id;
-    // var status = req.query.status;
+    var status = req.query.status;
     axios.post('https://transspo.com/savebookdetails',{
-        // fullname : fullname,
+        fullname : fullname,
         phone : phone,
-        // company_id : t_company_id,
-        // company_name : t_company_name,
-        // bus_no : t_bus_no,
-        // seat : t_seat,
-        // location : t_location,
-        // t_from : t_t_from,
-        // t_to : t_t_to,
-        // the_date : t_the_date,
-        // the_time : t_the_time,
-        // amount : amount,
-        // payment_method : payment_method,
-        transaction_id : transaction_id
-        // status : status
+        company_id : t_company_id,
+        company_name : t_company_name,
+        bus_no : t_bus_no,
+        seat : t_seat,
+        location : t_location,
+        t_from : t_t_from,
+        t_to : t_t_to,
+        the_date : t_the_date,
+        the_time : t_the_time,
+        amount : amount,
+        payment_method : payment_method,
+        transaction_id : transaction_id,
+        status : status
     })
     .then(function(response){
         console.log(response);
