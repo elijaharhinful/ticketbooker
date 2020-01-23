@@ -6,14 +6,22 @@
         <div id="logmain">
                         <div class="login">
                                 <div class="logpage" >
-                                    <form>
+                                    <form id="confirmform">
                                         <div class="modal-body">
                                             <legend class="text-center">Confirm Payment Details</legend>
                                             <div class="row">
                                                 <div class="col-lg">
                                                     <div class="form-group">
-                                                        <label for="First & Last name">First & Last name</label>
-                                                        <input type="text" title="Name" name="extra_name" id="name" class="form-control" value="<%=name %>" required disabled>
+                                                        <label for="First & Last name">Firstname</label>
+                                                        <input type="text" title="FirstName" name="firstname" id="firstname" class="form-control" placeholder="Firstname" value="<%=payment.firstname %>" required disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg">
+                                                    <div class="form-group">
+                                                        <label for="First & Last name">Lastname</label>
+                                                        <input type="text" title="LastName" name="lastname" id="lastname" class="form-control" placeholder="Lastname" value="<%=payment.lastname %>" required disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -21,7 +29,7 @@
                                                 <div class="col-lg">
                                                     <div class="form-group">
                                                         <label for="Contact number">Contact number</label>
-                                                        <input type="tel" title="Mobile Number" name="extra_mobile" id="number" class="form-control" maxlength="10" value="<%=mobile %>" required disabled>
+                                                        <input type="tel" title="Mobile Number" name="extra_mobile" id="number" class="form-control" maxlength="10" value="<%=payment.mobile %>" required disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -29,7 +37,7 @@
                                                 <div class="col-lg">
                                                     <div class="form-group">
                                                         <label for="Email">Email</label>
-                                                        <input type="email" name="email" id="email" class="form-control" value="<%=email %>" required disabled>
+                                                        <input type="email" name="email" id="email" class="form-control" value="<%=payment.email %>" required disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -37,7 +45,7 @@
                                                 <div class="col-lg">
                                                     <div class="form-group">
                                                         <label for="Amount">Amount(GH₵)</label>
-                                                        <input type="text" name="total" class="form-control" id="total" value="<%=totalamount %>" required disabled>
+                                                        <input type="text" name="total" class="form-control" id="total" value="<%=payment.totalamount %>" required disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -45,14 +53,14 @@
                                                 <div class="col-lg">
                                                     <div class="form-group">
                                                         <label for="Description">Description of Payment</label>
-                                                        <input class="form-control" type="text" name="description" id="description" value="<%=description %>" required disabled>
+                                                        <input class="form-control" type="text" name="description" id="description" value="<%=payment.description %>" required disabled>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg">
                                                     <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
-                                                    <button class="btn btn-primary btn-block"  style="padding: 8px 11px;" type="button" onClick="payWithRave()"><strong>Pay Now</strong></button>
+                                                    <button class="btn btn-primary btn-block"  style="padding: 8px 11px;" type="button" onclick="payWithRave()"><strong>Pay Now</strong></button>
                                                 </div>
                                             </div>
                                             <br>
@@ -68,77 +76,11 @@
                             
                         </div>        
         </div>
-        <script>
-            //Rave Pay
-        var API_publicKey = "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X";
         
-        function payWithRave() {
-            // var customer_email = $('#email').val();
-            // var amount = $('#amount').val();
-            // var phone = $('#number').val();
-            // var txref = $('#description').val();
-            var x = getpaidSetup({
-                PBFPubKey: API_publicKey,
-                customer_email: "user@example.com",
-                amount: 200,
-                customer_phone: "234099940409",
-                currency: "GHS",
-                txref: "rave-123456",
-                meta: [{
-                    metaname: "flightID",
-                    metavalue: "AP1234"
-                }],
-                onclose: function() {},
-                callback: function(response) {
-                    var txref = response.tx.txRef; // collect txRef returned and pass to a server page to complete status check.
-                    console.log("This is the response returned after a charge", response);
-                    if (response.tx.chargeResponseCode == "00" ||response.tx.chargeResponseCode == "0") {
-                        // var fullname = $('#name').val();
-                        // var company_id = "";
-                        // var bus_no = "";
-                        // var seat = "";
-                        // var location = "";
-                        // var t_from = "";
-                        // var t_to = "";
-                        // var the_date = "";
-                        // var the_time = "";
-                        // var payment_mehtod = "";
-                        // var transaction_id = "";
-                        // var status = "";
-                        // axios.post("http://achatcryptostg.com/stcapp/public/savebookdetails",{
-                        //     fullname = fullname,
-                        //     phone = phone,
-                        //     company_id = company_id,
-                        //     bus_no = bus_no,
-                        //     seat = seat,
-                        //     location = location,
-                        //     t_from = t_from,
-                        //     t_to = t_to,
-                        //     the_date = the_date,
-                        //     the_time = the_time,
-                        //     amount = amount,
-                        //     payment_mehtod = payment_mehtod,
-                        //     transaction_id = transaction_id,
-                        //     status = status
-                        // })
-                        // .then(function(response){
-                        //     console.log(response)
-                        //     window.location.href = "D:/DEFACTO/templates/Transpo/views/ticket-success.ejs"
-                        // })
-                        // // .catch(function(error){
-                        //     console.log(error);
-                        // })
-                        // redirect to a success page
-                    } else {
-                        // redirect to a failure page.
-                    }
-        
-                    x.close(); // use this to close the modal immediately after payment.
-                }
-            });
-        }
-        //Rave Pay
-        </script>
     </body>
-
+<!--site javascript included-->
+<script src="/public/js/jquery-3.2.0.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<!-- Main JS-->
+<script type="text/javascript" src="/public/js/site.js"></script>
 </html>

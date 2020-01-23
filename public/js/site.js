@@ -140,17 +140,34 @@ function signValidator(e) {
 	return false;
 };
 
+$('#payfrom .btnsubmit').on('click',function(){
+		var isValid = true;
+		$('.form-field').each(function() {
+		  if ( $(this).val() === '' )
+			  isValid = false;
+		});
+		return isValid;
+		return payWithRave();
+})
 //Rave Pay
-var API_publicKey = "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X";
 
     function payWithRave() {
+		var customer_firstname = $('#confirmform #firstname').val();
+		var customer_lastname = $('#confirmform #lastname').val();
+		var customer_phone = $('#confirmform #number').val();
+		var customer_email = $('#confirmform #email').val();
+		var amount = $('#confirmform #total').val();
+		var txref = $('#confirmform #description').val();
+
         var x = getpaidSetup({
-            PBFPubKey: "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X",
-            customer_email: "user@example.com",
-            amount: 20,
-            customer_phone: "234099940409",
+			PBFPubKey: "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X",
+			customer_firstname : customer_firstname,
+			customer_lastname : customer_lastname,
+            customer_email: customer_email,
+            amount: amount,
+            customer_phone: customer_phone,
             currency: "GHS",
-            txref: "rave-123456",
+            txref: txref,
             meta: [{
                 metaname: "flightID",
                 metavalue: "AP1234"

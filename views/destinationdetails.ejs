@@ -84,6 +84,7 @@
                                                             </div>
                                                             <div class="col-xs-4">
                                                                 <div class="card-body text-center">
+                                                                    <p style="display: none;"class="busno"><%=buses[i].bus_id %></p>
                                                                     <p>Price: GH₵ <span  class="amount"><%=buses[i].amount %></span></p>
                                                                     <p>Duration: <span class="duration"><%=details.journeyhrs %></span></p>
                                                                     <p>Seatsleft: <span  class="seatleft"><%=buses[i].seat_left %></span></p>
@@ -95,6 +96,8 @@
                                                             <div class="col-xs-4">
                                                                 <img class="img-responsive" src="<%=details.image %>" alt="Company logo">
                                                             </div>
+                                                            <p style="display: none;"class="detailsfrom"><%=details.d_from %></p>
+                                                            <p style="display: none;"class="detailsto"><%=details.d_to %></p>
                                                             <p style="display: none;"class="detailscompanyid"><%=detailscompany.id %></p>
                                                             <p style="display: none;"class="detailscompanyname"><%=detailscompany.name %></p>
                                                             <p style="display: none;"class="detailscompanylocation"><%=detailscompany.location %></p>
@@ -158,12 +161,27 @@
                         var amount = card.find('.amount').text();
                         var duration = card.find('.duration').text();
                         var seatleft = card.find('.seatleft').text();
+                        var busno = card.find('.busno').text();
                         var departdate = card.find('.departdate').text();
                         var departtime = card.find('.departtime').text();
+                        var detailsfrom = card.find('.detailsfrom').text();
+                        var detailsto = card.find('.detailsfrom').text();
                         var detailscompanyid = card.find('.detailscompanyid').text();
                         var detailscompanyname = card.find('.detailscompanyname').text();
                         var detailscompanylocation = card.find('.detailscompanylocation').text();
-                        var datatosend = {amount: amount, duration:duration,seatleft:seatleft,departdate:departdate,departtime:departtime,detailscompanyid:detailscompanyid,detailscompanyname:detailscompanyname,detailscompanylocation:detailscompanylocation};
+                        var datatosend = {
+                            amount: amount,
+                             duration:duration,
+                             seatleft:seatleft,
+                             departdate:departdate,
+                             departtime:departtime,
+                             detailsfrom :detailsto,
+                             detailsto : detailsto,
+                             busno : busno,
+                             detailscompanyid:detailscompanyid,
+                             detailscompanyname:detailscompanyname,
+                             detailscompanylocation:detailscompanylocation
+                            };
                         $.post('/destinationdetails',datatosend,function(data){
                         })
                     })
