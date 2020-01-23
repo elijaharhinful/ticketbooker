@@ -221,6 +221,8 @@ app.get('/payconfirm',function(req,res){
 });
 
 app.get('/ticket-success',function(req,res){
+    var x = req.query.id;
+    console.log(x);
     // var fullname = req.query.customer.fullName;
     // var phone = req.query.customer.phone;
     // var amount = req.query.amount;
@@ -250,8 +252,7 @@ app.get('/ticket-success',function(req,res){
     // .catch(function(error){
     //     console.log(error)
     // })
-    console.log(res)
-    res.render('ticket-success')
+    res.render('ticket-success',{x:x})
 });
 
 app.get('/ticket-failure',function(req,res){
@@ -570,30 +571,30 @@ app.post('/editprofile',urlencodedParser,function(req,res){
     
 // })
 
-app.post("/pay",urlencodedParser, (req, res) => {
-    const data = {
-        PBFPubKey: "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X",
-        txref: "TransactionRef" + Date.now(),
-        customer_email: req.body.extra_email,
-        customer_phone: req.body.extra_mobile,
-        amount: 100,
-        currency: "GHS",
-        country: "GH",
-        redirect_url: "https://www.ticketbooker.herokuapp.com/ticket-success"
-    };
-    axios({
-        url: "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/hosted/pay",
-        method: "POST",
-        data
-    })
-        .then(result => {
-            console.log(result.data);
-            res.redirect(result.data.data.link);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
+// app.post("/pay",urlencodedParser, (req, res) => {
+//     const data = {
+//         PBFPubKey: "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X",
+//         txref: "TransactionRef" + Date.now(),
+//         customer_email: req.body.extra_email,
+//         customer_phone: req.body.extra_mobile,
+//         amount: 100,
+//         currency: "GHS",
+//         country: "GH",
+//         redirect_url: "https://www.ticketbooker.herokuapp.com/ticket-success"
+//     };
+//     axios({
+//         url: "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/hosted/pay",
+//         method: "POST",
+//         data
+//     })
+//         .then(result => {
+//             console.log(result.data);
+//             res.redirect(result.data.data.link);
+//         })
+//         .catch(err => {
+//             console.log(err);
+//         });
+// });
 
 //For homepage search
 // app.get('/search',function(req,res){

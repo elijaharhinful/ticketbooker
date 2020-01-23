@@ -140,72 +140,14 @@ function signValidator(e) {
 	return false;
 };
 
-
-
-//qr code
-var options = {
-	// render method: 'canvas', 'image' or 'div'
-	render: 'image',
-
-	// version range somewhere in 1 .. 40
-	minVersion: 1,
-	maxVersion: 40,
-
-	// error correction level: 'L', 'M', 'Q' or 'H'
-	ecLevel: 'L',
-
-	// offset in pixel if drawn onto existing canvas
-	left: 0,
-	top: 0,
-
-	// size in pixel
-	size: 100,
-
-	// code color or image element
-	fill: '#000',
-
-	// background color or image element, null for transparent background
-	background: null,
-
-	// content
-	text: "some text",
-
-	// corner radius relative to module width: 0.0 .. 0.5
-	radius: 0,
-
-	// quiet zone in modules
-	quiet: 0,
-
-	// modes
-	// 0: normal
-	// 1: label strip
-	// 2: label box
-	// 3: image strip
-	// 4: image box
-	mode: 0,
-
-	mSize: 0.1,
-	mPosX: 0.5,
-	mPosY: 0.5,
-
-	label: 'no label',
-	fontname: 'sans',
-	fontcolor: '#000',
-
-	image: null
-}
-
-$("#selector").qrcode(options);
-//qr code
-
 //Rave Pay
 var API_publicKey = "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X";
 
     function payWithRave() {
         var x = getpaidSetup({
-            PBFPubKey: API_publicKey,
+            PBFPubKey: "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X",
             customer_email: "user@example.com",
-            amount: 2000,
+            amount: 20,
             customer_phone: "234099940409",
             currency: "GHS",
             txref: "rave-123456",
@@ -215,15 +157,18 @@ var API_publicKey = "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X";
             }],
             onclose: function() {},
             callback: function(response) {
-                var txref = response.tx.txRef; // collect txRef returned and pass to a 					server page to complete status check.
+                var txref = response.tx.txRef; // collect txRef returned and pass to a server page to complete status check.
                 console.log("This is the response returned after a charge", response);
                 if (
                     response.tx.chargeResponseCode == "00" ||
                     response.tx.chargeResponseCode == "0"
                 ) {
-                    // redirect to a success page
+					// redirect to a success page
+					var myquery = $.param(response.data.data)
+					var redirectURL = "https://ticketbooker.herokuapp.com/ticket-success?id=1"
+					window.location = redirectURL
                 } else {
-                    // redirect to a failure page.
+                    window.location = "https://ticketbooker.herokuapp.com/ticket-failure"
                 }
 
                 x.close(); // use this to close the modal immediately after payment.
@@ -231,76 +176,3 @@ var API_publicKey = "FLWPUBK_TEST-abdf93acc2ba3a7b94fa44ad0d8ec0cf-X";
         });
 	}
 //Rave Pay
-/*
-$('#signupform').on('submit', function(){
-	sendsignupdata();
-});
-
-$('#loginform').on('submit', function(){
-	sendlogindata();
-});
-*/
-
-/*Acessing API
-var mainAPIUrl = 'https://achatcryptostg.com/stcapp/public';
-
-
-function getPrices() {
-	axios.get(mainAPIUrl + "/companydestinationdetails/1")
-		.then(function (response) {
-			data = response.data
-
-			var $tableBody = $('<tbody></tbody>');
-			var $row = $('<tr></tr>');
-			$row.append($('<td></td>').text(data.d_from));
-			$row.append($('<td></td>').text(data.d_to));
-			$row.append($('<td></td>').text(data.journeyhrs));
-			$row.append($('<td></td>').text(data.journeyhrs));
-			$tableBody.append($row);
-			$('thead').after($tableBody);
-
-		})
-}
-
-
-function sendsignupdata(){
-	var tel = $('#tel').val();
-	var psw = $('#psw').val();
-	var cpsw = $('#cpsw').val();
-	axios.post(mainAPIUrl + "/signup", {phone:tel, password:psw})
-	.then(
-		function(response){
-			var data = response.data
-			if (tel == data.number){
-				if (psw == data.password){
-					return true;
-				}
-			}
-		}
-	)
-	.catch(function(error){
-		alert(error);
-	});
-}
-
-//for login
-function sendlogindata(){
-	var tel = $('#tel').val();
-	var psw = $('#psw').val();
-	var cpsw = $('#cpsw').val();
-	axios.post(mainAPIUrl + "/login", {phone:tel, password:psw})
-	.then(
-			function(response){
-				var data = response.data
-				if (tel == data.number){
-					if (psw == data.password){
-						return true;
-					}
-				}
-			}
-		)
-		.catch(function(error){
-			alert(error);
-		});
-}
-*/
