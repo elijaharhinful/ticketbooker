@@ -208,7 +208,8 @@ app.get('/ticketA',async function(req,res){
         }  
     })
     // Send the link of generated QR code
-    var qrurl = "public/qr/" + qr_code_file_name
+    var qrurl = "";
+    // var qrurl = "public/qr/" + qr_code_file_name
     res.render('ticketA',{buses,details,qrurl,chosendata})
 })
 
