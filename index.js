@@ -22,7 +22,7 @@ const TWO_HOURS = 1000 * 60 * 60 * 2; //2 HOURS
 
 const {
     PORT = 3000,
-    NODE_ENV = "development",
+    NODE_ENV = "production",
     SESS_NAME = 'sid',
     SESS_SECRET = 'appkeysecret',
     SESS_LIFETIME = TWO_HOURS 
