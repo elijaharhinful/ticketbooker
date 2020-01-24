@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "ejs": "^2.6.2",
     "email-templates": "^6.0.4",
@@ -32,7 +33,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon ./index.js"
   },
   "author": "Elijah",
   "license": "ISC"

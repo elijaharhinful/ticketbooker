@@ -180,7 +180,8 @@ function signValidator(e) {
 
 //to load ticket details
 var transactionid = ""; //to be passed as qrcode text
-$("#ticketHistory tbody td a").on('click',function(){
+$("#ticketHistory tbody tr td a").on('click',function(){
+	//var touse = $(this);
 	var from = $('.historyfrom').text();
 	var date = $('.historydate').text();
 	var to = $('.historyto').text();

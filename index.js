@@ -12,28 +12,77 @@ const TeleSignSDK = require('telesignsdk');
 //const messagebird = require('messagebird')('zxQxefh9UCbIMZGsBorCWxUlk');
 //const Ravepay = require('ravepay');
 
-const { JSDOM } = jsdom;
-const { window } = new JSDOM();
-const { document } = (new JSDOM('')).window;
-global.document = document;
-var $ = jQuery = require('jquery')(window);
+// const { JSDOM } = jsdom;
+// const { window } = new JSDOM();
+// const { document } = (new JSDOM('')).window;
+// global.document = document;
+// var $ = jQuery = require('jquery')(window);
 
+const TWO_HOURS = 1000 * 60 * 60 * 2; //2 HOURS
+
+const {
+    PORT = 3000,
+    NODE_ENV = "development",
+    SESS_NAME = 'sid',
+    SESS_SECRET = 'appkeysecret',
+    SESS_LIFETIME = TWO_HOURS 
+} = process.env
+
+const IN_PROD = NODE_ENV === 'production'
+
+// invoke an instance of express application.
 const app = express();
 app.use(cors());
 
-//creating app session
-app.use(session({
-    secret: 'secretforapp',
-    resave: true,
-    saveUninitialized: true
+// initialize body-parser to parse incoming parameters requests to req.body
+app.use(bodyParser.urlencoded({
+    extended: true
 }));
 
+// initialize express-session to allow us track the logged-in user across sessions.
+app.use(session({
+    name : SESS_NAME,
+    secret: SESS_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: SESS_LIFETIME,
+        sameSite : true,
+        secure : IN_PROD
+    }
+}));
+
+const redirectlogin = (req, res, next) =>{
+    if (!req.session.userId){
+        res.redirect('/login')
+    }else{
+        next()
+    }
+}
+
+const redirectDashboard = (req, res, next) =>{
+    if (req.session.userId){
+        res.redirect('/dashboard')
+    }else{
+        next()
+    }
+}
+
+// app.use((req,res,next)=>{
+//     const {userId} = req.session
+//     if (userId){
+//         res.locals.user = users.find(
+//             user => user.phone === userId
+//         )
+//     }
+// })
 app.set('view engine', 'ejs');
-urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use('/public', express.static('public'));
 
-const port = process.env.PORT || 3000;
-app.set('port',port);
+// const port = process.env.PORT || 3000;
+// app.set('port',port);
+
+
 
             //routes start here
 //node get requests
@@ -111,9 +160,12 @@ var t_the_time = "";
 
 var departtime = ""
 app.get('/', function (req, res) {
+    const {userId} = req.session
+    console.log(userId);
     res.render('index',{prices1,prices2,prices3,companyname});
 });
 app.get('/index', function (req, res) {
+    //const {userId} = req.session
     res.render('index',{prices1,prices2,prices3,companyname});
 });
 
@@ -133,31 +185,32 @@ app.get('/about1', function (req, res) {
     res.render('about1');
 });
     
-app.get('/dashboard', function (req, res) {
-    if (req.session.loggedin){
-        res.render('dashboard',{prices1,prices2,prices3,user})
-    } else{
-        res.render('login',{prices1,prices2,prices3,message,message1});
-    }
+app.get('/dashboard',redirectlogin, function (req, res) {
+    res.render('dashboard',{prices1,prices2,prices3,user})
+    // if (req.session.loggedin){
+    //     res.render('dashboard',{prices1,prices2,prices3,user})
+    // } else{
+    //     res.render('login',{prices1,prices2,prices3,message,message1});
+    // }
 });
 
-app.get('/booking', function(req, res){
+app.get('/booking',redirectlogin, function(req, res){
     res.render('booking',{prices1,prices2,prices3,companyname,user,amounterror});
 });
 
-app.get('/busdestination',function(req,res){
+app.get('/busdestination',redirectlogin,function(req,res){
     res.render('busdestination',{prices1,prices2,prices3,idname,iddetails,user});
 });
 
-app.get('/destinationdetails', function (req, res) {
+app.get('/destinationdetails',redirectlogin, function (req, res) {
     res.render('destinationdetails',{prices1,prices2,prices3,user,details,buses,chosendata,detailscompany});
 });
 
-app.get('/payment', function (req, res) {
+app.get('/payment',redirectlogin, function (req, res) {
     res.render('payment',{prices1,prices2,prices3,details,buses});
 });
 
-app.get('/profile', function (req, res) {
+app.get('/profile',redirectlogin, function (req, res) {
     //to get user profile
     axios.get('https://transspo.com/profile/' + usernum)
         .then(function(response){
@@ -169,22 +222,19 @@ app.get('/profile', function (req, res) {
         })
 });
 
-app.get('/editprofile', function (req, res) {
+app.get('/editprofile',redirectlogin, function (req, res) {
     res.render('editprofile',{success,user});
 });
 
-app.get('/sign', function (req, res) {
+app.get('/sign',redirectDashboard, function (req, res) {
     res.render('sign',{message});
 });
 
-app.get('/login', function (req, res) {
+app.get('/login',redirectDashboard, function (req, res) {
+    //req.session.userId = 
     res.render('login',{message,message1});
 });
 
-app.get('/logout', function (req, res) {
-    req.session.loggedIn=false;
-    res.redirect('/');
-});
 
 app.get('/token', function (req, res) {
     res.render('token',{message,thetoken});
@@ -336,7 +386,7 @@ app.get('/ticket-failure',function(req,res){
 
 //node post requests
 //this is for the login  
-app.post('/auth',urlencodedParser, function(req, res) {
+app.post('/auth',redirectDashboard, function(req, res) {
 	var num = req.body.tel;
     var psw = req.body.password;
 	if (psw) {
@@ -347,11 +397,11 @@ app.post('/auth',urlencodedParser, function(req, res) {
         .then(function(response){
             thestatus = response.data.status;
             if (thestatus == "success") {
-                req.session.loggedin = true;
+                req.session.userId = num;
                 usernum = num;
                 username = "";
                 //to get user profile
-                axios.get('https://transspo.com/profile/' + usernum)
+                axios.get('https://transspo.com/profile/' + req.session.userId)
                 .then(function(response){
                     user = response.data.user
                 })
@@ -381,7 +431,7 @@ app.post('/auth',urlencodedParser, function(req, res) {
 });
 
 //this is for user signup
-app.post('/token', urlencodedParser, function (req, res) {
+app.post('/token',redirectDashboard,  function (req, res) {
     firstname = req.body.firstname;
     lastname = req.body.lastname;
     email = req.body.email;
@@ -394,6 +444,7 @@ app.post('/token', urlencodedParser, function (req, res) {
             password : psw
         })
         .then(function(response){
+            req.session.userId = num
             thestatus = response.data.status;
             thetoken = response.data.token;
             tokenmsg = "Dear Customer, use this token " + thetoken + " to verify your new TransPo account";
@@ -482,8 +533,19 @@ app.post('/token', urlencodedParser, function (req, res) {
     }
 });
 
+app.post('/logout',redirectlogin, function(req,res){
+    req.session.destroy(err => {
+        if (err){
+            return res.redirect('/dashboard')
+        }
+
+        res.clearCookie(SESS_NAME)
+        res.redirect('/login')
+    })
+})
+
 //for token verification
-app.post('/target', urlencodedParser, function (req, res) {
+app.post('/target',  function (req, res) {
     var token = req.body.token;
     if (token == thetoken){
         message1 = "Account created. You may login"
@@ -499,7 +561,7 @@ app.post('/target', urlencodedParser, function (req, res) {
 });
 
 //this is for password reset
-app.post('/passtoken',urlencodedParser,function(req,res){
+app.post('/passtoken',function(req,res){
     var num = req.body.tel;
     axios.post("https://transspo.com/sendtoken",{
         phone : num
@@ -555,7 +617,7 @@ app.post('/passtoken',urlencodedParser,function(req,res){
 });
 
 
-app.post('/newpass',urlencodedParser,function(req,res){
+app.post('/newpass',function(req,res){
     var tok = req.body.token;
     if (tok == sometoken){
         message = "";
@@ -568,7 +630,7 @@ app.post('/newpass',urlencodedParser,function(req,res){
     res.end();
 });
 
-app.post('/tologin',urlencodedParser,function(req,res){
+app.post('/tologin',function(req,res){
     var pass = req.body.newpassword;
     var cpass = req.body.password;
     if (pass == cpass){
@@ -590,7 +652,7 @@ app.post('/tologin',urlencodedParser,function(req,res){
 });
 
 //To update user profile
-app.post('/editprofile',urlencodedParser,function(req,res){
+app.post('/editprofile',function(req,res){
     var firstname = req.body.first_name;
     var lastname = req.body.last_name;
     var email = req.body.email;
@@ -604,7 +666,7 @@ app.post('/editprofile',urlencodedParser,function(req,res){
     })
     .then(function(response){
         success = '<div class="alert alert-success alert-dismissible fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success! </strong> Go to <a href="/profile" class="alert-link">profile</a> to view updated profile.</div>'
-        res.render('editprofile',{success})
+        res.render('editprofile',{success,user})
     })
     .catch(function(error){
         console.log(error);
@@ -613,7 +675,7 @@ app.post('/editprofile',urlencodedParser,function(req,res){
 
 
 //to submit customer details to payconfirm
-app.post('/pay',urlencodedParser,function(req,res){
+app.post('/pay',function(req,res){
     totalamount = amount
     firstname = req.body.firstname 
     lastname = req.body.lastname;
@@ -652,7 +714,7 @@ app.post('/pay',urlencodedParser,function(req,res){
 
 
 /*To post subscription emails 
-app.post('/subcribe',urlencodedParser,function(req,res){
+app.post('/subcribe',function(req,res){
     var email = req.body.email;
     axios.post('https://transspo.com/')
     .then(function(response){
@@ -668,7 +730,7 @@ app.post('/subcribe',urlencodedParser,function(req,res){
 var iddetails = "";
 var idname = "";
 var idurls = "";
-app.post('/booking',urlencodedParser, function(req,res){
+app.post('/booking', function(req,res){
     idurls = req.body.id;
     idname = req.body.name;
     axios.get("https://transspo.com/companydestinationdetails/" + idurls)
@@ -682,7 +744,7 @@ app.post('/booking',urlencodedParser, function(req,res){
 });
 
 
-app.post('/busdestination',urlencodedParser,function(req,res){
+app.post('/busdestination',function(req,res){
     var from = req.body.from;
     var to = req.body.to;
     axios.get("https://transspo.com/companydestination/"+ from +"/" + to + "/" + idurls)
@@ -696,7 +758,7 @@ app.post('/busdestination',urlencodedParser,function(req,res){
     })
 });
 
-app.post('/destinationdetails',urlencodedParser,function(req,res){
+app.post('/destinationdetails',function(req,res){
     amount = req.body.amount;
     var duration = req.body.duration;
     var seatleft = req.body.seatleft;
@@ -737,7 +799,10 @@ app.use(function (err, req, res, next) {
 });
 
 //listening server
-app.listen(app.get('port'), function (err) {
-    if (err) throw err;
-    console.log("App is running on http://localhost:3000");
-});
+app.listen(PORT, () => {
+    console.log(`Listening to requests on http://localhost:${PORT}`);
+  });
+// app.listen(app.get('port'), function (err) {
+//     if (err) throw err;
+//     console.log("App is running on http://localhost:3000");
+// }); 
