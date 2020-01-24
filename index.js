@@ -386,7 +386,7 @@ app.get('/ticket-failure',function(req,res){
 
 //node post requests
 //this is for the login  
-app.post('/auth',redirectDashboard, function(req, res) {
+app.post('/auth', function(req, res) {
 	var num = req.body.tel;
     var psw = req.body.password;
 	if (psw) {
@@ -666,7 +666,7 @@ app.post('/editprofile',function(req,res){
     })
     .then(function(response){
         success = '<div class="alert alert-success alert-dismissible fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success! </strong> Go to <a href="/profile" class="alert-link">profile</a> to view updated profile.</div>'
-        res.render('editprofile',{success,user})
+        res.render('editprofile',{success})
     })
     .catch(function(error){
         console.log(error);
