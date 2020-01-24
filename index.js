@@ -25,7 +25,7 @@ app.use(cors());
 app.use(session({
     secret: 'secretforapp',
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: true
 }));
 
 app.set('view engine', 'ejs');
