@@ -101,15 +101,6 @@ function closeNav() {
 */
 
 
-$('.tocancel').on('click', function () {
-	var btn = $(this);
-	btn.addClass('disable');
-	if (confirm('Are you sure you want to cancel ticket?')){
-		$('.qrcode').addClass('disable');
-	}else{
-		btn.removeClass('disable');
-	}
-	});
 
 
 
@@ -262,3 +253,35 @@ var options = {
     image: null
 }
 $('.qrcode').qrcode(options);
+
+// $('.tocancel').on('click', function () {
+// 	var btn = $(this);
+// 	btn.addClass('disable');
+// 	if (confirm('Are you sure you want to cancel ticket?')){
+// 		$('.qrcode').addClass('disable');
+// 	}else{
+// 		btn.removeClass('disable');
+// 	}
+// 	});
+
+$('.tocancel').on('click', function () {
+	var btn = $(this);
+	btn.addClass('disable');
+	var transactionid = $('.transactionid').text();
+	if (confirm('Are you sure you want to cancel ticket?')){
+		$('.qrcode').addClass('disable');
+		axios.get('http://transspo.com/cancelticket/' + transactionid)
+		.then(function(response){
+			console.log(response)
+			if (response.data.status == "success" || response.data.message == "Ticket Cancelled Successfully"){
+				$('.qrcode').addClass('disable');
+				alert("Ticket cancellation succcessful");
+			}else{
+				alert("Ticket cancellaton failed")
+			}
+		})
+	}else{
+		btn.removeClass('disable');
+	}
+	});
+	

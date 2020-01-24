@@ -25,7 +25,7 @@ app.use(cors());
 app.use(session({
     secret: 'secretforapp',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: false
 }));
 
 app.set('view engine', 'ejs');
@@ -180,6 +180,12 @@ app.get('/sign', function (req, res) {
 app.get('/login', function (req, res) {
     res.render('login',{message,message1});
 });
+
+app.get('/logout', function (req, res) {
+    req.session.loggedIn=false;
+    res.redirect('/');
+});
+
 app.get('/token', function (req, res) {
     res.render('token',{message,thetoken});
 });
