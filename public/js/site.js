@@ -189,6 +189,7 @@ $("#ticketHistory tbody td a").on('click',function(){
 	var name = $('.historycompanyname').text();
 	var time = $('.historytime').text();
 
+
 	$('.modal-body .bus').text(name);
 	$('.modal-body .initial').text(from);
 	$('.modal-body .price').text('GH₵ '+ amount);
@@ -254,27 +255,17 @@ var options = {
 }
 $('.qrcode').qrcode(options);
 
-// $('.tocancel').on('click', function () {
-// 	var btn = $(this);
-// 	btn.addClass('disable');
-// 	if (confirm('Are you sure you want to cancel ticket?')){
-// 		$('.qrcode').addClass('disable');
-// 	}else{
-// 		btn.removeClass('disable');
-// 	}
-// 	});
-
 $('.tocancel').on('click', function () {
 	var btn = $(this);
 	btn.addClass('disable');
-	var transactionid = $('.transactionid').text();
 	if (confirm('Are you sure you want to cancel ticket?')){
 		$('.qrcode').addClass('disable');
-		axios.get('http://transspo.com/cancelticket/' + transactionid)
+		axios.get('https://transspo.com/cancelticket/' + transactionid)
 		.then(function(response){
-			console.log(response)
 			if (response.data.status == "success" || response.data.message == "Ticket Cancelled Successfully"){
 				$('.qrcode').addClass('disable');
+				$('tr td .btn-info').addClass('btn-warning');
+				$('tr td .btn-info').text("Cancelled").
 				alert("Ticket cancellation succcessful");
 			}else{
 				alert("Ticket cancellaton failed")
