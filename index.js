@@ -22,7 +22,7 @@ const TWO_HOURS = 1000 * 60 * 60 * 2; //2 HOURS
 
 const {
     PORT = 3000,
-    NODE_ENV = "production",
+    NODE_ENV = "development",
     SESS_NAME = 'sid',
     SESS_SECRET = 'appkeysecret',
     SESS_LIFETIME = TWO_HOURS 
@@ -52,21 +52,21 @@ app.use(session({
     }
 }));
 
-const redirectlogin = (req, res, next) =>{
-    if (!req.session.userId){
-        res.redirect('/login')
-    }else{
-        next()
-    }
-}
+// const redirectlogin = (req, res, next) =>{
+//     if (!req.session.userId){
+//         res.redirect('/login')
+//     }else{
+//         next()
+//     }
+// }
 
-const redirectDashboard = (req, res, next) =>{
-    if (req.session.userId){
-        res.redirect('/dashboard')
-    }else{
-        next()
-    }
-}
+// const redirectDashboard = (req, res, next) =>{
+//     if (req.session.userId){
+//         res.redirect('/dashboard')
+//     }else{
+//         next()
+//     }
+// }
 
 // app.use((req,res,next)=>{
 //     const {userId} = req.session
@@ -185,7 +185,7 @@ app.get('/about1', function (req, res) {
     res.render('about1');
 });
     
-app.get('/dashboard',redirectlogin, function (req, res) {
+app.get('/dashboard', function (req, res) {
     res.render('dashboard',{prices1,prices2,prices3,user})
     // if (req.session.loggedin){
     //     res.render('dashboard',{prices1,prices2,prices3,user})
@@ -194,23 +194,23 @@ app.get('/dashboard',redirectlogin, function (req, res) {
     // }
 });
 
-app.get('/booking',redirectlogin, function(req, res){
+app.get('/booking', function(req, res){
     res.render('booking',{prices1,prices2,prices3,companyname,user,amounterror});
 });
 
-app.get('/busdestination',redirectlogin,function(req,res){
+app.get('/busdestination',function(req,res){
     res.render('busdestination',{prices1,prices2,prices3,idname,iddetails,user});
 });
 
-app.get('/destinationdetails',redirectlogin, function (req, res) {
+app.get('/destinationdetails', function (req, res) {
     res.render('destinationdetails',{prices1,prices2,prices3,user,details,buses,chosendata,detailscompany});
 });
 
-app.get('/payment',redirectlogin, function (req, res) {
+app.get('/payment', function (req, res) {
     res.render('payment',{prices1,prices2,prices3,details,buses});
 });
 
-app.get('/profile',redirectlogin, function (req, res) {
+app.get('/profile', function (req, res) {
     //to get user profile
     axios.get('https://transspo.com/profile/' + usernum)
         .then(function(response){
@@ -222,15 +222,15 @@ app.get('/profile',redirectlogin, function (req, res) {
         })
 });
 
-app.get('/editprofile',redirectlogin, function (req, res) {
+app.get('/editprofile', function (req, res) {
     res.render('editprofile',{success,user});
 });
 
-app.get('/sign',redirectDashboard, function (req, res) {
+app.get('/sign', function (req, res) {
     res.render('sign',{message});
 });
 
-app.get('/login',redirectDashboard, function (req, res) {
+app.get('/login', function (req, res) {
     //req.session.userId = 
     res.render('login',{message,message1});
 });
@@ -389,49 +389,53 @@ app.get('/ticket-failure',function(req,res){
 app.post('/auth', function(req, res) {
 	var num = req.body.tel;
     var psw = req.body.password;
-	if (psw) {
-       axios.post("https://transspo.com/login",{
-            phone : num,
-            password : psw
-        })
-        .then(function(response){
-            thestatus = response.data.status;
-            if (thestatus == "success") {
-                req.session.userId = num;
-                usernum = num;
-                username = "";
-                //to get user profile
-                axios.get('https://transspo.com/profile/' + req.session.userId)
-                .then(function(response){
-                    user = response.data.user
-                })
-                .catch(function(error){
-                    console.log(error)
-                })
-				res.redirect('/dashboard');
-            }else if (response.data.message == "Invalid Password"){
-                message = "Invalid Password"
-                res.render('login',{message : message,message1:message1})
-                message = "";
-            } 
-            else if (thestatus == "error"){
-                message = 'Sorry you do not have any account with the details you logged in with. Go to signup page to create an account';
-                res.render('login',{message : message,message1:message1})
-                message = "";
-			}
-			res.end();
-        })
-        .catch(function(error){
-            console.log(error)
-        })	
-	} else {
-        message = "Invalid login details"
-        res.render('login',{message : message,message1:message1})
+    if(psw){
+        usernum = num
+        res.redirect('/dashboard')
     }
+	// if (psw) {
+    //    axios.post("https://transspo.com/login",{
+    //         phone : num,
+    //         password : psw
+    //     })
+    //     .then(function(response){
+    //         thestatus = response.data.status;
+    //         if (thestatus == "success") {
+    //             req.session.userId = num;
+    //             usernum = num;
+    //             username = "";
+    //             //to get user profile
+    //             axios.get('https://transspo.com/profile/' + req.session.userId)
+    //             .then(function(response){
+    //                 user = response.data.user
+    //             })
+    //             .catch(function(error){
+    //                 console.log(error)
+    //             })
+	// 			res.redirect('/dashboard');
+    //         }else if (response.data.message == "Invalid Password"){
+    //             message = "Invalid Password"
+    //             res.render('login',{message : message,message1:message1})
+    //             message = "";
+    //         } 
+    //         else if (thestatus == "error"){
+    //             message = 'Sorry you do not have any account with the details you logged in with. Go to signup page to create an account';
+    //             res.render('login',{message : message,message1:message1})
+    //             message = "";
+	// 		}
+	// 		res.end();
+    //     })
+    //     .catch(function(error){
+    //         console.log(error)
+    //     })	
+	// } else {
+    //     message = "Invalid login details"
+    //     res.render('login',{message : message,message1:message1})
+    // }
 });
 
 //this is for user signup
-app.post('/token',redirectDashboard,  function (req, res) {
+app.post('/token',  function (req, res) {
     firstname = req.body.firstname;
     lastname = req.body.lastname;
     email = req.body.email;
@@ -533,7 +537,7 @@ app.post('/token',redirectDashboard,  function (req, res) {
     }
 });
 
-app.post('/logout',redirectlogin, function(req,res){
+app.post('/logout', function(req,res){
     req.session.destroy(err => {
         if (err){
             return res.redirect('/dashboard')
