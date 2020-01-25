@@ -41,17 +41,17 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// const client = redis.createClient()  //for traditional redi
+const client = redis.createClient()  //for traditional redi
 
-// const store = new RedisStore({client});
+const store = new RedisStore({client});
 
-const client = new Redis({
-    // host: 'localhost', // already the default
-    // port: 6379, // already the default
-    // password: 'secret'
-})
+// const client = new Redis({
+//     // host: 'localhost', // already the default
+//     // port: 6379, // already the default
+//     // password: 'secret'
+// })
   
-const store = new RedisStore({ client })
+// const store = new RedisStore({ client })
   
 
 // initialize express-session to allow us track the logged-in user across sessions.
