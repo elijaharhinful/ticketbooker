@@ -101,9 +101,6 @@ function closeNav() {
 */
 
 
-
-
-
 //Validatons
 function profileValidator() {
 	var npsw = $('#npsw').val();
@@ -180,8 +177,8 @@ function signValidator(e) {
 
 //to load ticket details
 var transactionid = ""; //to be passed as qrcode text
-$("#ticketHistory tbody tr td a").on('click',function(){
-	//var touse = $(this);
+$("#ticketHistory tbody tr").on('click',function(){
+	var touse = $(this);
 	var from = $('.historyfrom').text();
 	var date = $('.historydate').text();
 	var to = $('.historyto').text();

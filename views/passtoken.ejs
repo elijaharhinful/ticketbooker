@@ -12,10 +12,10 @@
                                     <% } %>
                                     <div class="form-group">
                                         <label for="tel">Enter token</label>
-                                        <input type="number" name="token" class="form-control" value="<%= sometoken %>" required>
+                                        <input name="token" class="form-control" value="<%= sometoken %>" required>
                                     </div>
-                                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
-                                    <p>Didn't receive any code? <a href="#" style="color:red" class="resend">Resend token</a></p>
+                                    <button type="submit" class="btn btn-sm btn-info">Submit token</button>
+                                    <p>Didn't receive any code? <a href="/resend" style="color:red" class="resend">Resend token</a></p>
                                 </form>
                             </div>
                         

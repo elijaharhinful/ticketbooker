@@ -9,8 +9,6 @@ const jsdom = require('jsdom');
 "use strict";
 const nodemailer = require("nodemailer");
 const TeleSignSDK = require('telesignsdk');
-//const messagebird = require('messagebird')('zxQxefh9UCbIMZGsBorCWxUlk');
-//const Ravepay = require('ravepay');
 
 // const { JSDOM } = jsdom;
 // const { window } = new JSDOM();
@@ -23,6 +21,7 @@ const TWO_HOURS = 1000 * 60 * 60 * 2; //2 HOURS
 const {
     PORT = 3000,
     NODE_ENV = "development",
+
     SESS_NAME = 'sid',
     SESS_SECRET = 'appkeysecret',
     SESS_LIFETIME = TWO_HOURS 
@@ -52,30 +51,48 @@ app.use(session({
     }
 }));
 
-// const redirectlogin = (req, res, next) =>{
-//     if (!req.session.userId){
-//         res.redirect('/login')
-//     }else{
-//         next()
-//     }
-// }
+const redirectlogin = (req, res, next) =>{
+    if (!req.session.userId){
+        res.redirect('/login')
+    }else{
+        next()
+    }
+}
 
-// const redirectDashboard = (req, res, next) =>{
-//     if (req.session.userId){
-//         res.redirect('/dashboard')
-//     }else{
-//         next()
-//     }
-// }
+const redirectregister = (req, res, next) =>{
+    if (!req.session.userId){
+        res.redirect('/sign')
+    }else{
+        next()
+    }
+}
 
-// app.use((req,res,next)=>{
-//     const {userId} = req.session
-//     if (userId){
-//         res.locals.user = users.find(
-//             user => user.phone === userId
-//         )
-//     }
-// })
+const redirectpassreset = (req, res, next) =>{
+    if (!req.session.userId){
+        res.redirect('/passreset')
+    }else{
+        next()
+    }
+}
+
+
+
+const redirectDashboard = (req, res, next) =>{
+    if (req.session.userId){
+        res.redirect('/dashboard')
+    }else{
+        next()
+    }
+}
+
+app.use((req,res,next)=>{
+    const {userId} = req.session
+    if (userId){
+        res.locals.user = user
+    }
+    next();
+})
+
 app.set('view engine', 'ejs');
 app.use('/public', express.static('public'));
 
@@ -125,7 +142,6 @@ axios.get("https://transspo.com/companies")
     //end of booking form control
 
 var user = "";
-var usernum = "";
 var thetoken = "";
 var message = "";
 var message1 = "";
@@ -160,12 +176,9 @@ var t_the_time = "";
 
 var departtime = ""
 app.get('/', function (req, res) {
-    const {userId} = req.session
-    console.log(userId);
     res.render('index',{prices1,prices2,prices3,companyname});
 });
 app.get('/index', function (req, res) {
-    //const {userId} = req.session
     res.render('index',{prices1,prices2,prices3,companyname});
 });
 
@@ -185,7 +198,8 @@ app.get('/about1', function (req, res) {
     res.render('about1');
 });
     
-app.get('/dashboard', function (req, res) {
+app.get('/dashboard',redirectlogin, function (req, res) {
+    const {user} = res.locals
     res.render('dashboard',{prices1,prices2,prices3,user})
     // if (req.session.loggedin){
     //     res.render('dashboard',{prices1,prices2,prices3,user})
@@ -194,49 +208,53 @@ app.get('/dashboard', function (req, res) {
     // }
 });
 
-app.get('/booking', function(req, res){
+app.get('/booking',redirectlogin, function(req, res){
     res.render('booking',{prices1,prices2,prices3,companyname,user,amounterror});
 });
 
-app.get('/busdestination',function(req,res){
+app.get('/busdestination',redirectlogin,function(req,res){
     res.render('busdestination',{prices1,prices2,prices3,idname,iddetails,user});
 });
 
-app.get('/destinationdetails', function (req, res) {
+app.get('/destinationdetails',redirectlogin, function (req, res) {
     res.render('destinationdetails',{prices1,prices2,prices3,user,details,buses,chosendata,detailscompany});
 });
 
-app.get('/payment', function (req, res) {
+app.get('/payment',redirectlogin, function (req, res) {
     res.render('payment',{prices1,prices2,prices3,details,buses});
 });
 
-app.get('/profile', function (req, res) {
-    //to get user profile
-    axios.get('https://transspo.com/profile/' + usernum)
-        .then(function(response){
-            user = response.data.user
-            res.render('profile',{user});
-        })
-        .catch(function(error){
-            console.log(error)
-        })
+app.get('/profile',redirectlogin, function (req, res) {
+    const {user} = res.locals
+    res.render('profile',{user})
 });
 
-app.get('/editprofile', function (req, res) {
+app.get('/editprofile',redirectlogin, function (req, res) {
+    const {user} = res.locals
     res.render('editprofile',{success,user});
 });
 
-app.get('/sign', function (req, res) {
+app.get('/sign',redirectDashboard, function (req, res) {
     res.render('sign',{message});
 });
 
-app.get('/login', function (req, res) {
+app.get('/login',redirectDashboard, function (req, res) {
     //req.session.userId = 
     res.render('login',{message,message1});
 });
 
+app.get('/logout',redirectlogin, function(req,res){
+    req.session.destroy(err => {
+        if (err){
+            return res.redirect('/dashboard')
+        }
 
-app.get('/token', function (req, res) {
+        res.clearCookie(SESS_NAME)
+        res.redirect('/login')
+    })
+})
+
+app.get('/token',redirectregister, function (req, res) {
     res.render('token',{message,thetoken});
 });
 
@@ -244,8 +262,51 @@ app.get('/passreset', function (req, res) {
     res.render('passreset',{message});
 });
 
-app.get('/passtoken', function (req, res) {
+app.get('/passtoken',redirectpassreset, function (req, res) {
     res.render('passtoken',{sometoken,msg});
+});
+
+app.get('/resend', function (req, res) {
+    if (sometoken){
+        resetnnum = req.session.userId
+
+        //telesign sms 
+        const customerId = "75DA083A-6A1A-48CC-B3A4-EB0BED75E8CD";
+        const apiKey = "xxlW8qHbqwdIJQhKfDoE/+RCDFvZ5F9B28UuuNKd+Zafv3qTaj+zwgDkiT7AXEgFhG5qLf1pJYAGM3RdiyeA9g==";
+        const rest_endpoint = "https://rest-api.telesign.com";
+        const timeout = 300*1000; // 5 min
+      
+        const client = new TeleSignSDK( customerId,
+            apiKey,
+            rest_endpoint,
+            timeout // optional
+            // userAgent
+        );
+      
+        const phoneNumber = "2330548777676";
+        const message = tokenmsg;
+        const messageType = "ARN";
+      
+        console.log("## MessagingClient.message ##");
+      
+        function messageCallback(error, responseBody) {
+            if (error === null) {
+                console.log(`Messaging response for messaging phone number: ${phoneNumber}` +
+                    ` => code: ${responseBody['status']['code']}` +
+                    `, description: ${responseBody['status']['description']}`);
+            } else {
+                console.error("Unable to send message. " + error);
+            }
+        }
+        client.sms.message(messageCallback, phoneNumber, message, messageType);
+        //end of telesign sms
+
+        res.render('passtoken',{sometoken : sometoken,msg : msg})
+    }
+    else{
+        message = 'Enter valid phone number'
+        res.render('passreset',{message : message})
+    }
 });
 
 app.get('/newpass', function (req, res) {
@@ -253,7 +314,7 @@ app.get('/newpass', function (req, res) {
 });
 
 app.get('/history', function (req, res) {
-    axios.get("https://transspo.com/history/" + usernum)
+    axios.get("https://transspo.com/history/" + req.session.userId)
 	.then(function(response){
         t_history = response.data.response
     })
@@ -386,62 +447,57 @@ app.get('/ticket-failure',function(req,res){
 
 //node post requests
 //this is for the login  
-app.post('/auth', function(req, res) {
+app.post('/auth',redirectDashboard, function(req, res) {
 	var num = req.body.tel;
     var psw = req.body.password;
-    if(psw){
-        usernum = num
-        res.redirect('/dashboard')
+	if (psw) {
+       axios.post("https://transspo.com/login",{
+            phone : num,
+            password : psw
+        })
+        .then(function(response){
+            var thestatus = response.data.status;
+            if (thestatus == "success") {
+                req.session.userId = num;
+                username = "";
+                //to get user profile
+                axios.get('https://transspo.com/profile/' + req.session.userId)
+                .then(function(response){
+                    user = response.data.user
+                })
+                .catch(function(error){
+                    console.log(error)
+                })
+				res.redirect('/dashboard');
+            }else if (response.data.message == "Invalid Password"){
+                message = "Invalid Password"
+                res.render('login',{message : message,message1:message1})
+                message = "";
+            } 
+            else if (thestatus == "error"){
+                message = 'Sorry you do not have any account with the details you logged in with. Go to signup page to create an account';
+                res.render('login',{message : message,message1:message1})
+                message = "";
+			}
+			res.end(); 
+        })
+        .catch(function(error){
+            console.log(error)
+        })	
+	} else {
+        message = "Invalid login details"
+        res.render('login',{message : message,message1:message1})
     }
-	// if (psw) {
-    //    axios.post("https://transspo.com/login",{
-    //         phone : num,
-    //         password : psw
-    //     })
-    //     .then(function(response){
-    //         thestatus = response.data.status;
-    //         if (thestatus == "success") {
-    //             req.session.userId = num;
-    //             usernum = num;
-    //             username = "";
-    //             //to get user profile
-    //             axios.get('https://transspo.com/profile/' + req.session.userId)
-    //             .then(function(response){
-    //                 user = response.data.user
-    //             })
-    //             .catch(function(error){
-    //                 console.log(error)
-    //             })
-	// 			res.redirect('/dashboard');
-    //         }else if (response.data.message == "Invalid Password"){
-    //             message = "Invalid Password"
-    //             res.render('login',{message : message,message1:message1})
-    //             message = "";
-    //         } 
-    //         else if (thestatus == "error"){
-    //             message = 'Sorry you do not have any account with the details you logged in with. Go to signup page to create an account';
-    //             res.render('login',{message : message,message1:message1})
-    //             message = "";
-	// 		}
-	// 		res.end();
-    //     })
-    //     .catch(function(error){
-    //         console.log(error)
-    //     })	
-	// } else {
-    //     message = "Invalid login details"
-    //     res.render('login',{message : message,message1:message1})
-    // }
 });
 
 //this is for user signup
-app.post('/token',  function (req, res) {
-    firstname = req.body.firstname;
-    lastname = req.body.lastname;
-    email = req.body.email;
-    num = req.body.tel;
-    psw = req.body.psw;
-    cpsw = req.body.cpsw;
+app.post('/token',redirectDashboard, function (req, res) {
+    var firstname = req.body.firstname;
+    var lastname = req.body.lastname;
+    var email = req.body.email;
+    var num = req.body.tel;
+    var psw = req.body.psw;
+    var cpsw = req.body.cpsw;
     if (psw == cpsw){
         axios.post("https://transspo.com/signup",{
             phone : num,
@@ -449,9 +505,9 @@ app.post('/token',  function (req, res) {
         })
         .then(function(response){
             req.session.userId = num
-            thestatus = response.data.status;
-            thetoken = response.data.token;
-            tokenmsg = "Dear Customer, use this token " + thetoken + " to verify your new TransPo account";
+            var thestatus = response.data.status;
+            var thetoken = response.data.token;
+            var tokenmsg = "Dear Customer, use this token " + thetoken + " to verify your new TransPo account";
             if (thestatus == "success"){
                 // async..await is not allowed in global scope, must use a wrapper
                 async function main() {
@@ -537,7 +593,7 @@ app.post('/token',  function (req, res) {
     }
 });
 
-app.post('/logout', function(req,res){
+app.post('/logout',redirectlogin, function(req,res){
     req.session.destroy(err => {
         if (err){
             return res.redirect('/dashboard')
@@ -567,14 +623,15 @@ app.post('/target',  function (req, res) {
 //this is for password reset
 app.post('/passtoken',function(req,res){
     var num = req.body.tel;
+    req.session.userId = num
     axios.post("https://transspo.com/sendtoken",{
-        phone : num
+        phone : req.session.userId
     })
     .then(function(response){
         sometoken = response.data.token;
         tokenmsg = "Dear Customer, use this token " + sometoken + " to create your new TransPo password";
         if (response.data.status == 'success'){
-            resetnnum = num
+            resetnnum = req.session.userId;
 
             //telesign sms 
             const customerId = "75DA083A-6A1A-48CC-B3A4-EB0BED75E8CD";
@@ -620,7 +677,6 @@ app.post('/passtoken',function(req,res){
     })
 });
 
-
 app.post('/newpass',function(req,res){
     var tok = req.body.token;
     if (tok == sometoken){
@@ -662,7 +718,7 @@ app.post('/editprofile',function(req,res){
     var email = req.body.email;
     var gender = req.body.gender;
     axios.post('https://transspo.com/savebasicprofile',{
-        phone: usernum,
+        phone: req.session.userId,
         firstname : firstname,
         lastname : lastname,
         email : email,
@@ -804,7 +860,7 @@ app.use(function (err, req, res, next) {
 
 //listening server
 app.listen(PORT, () => {
-    console.log(`Listening to requests on http://localhost:${PORT}`);
+    console.log(`Listening to requests on https://localhost:${PORT}`);
   });
 // app.listen(app.get('port'), function (err) {
 //     if (err) throw err;
