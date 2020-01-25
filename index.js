@@ -1,12 +1,15 @@
+"use strict";
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs')
+const fs = require('fs');
 const cors = require('cors');
 const axios = require('axios');
 const session = require('express-session');
-const qr = require('qr-image')
-const jsdom = require('jsdom');
-"use strict";
+const redis = require('redis');
+const RedisStore = require('connect-redis')(session);
+const Redis = require('ioredis');
+const qr = require('qr-image');
+//const jsdom = require('jsdom');
 const nodemailer = require("nodemailer");
 const TeleSignSDK = require('telesignsdk');
 
@@ -38,8 +41,22 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// const client = redis.createClient()  //for traditional redi
+
+// const store = new RedisStore({client});
+
+const client = new Redis({
+    // host: 'localhost', // already the default
+    // port: 6379, // already the default
+    // password: 'secret'
+})
+  
+const store = new RedisStore({ client })
+  
+
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session({
+    store,
     name : SESS_NAME,
     secret: SESS_SECRET,
     resave: false,
@@ -459,7 +476,6 @@ app.post('/auth',redirectDashboard, function(req, res) {
             var thestatus = response.data.status;
             if (thestatus == "success") {
                 req.session.userId = num;
-                username = "";
                 //to get user profile
                 axios.get('https://transspo.com/profile/' + req.session.userId)
                 .then(function(response){
