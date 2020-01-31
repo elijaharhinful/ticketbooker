@@ -44,15 +44,28 @@ app.use(bodyParser.urlencoded({
 
 // const client = redis.createClient()  //for traditional redi
 
-// const store = new RedisStore({client});
 
-const client = new Redis({
-    // host: 'localhost', // already the default
-    // port: 6379, // already the default
-    // password: 'secret'
-  })
+var store = "";
+if (process.env.REDISTOGO_URL) {
+    // TODO: redistogo connection
+    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+    const client = redis.createClient(rtg.port, rtg.hostname)
+    store = new RedisStore({client});
+
+    client.auth(rtg.auth.split(":")[1]);
+} else {
+    const client = require("redis").createClient();
+    store = new RedisStore({client});
+}
+
+
+// const client = new Redis({
+//     // host: 'localhost', // already the default
+//     // port: 6379, // already the default
+//     // password: 'secret'
+//   })
   
-  const store = new RedisStore({ client })
+//   const store = new RedisStore({ client })
   
 
 // initialize express-session to allow us track the logged-in user across sessions.
