@@ -178,8 +178,22 @@ body{
     background-color: rgb(30, 14, 119) !important;
 }
 
+thead tr, tfoot tr{
+    background-color: rgb(194, 193, 192);
+}
+tr a{
+    display: block;
+    color:white;
+}
+
+tr a:hover{
+    color: white;
+    text-decoration: none;
+}
+
 tr:hover{
     cursor: pointer;
+    background-color: rgb(115, 139, 87);
 }
 
 #content .container-fluid .col-sm-3{

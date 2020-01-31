@@ -6,7 +6,7 @@
     <% include partials/dashboard-head.ejs %>
    
 
-        <body style="font-family: 'Nunito', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+        <body >
             <div id="page">
 
                 <div id="main">
@@ -144,16 +144,6 @@
                     
                     <% include layouts/footer.ejs %>
                 </div>
-                <script>
-                        $('.card').on('click',function(){
-                            var card = $(this);
-                            var cardtext = card.find('.card-text').text();
-                            var cardtext1 = card.find('.card-text1').text();
-                            var datatosend = {from: cardtext, to:cardtext1};
-                            $.post('/busdestination',datatosend,function(data){
-                            })
-                        })
-                </script>
         </body>
 
 </html>

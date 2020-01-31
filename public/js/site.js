@@ -1,13 +1,3 @@
-//Set the width of the side navigation to 250px
-function openNav() {
-	$('#mySidenav').css('width', '300px');
-}
-
-//Set the width of the side navigation to 0
-function closeNav() {
-	$('#mySidenav').css('width', '0');
-
-}
 $(function(){
 	$('#myCarousel').hide().slideToggle(3500);
 	$('#travelUs').hide().slideToggle(3500);
@@ -25,6 +15,7 @@ $(function () {
 	elbooktime.text(today.toTimeString());
 });
 
+//to make a clicked link the active one on the main page navbar 
 $(function () {
 	$('#myNavbar ul li:eq(0)').addClass('active');
 	$('#myNavbar ul li').on('click', function () {
@@ -33,103 +24,98 @@ $(function () {
 	});
 });
 
+//to load DataTable
 $(function() {
-    $('#ticketHistory').DataTable();
+    $('#ticketHistory').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": "scripts/objects.php",
+        "columns": [
+            { "t_history": "id" },
+            { "t_history": "the_date" },
+            { "t_history": "t_from" },
+            { "t_history": "t_to" },
+            { "t_history": "amount" }
+        ]
+    });
 });
 
+
+//to move page to the top
 $('#gotop').gotop();
 
-$(function () {
-	$('.nextbtn').on('click', function (e) {
-		e.preventDefault();
-
-		var bus = $('#companybus').val();
-		$('.bus').text(bus);
-
-		var from = $('#from').val();
-		$('.initial').text(from);
-
-		var leave = $('#departdate').val();
-		$('.leavedate').text(leave);
-
-		var leavetime = $('#departtime').val();
-		$('.leavetime').text(leavetime);
-
-		var to = $('#to').val();
-		$('.final').text(to);
-
-		var dataprice = localStorage.getItem('thirdkey');
-		$('.price').text("GHC " + dataprice);
-
-		var dataduration = localStorage.getItem('fourthkey');
-		$('.duration').text(dataduration + "hrs");
-	});
-});
-
+//Set the width of the side navigation to 250px
 function openNav() {
 	$("#mySidenav").width("250px");
 	$(".navbar-toggle").css("display","none");
 }
 
+//Set the width of the side navigation to 0
 function closeNav() {
 	$("#mySidenav").width("0");
 	$(".navbar-toggle").css("display","block");
 }
 
-//this is to connect the pages via the links clicked on the table
-/*$(function () {
-	$('tr').on('click', function () {
-		var tr = $(this);
-		var from = tr.find('td:eq(0)').text();
-		var to = tr.find('td:eq(1)').text();
-		var price = tr.find('td:eq(2)').text();
-		var duration = tr.find('td:eq(3)').text();
-		if (window.localStorage) {
-			localStorage.setItem('firstkey', from);
-			localStorage.setItem('secondkey', to);
-			localStorage.setItem('thirdkey', price);
-			localStorage.setItem('fourthkey', duration);
-			window.location.href = '/booking';
-		}
+//From booking
+$(function(){
+	$('.card').on('click',function(){
+		var card = $(this);
+		var clicked = card.find('.someid').text();
+		var name = card.find('.card-title').text();
+		var clickedid = {id: clicked,name: name};
+		$.post('/booking',clickedid,function(data){
+		})
+	})
+})
 
-		var datapresently = localStorage.getItem('firstkey');
-		$('#from').val(datapresently);
-		var datagoing = localStorage.getItem('secondkey');
-		$('#to').val(datagoing);
-	});
-});
-*/
+//From busdestination
+$(function(){
+	$('.card').on('click',function(){
+		var card = $(this);
+		var cardtext = card.find('.card-text').text();
+		var cardtext1 = card.find('.card-text1').text();
+		var datatosend = {from: cardtext, to:cardtext1};
+		$.post('/busdestination',datatosend,function(data){
+		})
+	})
+})
 
-
-//Validatons
-function profileValidator() {
-	var npsw = $('#npsw').val();
-	var cnpsw = $('#cnpsw').val();
-
-	if (npsw == cnpsw) {
-		return true;
-	}
-	$('.msg').text('New passwords do not match');
-	return false;
-};
-
-function signValidator(e) {
-	var psw = $('.passwd').val();
-	var cpsw = $('.cpasswd').val();
-	var num = $('.num').val();
-	if (psw == cpsw) {
-		if (num.length == 10) {
-			return true;
-		}
-	}
-	$('.msg').text('Invalid login details');
-	return false;
-};
-
+//From destinationdetails
+$(function(){
+	$('.card').on('click',function(){
+	var card = $(this);
+	var amount = card.find('.amount').text();
+	var duration = card.find('.duration').text();
+	var seatleft = card.find('.seatleft').text();
+	var busno = card.find('.busno').text();
+	var departdate = card.find('.departdate').text();
+	var departtime = card.find('.departtime').text();
+	var detailsfrom = card.find('.detailsfrom').text();
+	var detailsto = card.find('.detailsto').text();
+	var detailscompanyid = card.find('.detailscompanyid').text();
+	var detailscompanyname = card.find('.detailscompanyname').text();
+	var detailscompanylocation = card.find('.detailscompanylocation').text();
+	var datatosend = {
+		amount: amount,
+		 duration:duration,
+		 seatleft:seatleft,
+		 departdate:departdate,
+		 departtime:departtime,
+		 detailsfrom :detailsfrom,
+		 detailsto : detailsto,
+		 busno : busno,
+		 detailscompanyid:detailscompanyid,
+		 detailscompanyname:detailscompanyname,
+		 detailscompanylocation:detailscompanylocation
+		};
+	$.post('/destinationdetails',datatosend,function(data){
+	})
+})  
+})
 
 //Rave Pay
 
-    function payWithRave() {
+function payWithRave() {
 		var customer_firstname = $('#confirmform #firstname').val();
 		var customer_lastname = $('#confirmform #lastname').val();
 		var customer_phone = $('#confirmform #number').val();
@@ -169,108 +155,51 @@ function signValidator(e) {
                 x.close(); // use this to close the modal immediately after payment.
             }
         });
-	}
+}
 //Rave Pay
 
 
+//to load ticket details once a row is clicked on
+var transactionid = "";
+var touse = "";
+$(function(){
+	$("#ticketHistory tbody .btn-primary").on('click',function(){
+		touse = $(this);
+		var from = touse.find('.historyfrom').text();
+		var date = touse.find('.historydate').text();
+		var to = touse.find('.historyto').text();
+		var amount = touse.find('.historyamount').text();
+		transactionid = touse.find('.historytransactionid').text();
+		var name = touse.find('.historycompanyname').text();
+		var time = touse.find('.historytime').text();
+		var seat = touse.find('.historyseat').text();
+		var location = touse.find('.historylocation').text();
+		var busno = touse.find('.historybusno').text();
+		var imgsrc = touse.find('.historyqr img').attr('src');
 
+		
+		$('.modal-body .bus').text(name);
+		$('.modal-body .initial').text(from);
+		$('.modal-body .price').text('GH₵ '+ amount);
+		$('.modal-body .duration').text();
+		$('.modal-body .final').text(to);
+		$('.modal-body .departure').text(date);
+		$('.modal-body .time').text(time);
+		$('.modal-body .transactionid').text(transactionid);
+		$('.modal-body .busnumber').text(busno);
+		$('.modal-body .location').text(location);
+		$('.modal-body .seat').text(seat);
+		var new_imgsrc = "data:image/png;base64,"+imgsrc
+		$('.modal-body .qrcode').attr('src',new_imgsrc);
+		
+	});
+})
 
-//to load ticket details
-var transactionid = ""; //to be passed as qrcode text
-$("#ticketHistory tbody tr").on('click',function(){
-	var touse = $(this);
-	var from = $('.historyfrom').text();
-	var date = $('.historydate').text();
-	var to = $('.historyto').text();
-	var amount = $('.historyamount').text();
-	transactionid = $('.historytransactionid').text();
-	var name = $('.historycompanyname').text();
-	var time = $('.historytime').text();
-
-
-	$('.modal-body .bus').text(name);
-	$('.modal-body .initial').text(from);
-	$('.modal-body .price').text('GH₵ '+ amount);
-	$('.modal-body .duration').text();
-	$('.modal-body .final').text(to);
-	$('.modal-body .departure').text(date);
-	$('.modal-body .time').text(time);
-	$('.modal-body .transactionid').text(transactionid);
-});
-
-//for qrcode
-
-var options = {
-    // render method: 'canvas', 'image' or 'div'
-    render: 'div',
-
-    // version range somewhere in 1 .. 40
-    minVersion: 1,
-    maxVersion: 40,
-
-    // error correction level: 'L', 'M', 'Q' or 'H'
-    ecLevel: 'L',
-
-    // offset in pixel if drawn onto existing canvas
-    left: 0,
-    top: 0,
-
-    // size in pixel
-    size: 150,
-
-    // code color or image element
-    fill: '#000',
-
-    // background color or image element, null for transparent background
-    background: null,
-
-    // content
-    text: transactionid,
-
-    // corner radius relative to module width: 0.0 .. 0.5
-    radius: 0,
-
-    // quiet zone in modules
-    quiet: 0,
-
-    // modes
-    // 0: normal
-    // 1: label strip
-    // 2: label box
-    // 3: image strip
-    // 4: image box
-    mode: 0,
-
-    mSize: 0.1,
-    mPosX: 0.5,
-    mPosY: 0.5,
-
-    label: 'no label',
-    fontname: 'sans',
-    fontcolor: '#000',
-
-    image: null
-}
-$('.qrcode').qrcode(options);
-
-$('.tocancel').on('click', function () {
+//to cancel ticket
+$('.tocancel').on('click',function(){
 	var btn = $(this);
 	btn.addClass('disable');
 	if (confirm('Are you sure you want to cancel ticket?')){
-		$('.qrcode').addClass('disable');
-		axios.get('https://transspo.com/cancelticket/' + transactionid)
-		.then(function(response){
-			if (response.data.status == "success" || response.data.message == "Ticket Cancelled Successfully"){
-				$('.qrcode').addClass('disable');
-				$('tr td .btn-info').addClass('btn-warning');
-				$('tr td .btn-info').text("Cancelled").
-				alert("Ticket cancellation succcessful");
-			}else{
-				alert("Ticket cancellaton failed")
-			}
-		})
-	}else{
-		btn.removeClass('disable');
+		window.location = "/cancelticket?transactionid=" + transactionid
 	}
-	});
-	
+})

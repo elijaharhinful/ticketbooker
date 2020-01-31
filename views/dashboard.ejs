@@ -65,14 +65,14 @@
                                 <h1 class="text-center">DASHBOARD</h1>
                             </div>
                             <div id="dash" class="row">
-                                <div class="col-sm-3">
-                                    <div class="card narrower" style="background:-webkit-linear-gradient(90deg,#3f5efb 0% , #fc466b 100%)">
+                                <div class="col-sm-6">
+                                    <div class="card narrower" style="background:-webkit-linear-gradient(90deg,#3f5efb 0% , #38ef7d 100%)">
                                         <div class="panel-body">
                                             <div class="text-center">
                                                 <i class="glyphicon glyphicon-shopping-cart" style="font-weight: 900; font-size: 45px;"></i>
                                                 <h3>
                                                     <i>
-                                                        <span class="ticketspurchased">31</span>
+                                                        <span class="ticketspurchased"><%=t_history.length %></span>
                                                     </i>
                                                 </h3>
                                                 <h5 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-weight: 900;">
@@ -82,31 +82,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <div class="card narrower" style="background:-webkit-linear-gradient(90deg, #11998e 0% , #38ef7d 100%)">
-                                        <div class="panel-body">
-                                                <div class="text-center">
-                                                    <i class="glyphicon glyphicon-shopping-cart" style="font-weight: 900; font-size: 45px;"></i>
-                                                    <h3>
-                                                        <i>
-                                                            <span class="ticketspurchased">31</span>
-                                                        </i>
-                                                    </h3>
-                                                    <h5 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-weight: 900;">
-                                                        TICKETS PENDING
-                                                    </h5>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
+                                
+                                <div class="col-sm-6">
                                     <div class="card narrower" style="background:-webkit-linear-gradient(90deg, #ee0979 0% , #ff6a00 100%)">
                                         <div class="panel-body">
                                                 <div class="text-center">
-                                                    <i class="glyphicon glyphicon-shopping-cart" style="font-weight: 900; font-size: 45px;"></i>
+                                                    <i class="glyphicon glyphicon-remove" style="font-weight: 900; font-size: 45px;"></i>
                                                     <h3>
                                                         <i>
-                                                            <span class="ticketspurchased">31</span>
+                                                            <span class="ticketscancelled"><%=counter.length %></span>
                                                         </i>
                                                     </h3>
                                                     <h5 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-weight: 900;">
@@ -116,23 +100,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <div class="card narrower" style="background:-webkit-linear-gradient(90deg, #45b649 0% , #4ef7f7 100%)">
-                                        <div class="panel-body">
-                                                <div class="text-center">
-                                                    <i class="glyphicon glyphicon-shopping-cart" style="font-weight: 900; font-size: 45px;"></i>
-                                                    <h3>
-                                                        <i>
-                                                            <span class="ticketspurchased">31</span>
-                                                        </i>
-                                                    </h3>
-                                                    <h5 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-weight: 900;">
-                                                        FREE TICKETS
-                                                    </h5>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                             <% include partials/pricing.ejs %>
                     </div>

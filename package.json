@@ -30,6 +30,7 @@
     "ravepay": "^1.2.4",
     "redis": "^2.8.0",
     "request": "^2.88.0",
+    "resize-base64": "^1.0.12",
     "telesignsdk": "^2.2.1",
     "textmagic-rest-client": "^1.0.10",
     "twilio": "^3.38.0"
