@@ -45,18 +45,19 @@ app.use(bodyParser.urlencoded({
 // const client = redis.createClient()  //for traditional redi
 
 
-var store = "";
-if (process.env.REDISTOGO_URL) {
-    // TODO: redistogo connection
-    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
-    const client = redis.createClient(rtg.port, rtg.hostname)
-    store = new RedisStore({client});
+// var store = "";
+// const REDIS_URL = "redis://h:p75a11d3748b0cad12751398259f1b54292b3d8218c3c1276f869d910a4560c30@ec2-52-204-117-170.compute-1.amazonaws.com:30579";
+// if (process.env.REDISTOGO_URL) {
+//     // TODO: redistogo connection
+//     var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+//     const client = redis.createClient(rtg.port, rtg.hostname)
+//     store = new RedisStore({client});
 
-    client.auth(rtg.auth.split(":")[1]);
-} else {
-    const client = require("redis").createClient();
-    store = new RedisStore({client});
-}
+//     client.auth(rtg.auth.split(":")[1]);
+// } else {
+//     const client = require("redis").createClient();
+//     store = new RedisStore({client});
+// }
 
 
 // const client = new Redis({
@@ -67,6 +68,9 @@ if (process.env.REDISTOGO_URL) {
   
 //   const store = new RedisStore({ client })
   
+var client = require('redis').createClient(process.env.REDIS_URL); 
+var redis = new Redis(process.env.REDIS_URL);
+const store = new RedisStore({ client });
 
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session({
