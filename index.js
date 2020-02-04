@@ -8,6 +8,7 @@ const session = require('express-session');
 var redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const Redis = require('ioredis');
+var url = require('url')
 const qrcode = require('qrcode');
 //const qr = require('qr-image');
 //const jsdom = require('jsdom');
@@ -43,19 +44,33 @@ app.use(bodyParser.urlencoded({
 }));
 
 //using redis with heroku
-if (process.env.REDISTOGO_URL) {
-    // TODO: redistogo connection
-    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
-    var redis = require("redis").createClient(rtg.port, rtg.hostname);
+var client;
+var store;
+    if (process.env.REDISTOGO_URL) {
+        var redisURL = url.parse(process.env.REDISTOGO_URL);
+        client = redis.createClient(redisURL.port, redisURL.hostname, options);
+        client.auth(redisURL.auth.split(":")[1]);
+        store = new RedisStore({ client: client });
+    } else {
+        client = redis.createClient();
+    }
 
-    redis.auth(rtg.auth.split(":")[1]);
-} else {
-    var redis = require("redis").createClient();
-}
+// var store;
+// if (process.env.REDISTOGO_URL) {
+//     // TODO: redistogo connection
+//     var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+//     var redis = require("redis").createClient(rtg.port, rtg.hostname);
+//     console.log(rtg.port)
+
+//     redis.auth(rtg.auth.split(":")[1]);
+//     store = new RedisStore({ client: redis })
+// } else {
+//     var redis = require("redis").createClient();
+// }
 
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session({
-    store: new RedisStore({ client: redis }),
+    store,
     name : SESS_NAME,
     secret: SESS_SECRET,
     resave: false,
