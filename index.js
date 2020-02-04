@@ -44,16 +44,16 @@ app.use(bodyParser.urlencoded({
 }));
 
 //using redis with heroku
-var client;
-var store;
-    if (process.env.REDISTOGO_URL) {
-        var redisURL = url.parse(process.env.REDISTOGO_URL);
-        client = redis.createClient(redisURL.port, redisURL.hostname);
-        client.auth(redisURL.auth.split(":")[1]);
-        store = new RedisStore({ client: client });
-    } else {
-        client = redis.createClient();
-    }
+// var client;
+// var store;
+//     if (process.env.REDISTOGO_URL) {
+//         var redisURL = url.parse(process.env.REDISTOGO_URL);
+//         client = redis.createClient(redisURL.port, redisURL.hostname);
+//         client.auth(redisURL.auth.split(":")[1]);
+//         store = new RedisStore({ client: client });
+//     } else {
+//         client = redis.createClient();
+//     }
 
 // var store;
 // if (process.env.REDISTOGO_URL) {
@@ -67,6 +67,10 @@ var store;
 // } else {
 //     var redis = require("redis").createClient();
 // }
+
+const client = new Redis(process.env.REDIS_URL)
+  
+const store = new RedisStore({ client })
 
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session({
