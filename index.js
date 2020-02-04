@@ -5,7 +5,7 @@ const fs = require('fs');
 const cors = require('cors');
 const axios = require('axios');
 const session = require('express-session');
-const redis = require('redis');
+var redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const Redis = require('ioredis');
 const qrcode = require('qrcode');
@@ -42,16 +42,20 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-//var redisclient = redis.createClient()  //for traditional redis
+//using redis with heroku
+if (process.env.REDISTOGO_URL) {
+    // TODO: redistogo connection
+    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+    var redis = require("redis").createClient(rtg.port, rtg.hostname);
 
-const client = new Redis(process.env.REDIS_URL)
-  
-var store = new RedisStore({ client })
-  
+    redis.auth(rtg.auth.split(":")[1]);
+} else {
+    var redis = require("redis").createClient();
+}
 
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session({
-    store,
+    store: new RedisStore({ client: redis }),
     name : SESS_NAME,
     secret: SESS_SECRET,
     resave: false,
