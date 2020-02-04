@@ -48,7 +48,7 @@ var client;
 var store;
     if (process.env.REDISTOGO_URL) {
         var redisURL = url.parse(process.env.REDISTOGO_URL);
-        client = redis.createClient(redisURL.port, redisURL.hostname, options);
+        client = redis.createClient(redisURL.port, redisURL.hostname);
         client.auth(redisURL.auth.split(":")[1]);
         store = new RedisStore({ client: client });
     } else {
