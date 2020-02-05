@@ -5,10 +5,10 @@ const fs = require('fs');
 const cors = require('cors');
 const axios = require('axios');
 const session = require('express-session');
-var redis = require('redis');
+//var redis = require('redis');
 const RedisStore = require('connect-redis')(session);
-const Redis = require('ioredis');
-var url = require('url')
+//const Redis = require('ioredis');
+//var url = require('url')
 const qrcode = require('qrcode');
 //const qr = require('qr-image');
 //const jsdom = require('jsdom');
@@ -68,13 +68,22 @@ app.use(bodyParser.urlencoded({
 //     var redis = require("redis").createClient();
 // }
 
-const client = new Redis(process.env.REDIS_URL)
+// const client = new Redis(process.env.REDIS_URL)
   
-const store = new RedisStore({ client })
+// const store = new RedisStore({ client });
+
+if (process.env.REDISTOGO_URL){
+    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+    var redis = require("redis").createClient(rtg.port, rtg.hostname);
+
+    redis.auth(rtg.auth.split(":")[1]); //auth 1st part is username and 2nd is password separated by ":"
+}else{
+    var redis = require("redis").createClient();
+}
 
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session({
-    store,
+    store : new RedisStore({client : redis}),
     name : SESS_NAME,
     secret: SESS_SECRET,
     resave: false,
@@ -94,21 +103,21 @@ const redirectlogin = (req, res, next) =>{
     }
 }
 
-const redirectregister = (req, res, next) =>{
-    if (!req.session.userId){
-        res.redirect('/sign')
-    }else{
-        next()
-    }
-}
+// const redirectregister = (req, res, next) =>{
+//     if (!req.session.userId){
+//         res.redirect('/sign')
+//     }else{
+//         next()
+//     }
+// }
 
-const redirectpassreset = (req, res, next) =>{
-    if (!req.session.userId){
-        res.redirect('/passreset')
-    }else{
-        next()
-    }
-}
+// const redirectpassreset = (req, res, next) =>{
+//     if (!req.session.userId){
+//         res.redirect('/passreset')
+//     }else{
+//         next()
+//     }
+// }
 
 
 
