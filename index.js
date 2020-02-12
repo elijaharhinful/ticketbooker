@@ -3,10 +3,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
-const session = require('express-session');
+var session = require('express-session');
 //var redis = require('redis');
-const RedisStore = require('connect-redis')(session);
-const Redis = require('ioredis');
+var redis = require("redis").createClient();
+var RedisStore = require('connect-redis')(session);
+//const Redis = require('ioredis');
 const qrcode = require('qrcode');
 const nodemailer = require("nodemailer");
 const TeleSignSDK = require('telesignsdk');
@@ -34,32 +35,50 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// if (process.env.REDISTOGO_URL){
-//     var rtg = require("url").parse(process.env.REDISTOGO_URL);
-//     var redis = require("redis").createClient(rtg.port, rtg.hostname);
+//export REDISTOGO_URL = "redis://redistogo:23db53989eb231b1f8e88be96b765657@pike.redistogo.com:10233/"
 
-//     redis.auth(rtg.auth.split(":")[1]); //auth 1st part is username and 2nd is password separated by ":"
-// }else{
-//     var redis = require("redis").createClient();
-// }
+if (process.env.REDISTOGO_URL){
+    var rtg = require("url").parse(process.env.REDISTOGO_URL);
+    var redis = require("redis").createClient(rtg.port, rtg.hostname);
 
-var client = new Redis(process.env.REDIS_URL)
+    redis.auth(rtg.auth.split(":")[1]); //auth 1st part is username and 2nd is password separated by ":"
+    app.use(session({
+        store: new RedisStore({ 
+            host: rtg.hostname,
+            port: rtg.port
+        }),
+        name : SESS_NAME,
+        secret: SESS_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: SESS_LIFETIME,
+            sameSite : true,
+            secure : IN_PROD
+        }
+    }));
+}else{
+    var redis = require("redis").createClient();
+    app.use(session({
+        store: new RedisStore({ client: redis }),
+        name : SESS_NAME,
+        secret: SESS_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: SESS_LIFETIME,
+            sameSite : true,
+            secure : IN_PROD
+        }
+    }));
+}
+
+// var client = new Redis(process.env.REDIS_URL)
   
-var store = new RedisStore({ client })
+// var store = new RedisStore({ client })
 
 // initialize express-session to allow us track the logged-in user across sessions.
-app.use(session({
-    store,
-    name : SESS_NAME,
-    secret: SESS_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: SESS_LIFETIME,
-        sameSite : true,
-        secure : IN_PROD
-    }
-}));
+
 
 const redirectlogin = (req, res, next) =>{
     if (!req.session.userId){
@@ -415,44 +434,6 @@ app.get('/ticket-success',redirectlogin,function(req,res){
     var transaction_id = "transpo."+ req.query.id;
     var flwRef = req.query.flwRef;
     var status = req.query.status;
-    // current timestamp in milliseconds
-    // let ts = Date.now();
-
-    // console.log()
-    // var date_ob = new Date(ts);
-
-    // var hour = date_ob.getHours();
-    // hour = (hour < 10 ? "0" : "") + hour;
-
-    // var min  = date_ob.getMinutes();
-    // min = (min < 10 ? "0" : "") + min;
-
-    // var sec  = date_ob.getSeconds();
-    // sec = (sec < 10 ? "0" : "") + sec;
-
-    // t_the_time = hour + ":" + min + ":" + sec;
-
-    // var date = date_ob.getDate();
-    // var month = date_ob.getMonth() + 1;
-    // var year = date_ob.getFullYear();
-    
-    // t_the_date = year + "-" + month + "-" + date;
-    
-    // var imgsrc = "";
-    // var transact_id = transaction_id;
-    //     run().catch(error => console.error(error.stack));
-    //     async function run() {
-    //         imgsrc = await qrcode.toDataURL(transact_id);
-    //     }
-
-    // var transact_id = transaction_id;
-    // var new_imgsrc = "";
-    //     run().catch(error => console.error(error.stack));
-    //     async function run() {
-    //         var imgsrc = await qrcode.toDataURL(transact_id);
-    //         new_imgsrc = imgsrc.substr(22);
-    //         console.log(new_imgsrc)
-    //     }
 
     axios.post('https://transspo.com/savebookdetails',{
         fullname : fullname,
@@ -938,23 +919,6 @@ app.post('/pay',function(req,res){
     }
     res.render('payconfirm',{payment})
 })
-
-//For homepage search
-// app.get('/search',function(req,res){
-//     var from = req.params.searchfrom;
-//     var to = req.params.searchto;
-//     var searchid = req.params.searchid;
-//     console.log(searchid)
-//     axios.get('https://transspo.com/companyalldetails/1')
-//     .then(function(response){
-//         console.log(response)
-//         res.render('index',{prices1,prices2,prices3,companyname})
-//     })
-//     .catch(function(error){
-//         console.log(error)
-//     })
-// })
-
 
 
 
