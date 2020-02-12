@@ -1,25 +1,16 @@
 "use strict";
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
 const cors = require('cors');
 const axios = require('axios');
 const session = require('express-session');
 //var redis = require('redis');
 const RedisStore = require('connect-redis')(session);
-//const Redis = require('ioredis');
-//var url = require('url')
+const Redis = require('ioredis');
 const qrcode = require('qrcode');
-//const qr = require('qr-image');
-//const jsdom = require('jsdom');
 const nodemailer = require("nodemailer");
 const TeleSignSDK = require('telesignsdk');
 
-// const { JSDOM } = jsdom;
-// const { window } = new JSDOM();
-// const { document } = (new JSDOM('')).window;
-// global.document = document;
-// var $ = jQuery = require('jquery')(window);
 
 const TWO_HOURS = 1000 * 60 * 60 * 2; //2 HOURS
 
@@ -43,47 +34,22 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-//using redis with heroku
-// var client;
-// var store;
-//     if (process.env.REDISTOGO_URL) {
-//         var redisURL = url.parse(process.env.REDISTOGO_URL);
-//         client = redis.createClient(redisURL.port, redisURL.hostname);
-//         client.auth(redisURL.auth.split(":")[1]);
-//         store = new RedisStore({ client: client });
-//     } else {
-//         client = redis.createClient();
-//     }
-
-// var store;
-// if (process.env.REDISTOGO_URL) {
-//     // TODO: redistogo connection
-//     var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+// if (process.env.REDISTOGO_URL){
+//     var rtg = require("url").parse(process.env.REDISTOGO_URL);
 //     var redis = require("redis").createClient(rtg.port, rtg.hostname);
-//     console.log(rtg.port)
 
-//     redis.auth(rtg.auth.split(":")[1]);
-//     store = new RedisStore({ client: redis })
-// } else {
+//     redis.auth(rtg.auth.split(":")[1]); //auth 1st part is username and 2nd is password separated by ":"
+// }else{
 //     var redis = require("redis").createClient();
 // }
 
-// const client = new Redis(process.env.REDIS_URL)
+var client = new Redis(process.env.REDIS_URL)
   
-// const store = new RedisStore({ client });
-
-if (process.env.REDISTOGO_URL){
-    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
-    var redis = require("redis").createClient(rtg.port, rtg.hostname);
-
-    redis.auth(rtg.auth.split(":")[1]); //auth 1st part is username and 2nd is password separated by ":"
-}else{
-    var redis = require("redis").createClient();
-}
+var store = new RedisStore({ client })
 
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session({
-    store : new RedisStore({client : redis}),
+    store,
     name : SESS_NAME,
     secret: SESS_SECRET,
     resave: false,
