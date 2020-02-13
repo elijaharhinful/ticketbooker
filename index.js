@@ -5,7 +5,6 @@ const cors = require('cors');
 const axios = require('axios');
 var session = require('express-session');
 var redis = require('redis');
-//var redis = require("redis").createClient();
 var RedisStore = require('connect-redis')(session);
 //const Redis = require('ioredis');
 const qrcode = require('qrcode');
@@ -37,19 +36,13 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 if (process.env.REDISTOGO_URL){
-    var rtg = require("url").parse(process.env.REDISTOGO_URL);
-    var redis = require("redis").createClient(rtg.port, rtg.hostname);
     var  client = redis.createClient({
-        port      : rtg.port,        
-        host      : rtg.hostname,   
-        password  : 'ba3d8a14aa978bfd8cbc6fd8f8e3acf3'
+        port      : 9896,        
+        host      : 'pike.redistogo.com',   
+        password  : 'ba3d8a14aa978bfd8cbc6fd8f8e3acf3', // replace with actual password
     })
-
-    redis.auth(rtg.auth.split(":")[1]); //auth 1st part is username and 2nd is password separated by ":"
     app.use(session({
-        store: new RedisStore({
-            client : client
-        }),
+        store: new RedisStore({ client: client }),
         name : SESS_NAME,
         secret: SESS_SECRET,
         resave: false,
