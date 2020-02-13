@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
 var session = require('express-session');
-//var redis = require('redis');
-var redis = require("redis").createClient();
+var redis = require('redis');
+//var redis = require("redis").createClient();
 var RedisStore = require('connect-redis')(session);
 //const Redis = require('ioredis');
 const qrcode = require('qrcode');
@@ -34,18 +34,21 @@ app.use(cors());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
-//export REDISTOGO_URL = "redis://redistogo:23db53989eb231b1f8e88be96b765657@pike.redistogo.com:10233/"
+app.use(bodyParser.json());
 
 if (process.env.REDISTOGO_URL){
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
     var redis = require("redis").createClient(rtg.port, rtg.hostname);
+    var  client = redis.createClient({
+        port      : rtg.port,        
+        host      : rtg.hostname,   
+        password  : 'ba3d8a14aa978bfd8cbc6fd8f8e3acf3'
+    })
 
     redis.auth(rtg.auth.split(":")[1]); //auth 1st part is username and 2nd is password separated by ":"
     app.use(session({
-        store: new RedisStore({ 
-            host: rtg.hostname,
-            port: rtg.port
+        store: new RedisStore({
+            client : client
         }),
         name : SESS_NAME,
         secret: SESS_SECRET,
@@ -58,9 +61,13 @@ if (process.env.REDISTOGO_URL){
         }
     }));
 }else{
-    var redis = require("redis").createClient();
+    var  client = redis.createClient({
+        port      : 9896,        
+        host      : 'pike.redistogo.com',   
+        password  : 'ba3d8a14aa978bfd8cbc6fd8f8e3acf3', // replace with actual password
+    })
     app.use(session({
-        store: new RedisStore({ client: redis }),
+        store: new RedisStore({ client: client }),
         name : SESS_NAME,
         secret: SESS_SECRET,
         resave: false,
