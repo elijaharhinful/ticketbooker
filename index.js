@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
+var url = require('url');
 var session = require('express-session');
 var redis = require('redis');
 var RedisStore = require('connect-redis')(session);
@@ -38,11 +39,15 @@ app.use(bodyParser.json());
 
 //redis-cli -h pike.redistogo.com -p 9896 -a ba3d8a14aa978bfd8cbc6fd8f8e3acf3
 if (process.env.REDISTOGO_URL){
-    var  client = redis.createClient({
-        port      : 9896,        
-        host      : 'pike.redistogo.com',   
-        password  : 'ba3d8a14aa978bfd8cbc6fd8f8e3acf3', // replace with actual password
-    })
+    var rtg   = url.parse(process.env.REDISTOGO_URL);
+    var client = redis.createClient(rtg.port, rtg.hostname);
+
+    // var  client = redis.createClient({
+    //     port      : 9896,        
+    //     host      : 'pike.redistogo.com',   
+    //     password  : 'ba3d8a14aa978bfd8cbc6fd8f8e3acf3', // replace with actual password
+    // })
+    client.auth(rtg.auth.split(":")[1]);
     app.use(session({
         store: new RedisStore({ client: client }),
         name : SESS_NAME,
