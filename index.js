@@ -35,6 +35,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+
+//redis-cli -h pike.redistogo.com -p 9896 -a ba3d8a14aa978bfd8cbc6fd8f8e3acf3
 if (process.env.REDISTOGO_URL){
     var  client = redis.createClient({
         port      : 9896,        
@@ -54,10 +56,9 @@ if (process.env.REDISTOGO_URL){
         }
     }));
 }else{
-    var  client = redis.createClient({
-        port      : 9896,        
-        host      : 'pike.redistogo.com',   
-        password  : 'ba3d8a14aa978bfd8cbc6fd8f8e3acf3', // replace with actual password
+    var client = redis.createClient({
+        port      : 6379,        
+        host      : 'localhost'
     })
     app.use(session({
         store: new RedisStore({ client: client }),
@@ -234,8 +235,9 @@ app.get('/about1', function (req, res) {
     res.render('about1');
 });
     
-app.get('/dashboard',redirectlogin, function (req, res) {
+app.get('/dashboard', function (req, res) {
     const {user} = res.locals
+    
     axios.get("https://transspo.com/history/" + req.session.userId)
                 .then(function(response){
                     t_history = response.data.response
