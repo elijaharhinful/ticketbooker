@@ -38,14 +38,16 @@ app.use(bodyParser.json());
 
 
 //redis-cli -h pike.redistogo.com -p 9896 -a ba3d8a14aa978bfd8cbc6fd8f8e3acf3
+//redis-cli -h pike.redistogo.com -p 10233 -a 23db53989eb231b1f8e88be96b765657
+
 if (process.env.REDISTOGO_URL){
     var rtg   = url.parse(process.env.REDISTOGO_URL);
     var client = redis.createClient(rtg.port, rtg.hostname);
 
     // var  client = redis.createClient({
-    //     port      : 9896,        
+    //     port      : 10233,        
     //     host      : 'pike.redistogo.com',   
-    //     password  : 'ba3d8a14aa978bfd8cbc6fd8f8e3acf3', // replace with actual password
+    //     password  : '23db53989eb231b1f8e88be96b765657', // replace with actual password
     // })
     client.auth(rtg.auth.split(":")[1]);
     app.use(session({
@@ -121,7 +123,7 @@ const redirectDashboard = (req, res, next) =>{
 }
 
 app.use((req,res,next)=>{
-    const {userId} = req.session
+    var {userId} = req.session
     if (userId){
         res.locals.user = user
     }
@@ -241,8 +243,6 @@ app.get('/about1', function (req, res) {
 });
     
 app.get('/dashboard', function (req, res) {
-    const {user} = res.locals
-    
     axios.get("https://transspo.com/history/" + req.session.userId)
                 .then(function(response){
                     t_history = response.data.response
@@ -682,40 +682,40 @@ app.post('/token',redirectDashboard, function (req, res) {
             var thetoken = response.data.token;
             var tokenmsg = "Dear Customer, use this token " + thetoken + " to verify your new TransPo account";
             if (thestatus == "success"){
-                // async..await is not allowed in global scope, must use a wrapper
-                async function main() {
-                // Generate test SMTP service account from ethereal.email
-                // Only needed if you don't have a real mail account for testing
-                let testAccount = await nodemailer.createTestAccount();
+                // // async..await is not allowed in global scope, must use a wrapper
+                // async function main() {
+                // // Generate test SMTP service account from ethereal.email
+                // // Only needed if you don't have a real mail account for testing
+                // let testAccount = await nodemailer.createTestAccount();
 
-                // create reusable transporter object using the default SMTP transport
-                let transporter = nodemailer.createTransport({
-                    host: "smtp.ethereal.email",
-                    port: 587,
-                    secure: false, // true for 465, false for other ports
-                    auth: {
-                    user: testAccount.user, // generated ethereal user
-                    pass: testAccount.pass // generated ethereal password
-                    }
-                });
+                // // create reusable transporter object using the default SMTP transport
+                // let transporter = nodemailer.createTransport({
+                //     host: "smtp.ethereal.email",
+                //     port: 587,
+                //     secure: false, // true for 465, false for other ports
+                //     auth: {
+                //     user: testAccount.user, // generated ethereal user
+                //     pass: testAccount.pass // generated ethereal password
+                //     }
+                // });
 
-                // send mail with defined transport object
-                let info = await transporter.sendMail({
-                    from: '"Fred Foo 👻" <foo@example.com>', // sender address
-                    to: email, // list of receivers
-                    subject: "TransPo Registration Token", // Subject line
-                    text: tokenmsg, // plain text body
-                    html: "<b>Hello world?</b>" // html body
-                });
+                // // send mail with defined transport object
+                // let info = await transporter.sendMail({
+                //     from: '"Fred Foo 👻" <foo@example.com>', // sender address
+                //     to: email, // list of receivers
+                //     subject: "TransPo Registration Token", // Subject line
+                //     text: tokenmsg, // plain text body
+                //     html: "<b>Hello world?</b>" // html body
+                // });
 
-                console.log("Message sent: %s", info.messageId);
-                // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+                // console.log("Message sent: %s", info.messageId);
+                // // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-                // Preview only available when sending through an Ethereal account
-                console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-                // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-                }
-                main().catch(console.error);
+                // // Preview only available when sending through an Ethereal account
+                // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+                // // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+                // }
+                // main().catch(console.error);
 
                 //telesign sms 
                 const customerId = "75DA083A-6A1A-48CC-B3A4-EB0BED75E8CD";
@@ -784,7 +784,6 @@ app.post('/target',  function (req, res) {
         message1 = "Account created. You may login"
         res.render('login', {message:message, message1 : message1})
         message1 = "";
-        res.end();
     }
     else{
         message = "Invalid token"

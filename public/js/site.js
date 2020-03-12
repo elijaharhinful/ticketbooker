@@ -168,6 +168,7 @@ $(function(){
 		var from = touse.find('.historyfrom').text();
 		var date = touse.find('.historydate').text();
 		var to = touse.find('.historyto').text();
+		alert(to)
 		var amount = touse.find('.historyamount').text();
 		transactionid = touse.find('.historytransactionid').text();
 		var name = touse.find('.historycompanyname').text();
