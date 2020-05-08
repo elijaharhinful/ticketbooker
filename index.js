@@ -88,6 +88,7 @@ if (process.env.REDISTOGO_URL){
 // initialize express-session to allow us track the logged-in user across sessions.
 
 
+//this middleware checks if there is no middleware and redirects to the login page 
 const redirectlogin = (req, res, next) =>{
     if (!req.session.userId){
         res.redirect('/login')
