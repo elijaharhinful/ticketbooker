@@ -88,14 +88,14 @@ if (process.env.REDISTOGO_URL){
 // initialize express-session to allow us track the logged-in user across sessions.
 
 
-//this middleware checks if there is no middleware and redirects to the login page 
-const redirectlogin = (req, res, next) =>{
-    if (!req.session.userId){
-        res.redirect('/login')
-    }else{
-        next()
-    }
-}
+//this middleware checks if there is no session and redirects to the login page 
+//const redirectlogin = (req, res, next) =>{
+//    if (!req.session.userId){
+  //      res.redirect('/login')
+ //   }else{
+ //       next()
+//    }
+//}
 
 // const redirectregister = (req, res, next) =>{
 //     if (!req.session.userId){
@@ -261,17 +261,17 @@ app.get('/dashboard', function (req, res) {
                 })
     res.render('dashboard',{prices1,prices2,prices3,user,t_history,counter})
     // if (req.session.loggedin){
-    //     res.render('dashboard',{prices1,prices2,prices3,user})
+    //     res.render('dashboard',{prices1,prices2,prices3,user,t_history,counter})
     // } else{
-    //     res.render('login',{prices1,prices2,prices3,message,message1});
+    //     res.render('login',{prices1,prices2,prices3,user,t_history,counter});
     // }
 });
 
-app.get('/booking',redirectlogin, function(req, res){
+app.get('/booking', function(req, res){
     res.render('booking',{prices1,prices2,prices3,companyname,user,amounterror});
 });
 
-app.get('/busdestination',redirectlogin,function(req,res){
+app.get('/busdestination',function(req,res){
     axios.get("https://transspo.com/companydestinationdetails/" + idurls)
     .then(function(response){
         iddetails = response.data.response
@@ -282,7 +282,7 @@ app.get('/busdestination',redirectlogin,function(req,res){
     })
 });
 
-app.get('/destinationdetails',redirectlogin, function (req, res) {
+app.get('/destinationdetails', function (req, res) {
     axios.get("https://transspo.com/companydestination/"+ from +"/" + to + "/" + idurls)
     .then(function(response){
         details = response.data.response
@@ -295,16 +295,19 @@ app.get('/destinationdetails',redirectlogin, function (req, res) {
     })
 });
 
-app.get('/payment',redirectlogin, function (req, res) {
+app.get('/payment', function (req, res) {
     res.render('payment',{prices1,prices2,prices3,details,buses});
 });
 
-app.get('/profile',redirectlogin, function (req, res) {
-    const {user} = res.locals
-    res.render('profile',{user})
+app.get('/profile', function (req, res) {
+    if (req.session.loggedin){
+        res.render('profile',{user})
+    }
+    //const {user} = res.locals
+    //res.render('profile',{user})
 });
 
-app.get('/editprofile',redirectlogin, function (req, res) {
+app.get('/editprofile', function (req, res) {
     const {user} = res.locals
     res.render('editprofile',{success,user});
 });
@@ -318,7 +321,7 @@ app.get('/login',redirectDashboard, function (req, res) {
     res.render('login',{message,message1});
 });
 
-app.get('/logout',redirectlogin, function(req,res){
+app.get('/logout', function(req,res){
     req.session.destroy(err => {
         if (err){
             res.redirect('/dashboard')
@@ -389,7 +392,7 @@ app.get('/newpass', function (req, res) {
 });
 
 
-app.get('/history', redirectlogin,function (req, res) {
+app.get('/history',function (req, res) {
     axios.get("https://transspo.com/history/" + req.session.userId)
                 .then(function(response){
                     t_history = response.data.response
@@ -407,7 +410,7 @@ app.get('/history', redirectlogin,function (req, res) {
     res.render('history',{buses,details,user,t_history,success});
 });
 
-app.get('/ticket',redirectlogin,async function(req,res){
+app.get('/ticket',async function(req,res){
     res.render('ticket',{buses,details,chosendata})
 })
 
@@ -426,15 +429,15 @@ app.get('/ticketmain',async function(req,res){
     res.render('ticketmain',{buses,details,chosendata})
 })
 
-app.get('/pay',redirectlogin,function(req,res){
+app.get('/pay', function(req,res){
     res.render('pay',{amount})
 });
 
-app.get('/payconfirm',redirectlogin,function(req,res){
+app.get('/payconfirm',function(req,res){
     res.render('payconfirm',{payment})
 });
 
-app.get('/ticket-success',redirectlogin,function(req,res){
+app.get('/ticket-success',function(req,res){
     var fullname = req.query["customer.fullName"];
     var phone = req.query["customer.phone"];
     var amount = req.query.amount;
@@ -767,7 +770,7 @@ app.post('/token',redirectDashboard, function (req, res) {
     }
 });
 
-app.post('/logout',redirectlogin, function(req,res){
+app.post('/logout', function(req,res){
     req.session.destroy(err => {
         if (err){
             return res.redirect('/dashboard')
