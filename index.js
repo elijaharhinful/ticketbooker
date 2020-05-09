@@ -300,12 +300,8 @@ app.get('/payment', function (req, res) {
 });
 
 app.get('/profile', function (req, res) {
-    if (req.session.loggedin){
-        const {user} = res.locals
-        res.render('profile',{user})
-    }
-    //const {user} = res.locals
-    //res.render('profile',{user})
+    const {user} = res.locals
+    res.render('profile',{user})
 });
 
 app.get('/editprofile', function (req, res) {
